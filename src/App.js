@@ -12,6 +12,7 @@ import ThemePrimaryColor from './components/ThemePrimaryColor';
 
 // ----------------------------------------------------------------------
 
+// Main Function
 export default function App() {
   return (
     <ThemeConfig>
