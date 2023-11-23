@@ -41,10 +41,10 @@ export default function Router() {
       path: 'dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/one" replace /> },
-        { path: 'one', element: <PageOne /> },
-        { path: 'two', element: <PageTwo /> },
-        { path: 'three', element: <PageThree /> },
+        { element: <Navigate to="/dashboard/home" replace /> },
+        { path: 'home', element: <PageOne /> },
+        { path: 'transactions', element: <PageTwo /> },
+        { path: 'queue', element: <PageThree /> },
         {
           path: 'app',
           children: [
