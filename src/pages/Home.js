@@ -7,14 +7,14 @@ import Page from '../components/Page';
 
 // ----------------------------------------------------------------------
 
-export default function PageOne() {
+export default function Home() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="Page One | Minimal-UI">
+    <Page title="Home | SmartQ">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Typography variant="h3" component="h1" paragraph>
-          Page One
+          Welcome John Doe!
         </Typography>
         <Typography gutterBottom>
           Curabitur turpis. Vestibulum facilisis, purus nec pulvinar iaculis, ligula mi congue nunc, vitae euismod

@@ -139,10 +139,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
               <Avatar alt="My Avatar" src="/static/mock-images/avatars/avatar_default.jpg" />
               <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                  displayName
+                  Dr. John Doe
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  role
+                  Vendor 
                 </Typography>
               </Box>
             </AccountStyle>

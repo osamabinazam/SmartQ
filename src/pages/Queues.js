@@ -7,14 +7,14 @@ import Page from '../components/Page';
 
 // ----------------------------------------------------------------------
 
-export default function PageTwo() {
+export default function PageThree() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="Page Two | Minimal-UI">
+    <Page title="Page Three | Minimal-UI">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Typography variant="h3" component="h1" paragraph>
-          Page Two
+          Queue
         </Typography>
         <Typography gutterBottom>
           Curabitur turpis. Vestibulum facilisis, purus nec pulvinar iaculis, ligula mi congue nunc, vitae euismod
