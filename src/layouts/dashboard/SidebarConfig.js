@@ -22,29 +22,31 @@ const sidebarConfig = [
   {
     subheader: 'general',
     items: [
-      { title: 'One', path: PATH_DASHBOARD.general.pageOne, icon: ICONS.dashboard },
-      { title: 'Two', path: PATH_DASHBOARD.general.pageTwo, icon: ICONS.ecommerce },
-      { title: 'Three', path: PATH_DASHBOARD.general.pageThree, icon: ICONS.analytics }
+      { title: 'Home', path: PATH_DASHBOARD.general.pageOne, icon: ICONS.dashboard },
+      { title: 'Transactions', path: PATH_DASHBOARD.general.pageTwo, icon: ICONS.ecommerce },
+      { title: 'Queues', path: PATH_DASHBOARD.general.pageThree, icon: ICONS.analytics },
+      { title: 'Requests', path: PATH_DASHBOARD.app.pageFour, icon: ICONS.analytics },
+      { title: 'History', path: PATH_DASHBOARD.app.pageFive, icon: ICONS.analytics }
     ]
   },
 
   // MANAGEMENT
   // ----------------------------------------------------------------------
-  {
-    subheader: 'management',
-    items: [
-      {
-        title: 'user',
-        path: PATH_DASHBOARD.app.root,
-        icon: ICONS.user,
-        children: [
-          { title: 'Four', path: PATH_DASHBOARD.app.pageFour },
-          { title: 'Five', path: PATH_DASHBOARD.app.pageFive },
-          { title: 'Six', path: PATH_DASHBOARD.app.pageSix }
-        ]
-      }
-    ]
-  }
+  // {
+  //   subheader: 'management',
+  //   items: [
+  //     {
+  //       title: 'user',
+  //       path: PATH_DASHBOARD.app.root,
+  //       icon: ICONS.user,
+  //       children: [
+  //         { title: 'Four', path: PATH_DASHBOARD.app.pageFour },
+  //         { title: 'Five', path: PATH_DASHBOARD.app.pageFive },
+  //         { title: 'Six', path: PATH_DASHBOARD.app.pageSix }
+  //       ]
+  //     }
+  //   ]
+  // }
 ];
 
 export default sidebarConfig;

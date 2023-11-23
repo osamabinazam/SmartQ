@@ -78,9 +78,9 @@ export default function Router() {
 // IMPORT COMPONENTS
 
 // Dashboard
-const PageOne = Loadable(lazy(() => import('../pages/PageOne')));
-const PageTwo = Loadable(lazy(() => import('../pages/PageTwo')));
-const PageThree = Loadable(lazy(() => import('../pages/PageThree')));
+const PageOne = Loadable(lazy(() => import('../pages/Home')));
+const PageTwo = Loadable(lazy(() => import('../pages/Transactions')));
+const PageThree = Loadable(lazy(() => import('../pages/Queues')));
 const PageFour = Loadable(lazy(() => import('../pages/PageFour')));
 const PageFive = Loadable(lazy(() => import('../pages/PageFive')));
 const PageSix = Loadable(lazy(() => import('../pages/PageSix')));
