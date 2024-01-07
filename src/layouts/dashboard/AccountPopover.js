@@ -14,7 +14,7 @@ import MenuPopover from '../../components/MenuPopover';
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
-  { label: 'Home', icon: homeFill, linkTo: '/' },
+  { label: 'Home', icon: homeFill, linkTo: '/dashboard/home' },
   { label: 'Profile', icon: personFill, linkTo: '#' },
   { label: 'Settings', icon: settings2Fill, linkTo: '#' }
 ];
@@ -60,10 +60,10 @@ export default function AccountPopover() {
       <MenuPopover open={open} onClose={handleClose} anchorEl={anchorRef.current} sx={{ width: 220 }}>
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            displayName
+            Dr. John Doe
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            email
+            johndoe@gmail.com
           </Typography>
         </Box>
 

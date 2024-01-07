@@ -11,9 +11,9 @@ const ROOTS_DASHBOARD = '/dashboard';
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   general: {
-    pageOne: path(ROOTS_DASHBOARD, '/home'),
-    pageTwo: path(ROOTS_DASHBOARD, '/transactions'),
-    pageThree: path(ROOTS_DASHBOARD, '/queue')
+    home: path(ROOTS_DASHBOARD, '/home'),
+    transactions: path(ROOTS_DASHBOARD, '/transactions'),
+    queue: path(ROOTS_DASHBOARD, '/queue')
   },
   app: {
     root: path(ROOTS_DASHBOARD, '/app'),

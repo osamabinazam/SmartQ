@@ -71,17 +71,18 @@ export default function MainNavbar() {
           <RouterLink to="/">
             <Logo />
           </RouterLink>
-          <Label color="info" sx={{ ml: 1 }}>
-            Simple v2.6.0
-          </Label>
           <Box sx={{ flexGrow: 1 }} />
 
           <MHidden width="mdDown">
             <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />
           </MHidden>
 
-          <Button variant="contained" target="_blank" href="https://material-ui.com/store/items/minimal-dashboard/">
-            Purchase Now
+          <Button variant="contained" target="_blank" href="#">
+            Login
+          </Button>
+
+          <Button variant="contained" target="_blank" href="#">
+            Register
           </Button>
 
           <MHidden width="mdUp">

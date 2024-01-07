@@ -76,39 +76,19 @@ export default function LandingHero() {
         <Container maxWidth="lg">
           <ContentStyle>
             <motion.div variants={varFadeInRight}>
-              <Typography variant="h1" sx={{ color: 'common.white' }}>
-                Start a <br />
-                new project <br /> with
-                <Typography component="span" variant="h1" sx={{ color: 'primary.main' }}>
-                  &nbsp;Minimal
+              <Typography variant="h3" sx={{ color: 'common.white' }}>
+                <Typography component="span" variant="h3" sx={{ color: 'primary.main' }}>
+                  Welcome to SmartQ
                 </Typography>
+                :Revolutionizing Your Appointment Experience
               </Typography>
             </motion.div>
 
             <motion.div variants={varFadeInRight}>
               <Typography sx={{ color: 'common.white' }}>
-                The starting point for your next project based on easy-to-customize Material-UI © helps you build apps
-                faster and better.
+              At SmartQ, we believe in transforming the way you manage appointments. Experience efficiency, convenience, and a seamless service landscape with our innovative platform. Say goodbye to long queues and hello to a new era of appointment scheduling.
               </Typography>
             </motion.div>
-
-            <Stack
-              component={motion.div}
-              variants={varFadeInRight}
-              direction="row"
-              spacing={1}
-              justifyContent={{ xs: 'center', md: 'flex-start' }}
-            >
-              <img alt="sketch icon" src="/static/home/ic_sketch_small.svg" width={20} height={20} />
-              <Link
-                underline="always"
-                href="https://www.sketch.com/s/0fa4699d-a3ff-4cd5-a3a7-d851eb7e17f0"
-                target="_blank"
-                sx={{ color: 'common.white' }}
-              >
-                Preview in Sketch Cloud
-              </Link>
-            </Stack>
 
             <motion.div variants={varFadeInRight}>
               <Button
@@ -122,14 +102,14 @@ export default function LandingHero() {
               </Button>
             </motion.div>
 
-            <Stack direction="row" spacing={1.5} justifyContent={{ xs: 'center', md: 'flex-start' }}>
+            {/* <Stack direction="row" spacing={1.5} justifyContent={{ xs: 'center', md: 'flex-start' }}>
               <motion.img variants={varFadeInRight} src="/static/home/ic_sketch.svg" />
               <motion.img variants={varFadeInRight} src="/static/home/ic_figma.svg" />
               <motion.img variants={varFadeInRight} src="/static/home/ic_material.svg" />
               <motion.img variants={varFadeInRight} src="/static/home/ic_react.svg" />
               <motion.img variants={varFadeInRight} src="/static/home/ic_js.svg" />
               <motion.img variants={varFadeInRight} src="/static/home/ic_ts.svg" />
-            </Stack>
+            </Stack> */}
           </ContentStyle>
         </Container>
       </RootStyle>
