@@ -22,9 +22,9 @@ const sidebarConfig = [
   {
     subheader: 'general',
     items: [
-      { title: 'Home', path: PATH_DASHBOARD.general.pageOne, icon: ICONS.dashboard },
-      { title: 'Transactions', path: PATH_DASHBOARD.general.pageTwo, icon: ICONS.ecommerce },
-      { title: 'Queues', path: PATH_DASHBOARD.general.pageThree, icon: ICONS.analytics },
+      { title: 'Home', path: PATH_DASHBOARD.general.home, icon: ICONS.dashboard },
+      { title: 'Manage Queue', path: PATH_DASHBOARD.general.queue, icon: ICONS.ecommerce },
+      { title: 'Transactions', path: PATH_DASHBOARD.general.transactions, icon: ICONS.analytics },
       { title: 'Requests', path: PATH_DASHBOARD.app.pageFour, icon: ICONS.analytics },
       { title: 'History', path: PATH_DASHBOARD.app.pageFive, icon: ICONS.analytics }
     ]

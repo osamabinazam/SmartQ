@@ -1,6 +1,6 @@
 {
-  "name": "React Material Minimal UI",
-  "short_name": "Minimal-UI",
+  "name": "SmartQ",
+  "short_name": "SmartQ",
   "display": "standalone",
   "start_url": "/",
   "theme_color": "#000000",

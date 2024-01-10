@@ -42,7 +42,7 @@ export default function AppWelcome({ displayName }) {
         </Typography>
 
         <Typography variant="body2" sx={{ pb: { xs: 3, xl: 5 }, maxWidth: 480, mx: 'auto' }}>
-          If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything
+        Thank you for choosing SmartQ to streamline your appointment management. With our platform, you can enhance customer experiences and optimize your operations. Feel free to explore the features to make the most of your SmartQ experience.
         </Typography>
 
         <Button variant="contained" to="#" component={RouterLink}>

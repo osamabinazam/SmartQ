@@ -20,6 +20,7 @@ import {
   AppTotalActiveUsers,
   AppTopInstalledCountries
 } from '../components/general-app';
+import UpcomingAppointments from 'src/components/general-app/UpcomingAppointments';
 
 // ----------------------------------------------------------------------
 
@@ -34,14 +35,7 @@ export default function GeneralApp() {
           <Grid item xs={12}   >
             <AppWelcome displayName="Osama"/>
           </Grid>
-        </Grid>
-      </Container>
 
-          {/* <Grid item xs={12} md={4}>
-            <AppFeatured />
-          </Grid> */}
-      <Container maxWidth={themeStretch?false:'xl'} spacing={3  }>
-        <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
             <AppTotalActiveUsers />
           </Grid>
@@ -53,6 +47,12 @@ export default function GeneralApp() {
           <Grid item xs={12} md={4}>
             <AppTotalDownloads />
           </Grid>
+          
+          <Grid item xs={12} >
+            <UpcomingAppointments />
+          </Grid>
+
+          
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentDownload />
@@ -70,20 +70,20 @@ export default function GeneralApp() {
             <AppTopRelated />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppTopInstalledCountries />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppTopAuthors />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <Stack spacing={3}>
               <AppWidgets1 />
               <AppWidgets2 />
             </Stack>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>

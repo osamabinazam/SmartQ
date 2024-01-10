@@ -12,6 +12,7 @@ import { MHidden } from '../../components/@material-extend';
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -44,10 +45,21 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function MainNavbar() {
+const MainNavbar = () => {
   const isOffset = useOffSetTop(100);
   const { pathname } = useLocation();
   const isHome = pathname === '/';
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/auth/login');
+  };
+
+  const handleRegister = () => {
+    navigate('/auth/register');
+  };
+
 
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
@@ -71,26 +83,33 @@ export default function MainNavbar() {
           <RouterLink to="/">
             <Logo />
           </RouterLink>
-          <Label color="info" sx={{ ml: 1 }}>
-            Simple v2.6.0
-          </Label>
           <Box sx={{ flexGrow: 1 }} />
 
           <MHidden width="mdDown">
             <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />
           </MHidden>
-
-          <Button variant="contained" target="_blank" href="https://material-ui.com/store/items/minimal-dashboard/">
-            Purchase Now
-          </Button>
-
           <MHidden width="mdUp">
             <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />
           </MHidden>
+
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Button variant="contained" target="_blank" onClick={handleLogin}>
+              Login
+            </Button>
+            <Button variant="contained" target="_blank" onClick={handleRegister}>
+              Register
+            </Button>
+          </Box>
+
+
         </Container>
+
+
       </ToolbarStyle>
 
       {isOffset && <ToolbarShadowStyle />}
     </AppBar>
   );
 }
+
+export default MainNavbar;

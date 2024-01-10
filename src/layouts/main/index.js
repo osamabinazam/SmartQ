@@ -1,16 +1,16 @@
+
+// Libraries
 import { Link as ScrollLink } from 'react-scroll';
 import { useLocation, Outlet } from 'react-router-dom';
-// material
-import { Box, Link, Container, Typography } from '@mui/material';
-// components
-import Logo from '../../components/Logo';
-//
-import MainNavbar from './MainNavbar';
-import MainFooter from './MainFooter';
+import { Box, Link, Container, Typography } from '@mui/material';     // Matrial UI components
+import Logo from '../../components/Logo';                             // Logo 
+import MainNavbar from './MainNavbar';                                // Landing page navbar
+import MainFooter from './MainFooter';                                // Landing page footer           
 
-// ----------------------------------------------------------------------
 
-export default function MainLayout() {
+
+
+const MainLayout = () => {
   const { pathname } = useLocation();
   const isHome = pathname === '/';
 
@@ -38,9 +38,8 @@ export default function MainLayout() {
             </ScrollLink>
 
             <Typography variant="caption" component="p">
-              © All rights reserved
-              <br /> made by &nbsp;
-              <Link href="https://minimals.cc/">minimals.cc</Link>
+              ©2024 All rights reserved
+              <br /> made by SmartQ team&nbsp;
             </Typography>
           </Container>
         </Box>
@@ -48,3 +47,5 @@ export default function MainLayout() {
     </>
   );
 }
+
+export default MainLayout;

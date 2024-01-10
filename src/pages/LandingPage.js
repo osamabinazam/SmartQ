@@ -29,12 +29,12 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function LandingPage() {
   return (
-    <RootStyle title="The starting point for your next project | Minimal-UI" id="move_top">
+    <RootStyle title="SmartQ" id="move_top">
       <LandingHero />
       <ContentStyle>
         <LandingDarkMode />
-        <LandingThemeColor />
-        <LandingCleanInterfaces />
+        {/* <LandingThemeColor />
+        <LandingCleanInterfaces /> */}
         
       </ContentStyle>
     </RootStyle>

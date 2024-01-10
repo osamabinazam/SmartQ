@@ -52,7 +52,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function MainFooter() {
+const MainFooter = () => {
   return (
     <RootStyle>
       <Divider />
@@ -131,3 +131,5 @@ export default function MainFooter() {
     </RootStyle>
   );
 }
+
+export default MainFooter;

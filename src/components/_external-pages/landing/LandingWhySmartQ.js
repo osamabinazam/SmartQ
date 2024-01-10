@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Grid, Container, Typography } from '@mui/material';
 //
 import { MotionInView, varFadeInUp, varFadeInDown } from '../../animate';
+import Lists from './Lists';
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +29,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function LandingDarkMode() {
+export default function LandingWhySmartQ() {
   return (
     <RootStyle>
       <Container maxWidth="lg" sx={{ position: 'relative' }}>
@@ -48,36 +49,31 @@ export default function LandingDarkMode() {
         />
 
         <Grid container spacing={5} direction="row-reverse" justifyContent="space-between">
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} >
             <ContentStyle>
-              <MotionInView variants={varFadeInUp}>
-                <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.disabled', display: 'block' }}>
-                  Easy switch between styles.
-                </Typography>
-              </MotionInView>
 
               <MotionInView variants={varFadeInUp}>
-                <Typography variant="h2" sx={{ mb: 3, color: 'common.white' }}>
-                  Dark mode
+                <Typography variant="h2" sx={{ mb: 3, color: 'common.primary.main' }}>
+                Why SmartQ?
                 </Typography>
               </MotionInView>
 
               <MotionInView variants={varFadeInUp}>
                 <Typography sx={{ color: 'common.white', mb: 5 }}>
-                  A dark theme that feels easier on the eyes.
+                  <Lists/ >
                 </Typography>
               </MotionInView>
             </ContentStyle>
           </Grid>
 
-          <Grid item xs={12} md={7} sx={{ position: 'relative' }}>
+          {/* <Grid item xs={12} md={7} sx={{ position: 'relative' }}>
             <MotionInView threshold={0.5} variants={varFadeInUp}>
               <img alt="light mode" src="/static/home/lightmode.png" />
             </MotionInView>
             <MotionInView threshold={0.5} variants={varFadeInDown} sx={{ top: 0, left: 0, position: 'absolute' }}>
               <img alt="dark mode" src="/static/home/darkmode.png" />
             </MotionInView>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </RootStyle>
