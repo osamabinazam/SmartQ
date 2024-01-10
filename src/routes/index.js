@@ -6,6 +6,11 @@ import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // components
 import LoadingScreen from '../components/LoadingScreen';
+import Login from 'src/pages/authentication/Login';
+import Register from 'src/pages/authentication/Register';
+import ResetPassword from 'src/pages/authentication/ResetPassword';
+import VerifyCode from 'src/pages/authentication/VerifyCode';
+
 // ----------------------------------------------------------------------
 
 const Loadable = (Component) => (props) => {
@@ -36,8 +41,34 @@ const Loadable = (Component) => (props) => {
 
 export default function Router() {
   return useRoutes([
+    {
+      path: 'auth',
+      children: [
+        {
+          path: 'login',
+          element: (
+
+              <Login />
+
+          )
+        },
+        {
+          path: 'register',
+          element: (
+
+              <Register />
+
+          )
+        },
+        { path: 'login-unprotected', element: <Login /> },
+        { path: 'register-unprotected', element: <Register /> },
+        { path: 'reset-password', element: <ResetPassword /> },
+        { path: 'verify', element: <VerifyCode /> }
+      ]
+    },
     // Dashboard Routes
     {
+
       path: 'dashboard',
       element: <DashboardLayout />,
       children: [
@@ -45,6 +76,8 @@ export default function Router() {
         { path: 'home', element: <PageOne /> },
         { path: 'transactions', element: <PageTwo /> },
         { path: 'queue', element: <PageThree /> },
+        { path: 'login', element: <Login /> },
+        { path: 'register', element: <Register /> },
         {
           path: 'app',
           children: [

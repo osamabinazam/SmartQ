@@ -9,6 +9,7 @@ import RtlLayout from './components/RtlLayout';
 import ScrollToTop from './components/ScrollToTop';
 import { ProgressBarStyle } from './components/LoadingScreen';
 import ThemePrimaryColor from './components/ThemePrimaryColor';
+import  NotistackProvider  from './components/NotistackProvider';
 
 // ----------------------------------------------------------------------
 
@@ -17,11 +18,13 @@ export default function App() {
     <ThemeConfig>
       <ThemePrimaryColor>
         <RtlLayout>
-          <GlobalStyles />
-          <ProgressBarStyle />
-          <Settings />
-          <ScrollToTop />
-          <Router />
+        <NotistackProvider>
+            <GlobalStyles />
+            <ProgressBarStyle />
+            <Settings />
+            <ScrollToTop />
+            <Router />
+          </NotistackProvider>
         </RtlLayout>
       </ThemePrimaryColor>
     </ThemeConfig>
