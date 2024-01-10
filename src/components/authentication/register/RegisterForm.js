@@ -7,7 +7,7 @@ import eyeFill from '@iconify/icons-eva/eye-fill';
 import closeFill from '@iconify/icons-eva/close-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // material
-import { Stack, TextField, IconButton, InputAdornment, Alert } from '@mui/material';
+import { Stack, TextField, IconButton, InputAdornment, Alert, RadioGroup, Radio, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // hooks
 import useAuth from '../../../hooks/useAuth';
@@ -22,25 +22,43 @@ export default function RegisterForm() {
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
+  
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
+    username: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Username required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
+    address: Yup.string().required('Address is required'),
+    phone_number: Yup.string().required('Phone number is required'),
+    password: Yup.string().required('Password is required'),
+    gender: Yup.string().required('Gender is required')
   });
 
   const formik = useFormik({
     initialValues: {
       firstName: '',
       lastName: '',
+      username: '',
       email: '',
-      password: ''
+      address: '',
+      phone_number: '',
+      password: '',
+      gender: 'male' // Set a default value for gender, change it as needed
     },
     validationSchema: RegisterSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        await register(values.email, values.password, values.firstName, values.lastName);
+        await register(
+          values.email,
+          values.password,
+          values.firstName,
+          values.lastName,
+          values.username,
+          values.address,
+          values.phone_number,
+          values.gender
+        );
         enqueueSnackbar('Register success', {
           variant: 'success',
           action: (key) => (
@@ -90,6 +108,14 @@ export default function RegisterForm() {
 
           <TextField
             fullWidth
+            label="Username"
+            {...getFieldProps('username')}
+            error={Boolean(touched.username && errors.username)}
+            helperText={touched.username && errors.username}
+          />
+
+          <TextField
+            fullWidth
             autoComplete="username"
             type="email"
             label="Email address"
@@ -97,6 +123,28 @@ export default function RegisterForm() {
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
+
+          <TextField
+            fullWidth
+            label="Address"
+            {...getFieldProps('address')}
+            error={Boolean(touched.address && errors.address)}
+            helperText={touched.address && errors.address}
+          />
+
+          <TextField
+            fullWidth
+            label="Phone number"
+            {...getFieldProps('phone_number')}
+            error={Boolean(touched.phone_number && errors.phone_number)}
+            helperText={touched.phone_number && errors.phone_number}
+          />
+
+          <RadioGroup row {...getFieldProps('gender')}>
+            <FormControlLabel value="male" control={<Radio />} label="Male" />
+            <FormControlLabel value="female" control={<Radio />} label="Female" />
+            <FormControlLabel value="other" control={<Radio />} label="Other" />
+          </RadioGroup>
 
           <TextField
             fullWidth
