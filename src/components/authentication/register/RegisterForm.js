@@ -22,16 +22,17 @@ export default function RegisterForm() {
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
-  
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
     username: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Username required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    address: Yup.string().required('Address is required'),
     phone_number: Yup.string().required('Phone number is required'),
     password: Yup.string().required('Password is required'),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Passwords must match')
+      .required('Confirm Password is required'),
     gender: Yup.string().required('Gender is required')
   });
 
@@ -41,10 +42,10 @@ export default function RegisterForm() {
       lastName: '',
       username: '',
       email: '',
-      address: '',
       phone_number: '',
       password: '',
-      gender: 'male' // Set a default value for gender, change it as needed
+      confirmPassword: '',
+      gender: 'male' 
     },
     validationSchema: RegisterSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
@@ -55,7 +56,6 @@ export default function RegisterForm() {
           values.firstName,
           values.lastName,
           values.username,
-          values.address,
           values.phone_number,
           values.gender
         );
@@ -126,14 +126,6 @@ export default function RegisterForm() {
 
           <TextField
             fullWidth
-            label="Address"
-            {...getFieldProps('address')}
-            error={Boolean(touched.address && errors.address)}
-            helperText={touched.address && errors.address}
-          />
-
-          <TextField
-            fullWidth
             label="Phone number"
             {...getFieldProps('phone_number')}
             error={Boolean(touched.phone_number && errors.phone_number)}
@@ -144,6 +136,7 @@ export default function RegisterForm() {
             <FormControlLabel value="male" control={<Radio />} label="Male" />
             <FormControlLabel value="female" control={<Radio />} label="Female" />
             <FormControlLabel value="other" control={<Radio />} label="Other" />
+            <FormControlLabel value="n/a" control={<Radio />} label="Not Applicable" />
           </RadioGroup>
 
           <TextField
@@ -152,17 +145,18 @@ export default function RegisterForm() {
             type={showPassword ? 'text' : 'password'}
             label="Password"
             {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
+          />
+
+          <TextField
+            fullWidth
+            autoComplete="current-password"
+            type={showPassword ? 'text' : 'password'}
+            label="Confirm Password"
+            {...getFieldProps('confirmPassword')}
+            error={Boolean(touched.confirmPassword && errors.confirmPassword)}
+            helperText={touched.confirmPassword && errors.confirmPassword}
           />
 
           <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
