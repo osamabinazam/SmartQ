@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import { format } from 'date-fns';
-import { sentenceCase } from 'change-case';
+// import { sentenceCase } from 'change-case';
 import { Icon } from '@iconify/react';
 import { Link as RouterLink } from 'react-router-dom';
 import bookFill from '@iconify/icons-eva/book-fill';
@@ -12,8 +12,8 @@ import downloadFill from '@iconify/icons-eva/download-fill';
 import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
-import diagonalArrowRightUpFill from '@iconify/icons-eva/diagonal-arrow-right-up-fill';
-import diagonalArrowLeftDownFill from '@iconify/icons-eva/diagonal-arrow-left-down-fill';
+// import diagonalArrowRightUpFill from '@iconify/icons-eva/diagonal-arrow-right-up-fill';
+// import diagonalArrowLeftDownFill from '@iconify/icons-eva/diagonal-arrow-left-down-fill';
 // material
 import { useTheme } from '@mui/material/styles';
 import {
@@ -34,7 +34,7 @@ import {
   TableContainer
 } from '@mui/material';
 // utils
-import { fCurrency } from '../../utils/formatNumber';
+// import { fCurrency } from '../../utils/formatNumber';
 //
 import Label from '../Label';
 import Scrollbar from '../Scrollbar';

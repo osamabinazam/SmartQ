@@ -1,5 +1,9 @@
 // material
-import { Container, Grid, Stack } from '@mui/material';
+import { 
+  Container, 
+  Grid, 
+  // Stack 
+} from '@mui/material';
 // hooks
 import useAuth from '../hooks/useAuth';
 import useSettings from '../hooks/useSettings';
@@ -7,18 +11,18 @@ import useSettings from '../hooks/useSettings';
 import Page from '../components/Page';
 import {
   AppWelcome,
-  AppWidgets1,
-  AppWidgets2,
-  AppFeatured,
+  // AppWidgets1,
+  // AppWidgets2,
+  // AppFeatured,
   AppNewInvoice,
-  AppTopAuthors,
+  // AppTopAuthors,
   AppTopRelated,
   AppAreaInstalled,
   AppTotalDownloads,
   AppTotalInstalled,
   AppCurrentDownload,
   AppTotalActiveUsers,
-  AppTopInstalledCountries
+  // AppTopInstalledCountries
 } from '../components/general-app';
 import UpcomingAppointments from 'src/components/general-app/UpcomingAppointments';
 

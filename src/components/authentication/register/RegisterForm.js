@@ -7,7 +7,12 @@ import eyeFill from '@iconify/icons-eva/eye-fill';
 import closeFill from '@iconify/icons-eva/close-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // material
-import { Stack, TextField, IconButton, InputAdornment, Alert, RadioGroup, Radio, FormControlLabel } from '@mui/material';
+import {
+  Stack, TextField,
+  IconButton,
+  InputAdornment,
+  Alert, RadioGroup, Radio, FormControlLabel
+} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // hooks
 import useAuth from '../../../hooks/useAuth';
@@ -20,8 +25,10 @@ import { MIconButton } from '../../@material-extend';
 export default function RegisterForm() {
   const { register } = useAuth();
   const isMountedRef = useIsMountedRef();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
@@ -45,7 +52,7 @@ export default function RegisterForm() {
       phone_number: '',
       password: '',
       confirmPassword: '',
-      gender: 'male' 
+      gender: 'male'
     },
     validationSchema: RegisterSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
@@ -81,6 +88,13 @@ export default function RegisterForm() {
   });
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  const handleShowPassword = () => {
+    setShowPassword((show) => !show);
+  };
+
+  const handleShowConfirmPassword = () => {
+    setShowConfirmPassword((show) => !show);
+  };
 
   return (
     <FormikProvider value={formik}>
@@ -147,6 +161,15 @@ export default function RegisterForm() {
             {...getFieldProps('password')}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleShowPassword}>
+                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
 
           <TextField
@@ -157,6 +180,16 @@ export default function RegisterForm() {
             {...getFieldProps('confirmPassword')}
             error={Boolean(touched.confirmPassword && errors.confirmPassword)}
             helperText={touched.confirmPassword && errors.confirmPassword}
+
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleShowConfirmPassword}>
+                    <Icon icon={showConfirmPassword ? eyeFill : eyeOffFill} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
 
           <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>

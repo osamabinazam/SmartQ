@@ -6,7 +6,7 @@ import { Box, Button, AppBar, Toolbar, Container } from '@mui/material';
 import useOffSetTop from '../../hooks/useOffSetTop';
 // components
 import Logo from '../../components/Logo';
-import Label from '../../components/Label';
+// import Label from '../../components/Label';
 import { MHidden } from '../../components/@material-extend';
 //
 import MenuDesktop from './MenuDesktop';

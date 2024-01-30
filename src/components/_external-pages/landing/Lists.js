@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 // material
 import DraftsIcon from '@mui/icons-material/Drafts';
 import { styled } from '@mui/material/styles';
@@ -36,42 +36,42 @@ const ListWrapperStyle = styled(Paper)(({ theme }) => ({
 // }
 
 export default function ListsComponent() {
-  const [open, setOpen] = useState(true);
-  const [setSelectedIndex] = useState(1);
-  const [checked, setChecked] = useState([0]);
-  const [toggle, setToggle] = useState(['wifi']);
+  // const [open, setOpen] = useState(true);
+  // const [setSelectedIndex] = useState(1);
+  // const [checked, setChecked] = useState([0]);
+  // const [toggle, setToggle] = useState(['wifi']);
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  // const handleClick = () => {
+  //   setOpen(!open);
+  // };
 
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
+  // const handleListItemClick = (event, index) => {
+  //   setSelectedIndex(index);
+  // };
 
-  const handleCheck = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    setChecked(newChecked);
-  };
+  // const handleCheck = (value) => () => {
+  //   const currentIndex = checked.indexOf(value);
+  //   const newChecked = [...checked];
+  //   if (currentIndex === -1) {
+  //     newChecked.push(value);
+  //   } else {
+  //     newChecked.splice(currentIndex, 1);
+  //   }
+  //   setChecked(newChecked);
+  // };
 
-  const handleToggle = (value) => () => {
-    const currentIndex = toggle.indexOf(value);
-    const newChecked = [...toggle];
+  // const handleToggle = (value) => () => {
+  //   const currentIndex = toggle.indexOf(value);
+  //   const newChecked = [...toggle];
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
+  //   if (currentIndex === -1) {
+  //     newChecked.push(value);
+  //   } else {
+  //     newChecked.splice(currentIndex, 1);
+  //   }
 
-    setToggle(newChecked);
-  };
+  //   setToggle(newChecked);
+  // };
 
   return (
     <RootStyle>

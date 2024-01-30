@@ -2,7 +2,11 @@
 import { styled } from '@mui/material/styles';
 import { Box, Grid, Container, Typography } from '@mui/material';
 //
-import { MotionInView, varFadeInUp, varFadeInDown } from '../../animate';
+import { 
+  MotionInView, 
+  varFadeInUp,
+  //  varFadeInDown 
+  } from '../../animate';
 import Lists from './Lists';
 
 // ----------------------------------------------------------------------

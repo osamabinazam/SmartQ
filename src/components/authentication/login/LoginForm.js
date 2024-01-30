@@ -1,11 +1,11 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { useSnackbar } from 'notistack';
+// import { useSnackbar } from 'notistack';
 import { Link as RouterLink } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
-import closeFill from '@iconify/icons-eva/close-fill';
+// import closeFill from '@iconify/icons-eva/close-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // material
 import { Link, Stack, Alert, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
@@ -14,16 +14,18 @@ import { LoadingButton } from '@mui/lab';
 import { PATH_AUTH } from '../../../routes/paths';
 // hooks
 import useAuth from '../../../hooks/useAuth';
-import useIsMountedRef from '../../../hooks/useIsMountedRef';
+// import useIsMountedRef from '../../../hooks/useIsMountedRef';
 //
-import { MIconButton } from '../../@material-extend';
+// import { MIconButton } from '../../@material-extend';
+
+// import axiosInstance from 'src/utils/axios';
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const { login } = useAuth();
-  const isMountedRef = useIsMountedRef();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  // const isMountedRef = useIsMountedRef();
+  // const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -35,31 +37,26 @@ export default function LoginForm() {
     initialValues: {
       email: '',
       password: '',
-      remember: true
+      remember: true,
+      userType:'vendor'
     },
     validationSchema: LoginSchema,
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
-      try {
-        await login(values.email, values.password);
-        enqueueSnackbar('Login success', {
-          variant: 'success',
-          action: (key) => (
-            <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-              <Icon icon={closeFill} />
-            </MIconButton>
-          )
-        });
-        if (isMountedRef.current) {
-          setSubmitting(false);
-        }
-      } catch (error) {
-        console.error(error);
-        resetForm();
-        if (isMountedRef.current) {
-          setSubmitting(false);
-          setErrors({ afterSubmit: error.message });
-        }
-      }
+      login(values.email, values.password); // console.log(values)
+      // try {
+      //   axiosInstance.post('/api/auth/login', {username:values.email, password:values.password}).then((response) => {
+      //     console.log(response);
+      //   }
+      //   );
+      // } catch (error) {
+      //   console.log("Getting Error")
+      //   console.error(error);
+      //   // if (isMountedRef.current) {
+      //   //   setErrors({ afterSubmit: error.code });
+      //   //   setSubmitting(false);
+      //   //   enqueueSnackbar(error.message, { variant: 'error', action });
+      //   // }
+      // }
     }
   });
 

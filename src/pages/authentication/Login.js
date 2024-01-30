@@ -1,8 +1,8 @@
-import { capitalCase } from 'change-case';
+// import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Card, Stack, Link, Alert, Tooltip, Container, Typography, Button } from '@mui/material';
+import { Box, Card, Stack, Link, Container, Typography, Button } from '@mui/material';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // hooks
@@ -14,6 +14,7 @@ import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
 import { LoginForm } from 'src/components/authentication/login';
 import AuthFirebaseSocials from '../../components/authentication/AuthFirebaseSocial';
+import { AuthProvider } from 'src/contexts/JWTContext';
 
 // ----------------------------------------------------------------------
 
@@ -49,6 +50,7 @@ export default function Login() {
 
   const handleLoginAuth0 = async () => {
     try {
+      console.log("first")
       await login();
     } catch (error) {
       console.error(error);
@@ -56,7 +58,9 @@ export default function Login() {
   };
 
   return (
-    <RootStyle title="Login">
+    <AuthProvider>
+
+      <RootStyle title="Login">
       <AuthLayout>
         Don’t have an account? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
@@ -82,10 +86,6 @@ export default function Login() {
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
             </Box>
-
-            {/* <Tooltip title={capitalCase(method)}>
-              <Box component="img" src={`/static/auth/ic_${method}.png`} sx={{ width: 32, height: 32 }} />
-            </Tooltip> */}
           </Stack>
 
           {method === 'firebase' && <AuthFirebaseSocials />}
@@ -105,7 +105,7 @@ export default function Login() {
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
               Don’t have an account?&nbsp;
-              <Link to={PATH_AUTH.register} omponent={RouterLink}  variant="subtitle2" >
+              <Link to={PATH_AUTH.register}  component={RouterLink}  variant="subtitle2" >
                 Get started
               </Link>
             </Typography>
@@ -113,5 +113,7 @@ export default function Login() {
         </ContentStyle>
       </Container>
     </RootStyle>
+
+    </AuthProvider>
   );
 }

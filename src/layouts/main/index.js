@@ -2,7 +2,7 @@
 // Libraries
 import { Link as ScrollLink } from 'react-scroll';
 import { useLocation, Outlet } from 'react-router-dom';
-import { Box, Link, Container, Typography } from '@mui/material';     // Matrial UI components
+import { Box, Container, Typography } from '@mui/material';     // Matrial UI components
 import Logo from '../../components/Logo';                             // Logo 
 import MainNavbar from './MainNavbar';                                // Landing page navbar
 import MainFooter from './MainFooter';                                // Landing page footer           

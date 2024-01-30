@@ -8,10 +8,6 @@ import Page from '../components/Page';
 import {
   BankingIncome,
   BankingExpenses,
-  BankingContacts,
-  BankingInviteFriends,
-  BankingQuickTransfer,
-  BankingCurrentBalance,
   BankingBalanceStatistics,
   BankingRecentTransitions,
   BankingExpensesCategories

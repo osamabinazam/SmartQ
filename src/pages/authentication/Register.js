@@ -1,8 +1,8 @@
-import { capitalCase } from 'change-case';
+// import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Card, Link, Container, Typography, Tooltip } from '@mui/material';
+import { Box, Card, Link, Container, Typography } from '@mui/material';
 // hooks
 import useAuth from '../../hooks/useAuth';
 // routes
@@ -59,7 +59,7 @@ export default function Register() {
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Manage the job more effectively with Minimal
+            Manage the queue more effectively with us
           </Typography>
           <img alt="register" src="/static/illustrations/illustration_register.png" />
         </SectionStyle>
@@ -84,7 +84,7 @@ export default function Register() {
           <RegisterForm />
 
           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            By registering, I agree to Minimal&nbsp;
+            By registering, I agree to SmartQ&nbsp;
             <Link underline="always" color="text.primary" href="#">
               Terms of Service
             </Link>
