@@ -1,65 +1,54 @@
-import { Icon } from '@iconify/react';
-import { Link as RouterLink } from 'react-router-dom';
-import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
-// material
-import { styled } from '@mui/material/styles';
-import { Box, Button, Link, Container, Typography } from '@mui/material';
-// layouts
-import LogoOnlyLayout from '../../layouts/LogoOnlyLayout';
-// routes
-import { PATH_AUTH } from '../../routes/paths';
-// components
-import Page from '../../components/Page';
-import { VerifyCodeForm } from '../../components/authentication/verify-code';
+import React, { useState } from 'react';
+import { Button, Typography } from '@mui/material';
 
-// ----------------------------------------------------------------------
+export default function VerifyCode({ onVerified }) {
+  const [otpInputs, setOtpInputs] = useState(['', '', '', '', '', '']);
 
-const RootStyle = styled(Page)(({ theme }) => ({
-  display: 'flex',
-  minHeight: '100%',
-  alignItems: 'center',
-  padding: theme.spacing(12, 0)
-}));
+  const handleChange = (index, value) => {
+    const newInputs = [...otpInputs];
+    newInputs[index] = value;
+    setOtpInputs(newInputs);
+  };
 
-// ----------------------------------------------------------------------
+  const handleVerification = () => {
+    const otp = otpInputs.join('');
+  
+    if (otp.length === 6 && /^\d+$/.test(otp)) {
+      
+      onVerified();
+    } else {
 
-export default function VerifyCode() {
+      alert('Invalid OTP. Please enter a 6-digit code.');
+    }
+  };
+
   return (
-    <RootStyle title="Verify | Minimal UI">
-      <LogoOnlyLayout />
-
-      <Container>
-        <Box sx={{ maxWidth: 480, mx: 'auto' }}>
-          <Button
-            size="small"
-            component={RouterLink}
-            to={PATH_AUTH.login}
-            startIcon={<Icon icon={arrowIosBackFill} width={20} height={20} />}
-            sx={{ mb: 3 }}
-          >
-            Back
-          </Button>
-
-          <Typography variant="h3" paragraph>
-            Please check your email!
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>
-            We have emailed a 6-digit confirmation code to acb@domain, please enter the code in below box to verify your
-            email.
-          </Typography>
-
-          <Box sx={{ mt: 5, mb: 3 }}>
-            <VerifyCodeForm />
-          </Box>
-
-          <Typography variant="body2" align="center">
-            Don’t have a code? &nbsp;
-            <Link variant="subtitle2" underline="none" onClick={() => {}}>
-              Resend code
-            </Link>
-          </Typography>
-        </Box>
-      </Container>
-    </RootStyle>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Typography variant="h4" gutterBottom>Email Verification</Typography>
+        <Typography paragraph>We have sent a code to your email</Typography>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}> 
+          {otpInputs.map((input, index) => (
+            <input
+              key={index}
+              style={{
+                width: '30px',
+                height: '30px',
+                textAlign: 'center',
+                marginRight: '10px',
+                border: '1px solid #000',
+                borderRadius: '5px',
+                fontSize: '20px',
+              }}
+              maxLength="1"
+              type="text"
+              value={input}
+              onChange={(e) => handleChange(index, e.target.value)}
+            />
+          ))}
+        </div>
+        <Button variant="contained" onClick={handleVerification}>Verify Account</Button>
+      </div>
+    </div>
   );
 }
