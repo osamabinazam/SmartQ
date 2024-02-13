@@ -56,24 +56,28 @@ const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
     },
     validationSchema: RegisterSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
+      console.log(values)
+
       try {
         await register(
-          values.email,
-          values.password,
           values.firstName,
           values.lastName,
           values.username,
+          values.email,
           values.phone_number,
-          values.gender
-        );
-        enqueueSnackbar('Register success', {
-          variant: 'success',
-          action: (key) => (
-            <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-              <Icon icon={closeFill} />
-            </MIconButton>
-          )
-        });
+          values.gender,
+          values.password,
+          "Vendor"
+          );
+        console.log("Done ")
+        // enqueueSnackbar('Register success', {
+        //   variant: 'success',
+        //   action: (key) => (
+        //     <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+        //       <Icon icon={closeFill} />
+        //     </MIconButton>
+        //   )
+        // });
         if (isMountedRef.current) {
           setSubmitting(false);
         }
@@ -86,6 +90,9 @@ const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
       }
     }
   });
+
+
+
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
   const handleShowPassword = () => {
@@ -147,9 +154,9 @@ const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
           />
 
           <RadioGroup row {...getFieldProps('gender')}>
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
-            <FormControlLabel value="female" control={<Radio />} label="Female" />
-            <FormControlLabel value="other" control={<Radio />} label="Other" />
+            <FormControlLabel value="Male" control={<Radio />} label="Male" />
+            <FormControlLabel value="Female" control={<Radio />} label="Female" />
+            <FormControlLabel value="Other" control={<Radio />} label="Other" />
             <FormControlLabel value="n/a" control={<Radio />} label="Not Applicable" />
           </RadioGroup>
 
