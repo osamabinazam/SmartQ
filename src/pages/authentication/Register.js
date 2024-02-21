@@ -14,6 +14,7 @@ import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
 import { RegisterForm } from '../../components/authentication/register';
 import AuthFirebaseSocials from '../../components/authentication/AuthFirebaseSocial';
+import { AuthProvider } from 'src/contexts/JWTContext';
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +49,8 @@ export default function Register() {
   const { method } = useAuth();
 
   return (
-    <RootStyle title="Register | Minimal-UI">
+    <AuthProvider>
+      <RootStyle title="Register ">
       <AuthLayout>
         Already have an account? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to={PATH_AUTH.login}>
@@ -72,11 +74,7 @@ export default function Register() {
               <Typography variant="h4" gutterBottom>
                 Register
               </Typography>
-              {/* <Typography sx={{ color: 'text.secondary' }}>Free forever. No credit card needed.</Typography> */}
             </Box>
-            {/* <Tooltip title={capitalCase(method)}>
-              <Box component="img" src={`/static/auth/ic_${method}.png`} sx={{ width: 32, height: 32 }} />
-            </Tooltip> */}
           </Box>
 
           {method === 'firebase' && <AuthFirebaseSocials />}
@@ -106,5 +104,7 @@ export default function Register() {
         </ContentStyle>
       </Container>
     </RootStyle>
+    </AuthProvider>
+    
   );
 }

@@ -245,40 +245,50 @@ function AuthProvider({ children }) {
     initialize();
   }, []);
 
+
+
+  // Login User
   const login = async (email, password) => {
     await axios.post('/api/auth/login', {
       email,
       password
     }).then((response) => {
       console.log(response)
+      const { tokens, user } = response.data;
+      setSession(tokens.accessToken);
+      dispatch({
+        type: 'LOGIN',
+        payload: {
+          user
+        }
+      });
+
     }
     ).catch((error) => {
-      console.log(error)
+      console.log(error);
+
     })
-
-    // console.log("Hello World ")
-    // const { accessToken, user } = response.data;
-    // // console.log(response)
-
-    // setSession(accessToken);
-    // dispatch({
-    //   type: 'LOGIN',
-    //   payload: {
-    //     user
-    //   }
-    // });
   };
 
-  const register = async (email, password, firstName, lastName) => {
-    const response = await axios.post('/api/account/register', {
-      email,
-      password,
-      firstName,
-      lastName
-    });
-    const { accessToken, user } = response.data;
 
-    window.localStorage.setItem('accessToken', accessToken);
+  // Register user
+  const register = async (firstName, lastName, username, email,phone,gender, password, userType) => {
+    
+    console.log("User Type is : ", userType)
+    const response = await axios.post('/api/user', {
+
+      firstName,
+      lastName,
+      username,
+      email,
+      phone,
+      gender,
+      password,
+      userType
+    });
+    const { tokens, user } = response.data;
+
+    window.localStorage.setItem('accessToken', tokens.accessToken);
     dispatch({
       type: 'REGISTER',
       payload: {
