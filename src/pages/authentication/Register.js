@@ -1,4 +1,3 @@
-// import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
@@ -11,7 +10,8 @@ import { PATH_AUTH } from '../../routes/paths';
 import AuthLayout from '../../layouts/AuthLayout';
 // components
 import Page from '../../components/Page';
-import { MHidden } from '../../components/@material-extend';
+// import { MHidden } from '../../../components/@material-extend';
+import {MHidden} from '../../components/@material-extend';
 import { RegisterForm } from '../../components/authentication/register';
 import AuthFirebaseSocials from '../../components/authentication/AuthFirebaseSocial';
 import { AuthProvider } from 'src/contexts/JWTContext';

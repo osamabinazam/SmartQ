@@ -1,4 +1,3 @@
-// import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
@@ -89,10 +88,6 @@ export default function Login() {
           </Stack>
 
           {method === 'firebase' && <AuthFirebaseSocials />}
-
-          {/* <Alert severity="info" sx={{ mb: 3 }}>
-            Use email : <strong>demo@minimals.cc</strong> / password :<strong>&nbsp;demo1234</strong>
-          </Alert> */}
 
           {method !== 'auth0' ? (
             <LoginForm />
