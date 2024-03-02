@@ -198,7 +198,7 @@ export default function UpcomingAppointments() {
   return (
     <>
       <Card>
-        <CardHeader title="Upcoming Appointments" sx={{ mb: 3 }} />
+        <CardHeader title="current Queue" sx={{ mb: 3 }} />
         <Scrollbar>
           <TableContainer sx={{ minWidth: 720 }}>
             <Table>
