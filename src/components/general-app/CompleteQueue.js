@@ -2,18 +2,13 @@ import React from 'react';
 import { format } from 'date-fns';
 import { Icon } from '@iconify/react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Card, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Box, Button, Divider, CardHeader, Menu, MenuItem, Avatar } from '@mui/material';
+import { Card, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Box, Button, Divider, CardHeader, Menu, MenuItem } from '@mui/material';
 import Scrollbar from '../Scrollbar';
 import { MIconButton } from '../@material-extend';
-import bookFill from '@iconify/icons-eva/book-fill';
-import heartFill from '@iconify/icons-eva/heart-fill';
-import shareFill from '@iconify/icons-eva/share-fill';
-import printerFill from '@iconify/icons-eva/printer-fill';
-import downloadFill from '@iconify/icons-eva/download-fill';
-import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
 import PropTypes from 'prop-types';
+import MAvatar from '../@material-extend/MAvatar'; // Import MAvatar component
 
 const CompleteQueueMockData = [
   {
@@ -22,7 +17,7 @@ const CompleteQueueMockData = [
     start: '09:00 AM',
     end: '10:00 AM',
     status: 'Completed',
-    
+    avatar: '/static/mock-images/avatars/avatar_1.jpg' // Add avatar URL
   },
   {
     id: '2',
@@ -30,32 +25,17 @@ const CompleteQueueMockData = [
     start: '10:00 AM',
     end: '11:00 AM',
     status: 'Completed',
-  
+    avatar: '/static/mock-images/avatars/avatar_2.jpg' // Add avatar URL
   },
   {
-     id: '3',
+    id: '3',
     name: 'Jane Smith',
     start: '10:00 AM',
     end: '11:00 AM',
     status: 'Completed',
-   
+    avatar: '/static/mock-images/avatars/avatar_3.jpg' // Add avatar URL
   },
 ];
-
-function AvatarIcon({ icon }) {
-  return (
-    <Avatar
-      sx={{
-        width: 48,
-        height: 48,
-        color: 'text.secondary',
-        bgcolor: 'background.neutral'
-      }}
-    >
-      <Icon icon={icon} width={24} height={24} />
-    </Avatar>
-  );
-}
 
 function MoreMenuButton({ onClick }) {
   const menuRef = React.useRef(null);
@@ -121,7 +101,14 @@ export default function CompleteQueue() {
               <TableBody>
                 {CompleteQueueMockData.map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell>{row.name}</TableCell>
+                    <TableCell>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <MAvatar src={row.avatar} alt={row.name} />
+                        <Typography variant="subtitle2" sx={{ marginLeft: '12px' }}>
+                          {row.name}
+                        </Typography>
+                      </Box>
+                    </TableCell>
                     <TableCell>{row.start}</TableCell>
                     <TableCell>{row.end}</TableCell>
                     <TableCell>{row.status}</TableCell>

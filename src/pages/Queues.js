@@ -7,7 +7,7 @@ import CompleteQueue from '../components/general-app/CompleteQueue';
 
 export default function PageThree() {
   return (
-    <Page title="Page Three | Minimal-UI">
+    <Page title="Page Three ">
       <Container maxWidth="xl">
         <Typography variant="h3" component="h1" paragraph>
           Queue

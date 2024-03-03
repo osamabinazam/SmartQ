@@ -1,10 +1,10 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Avatar, Box, Button, Icon, Divider } from '@mui/material';
-import MoreMenuButton from './MoreMenuButton'; // Import the MoreMenuButton component
-import Scrollbar from '../Scrollbar'; // Import the custom Scrollbar component
-import { Link as RouterLink } from 'react-router-dom'; // Import Link from react-router-dom
+import MoreMenuButton from './MoreMenuButton';
+import Scrollbar from '../Scrollbar'; 
+import { Link as RouterLink } from 'react-router-dom'; 
 
-// Mock data for the vertical table
+
 const VerticalTableData = [
   {
     id: '1',
@@ -55,7 +55,7 @@ const VerticalTable = () => {
                       </Box>
                     </Box>
                   </TableCell>
-                  {/* Use the MoreMenuButton component here */}
+                 
                   <TableCell align="right">
                     <MoreMenuButton
                       onDownload={() => {}}
@@ -66,13 +66,13 @@ const VerticalTable = () => {
                   </TableCell>
                 </TableRow>
               ))}
-              {/* Divider to create a line above the "View All" button */}
+          
               <TableRow>
                 <TableCell colSpan={2}>
                   <Divider sx={{ width: '100%' }} />
                 </TableCell>
               </TableRow>
-              {/* Additional row for the "View All" button */}
+             
               <TableRow>
                 <TableCell colSpan={2} align="right">
                   <Button
@@ -81,7 +81,7 @@ const VerticalTable = () => {
                     color="inherit"
                     component={RouterLink}
                     endIcon={<Icon icon={'eva:arrow-ios-forward-fill'} />}
-                    sx={{ textTransform: 'none', fontWeight: 'bold' }} // Add styles to match the design
+                    sx={{ textTransform: 'none', fontWeight: 'bold' }} 
                   >
                     View All  &gt;
                   </Button>

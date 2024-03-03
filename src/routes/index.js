@@ -11,6 +11,7 @@ import Register from 'src/pages/authentication/Register';
 import ResetPassword from 'src/pages/authentication/ResetPassword';
 import VerifyCode from 'src/pages/authentication/VerifyCode';
 import NewPasswordForm from 'src/pages/authentication/NewPasswordForm';
+import Request from 'src/pages/Request';
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +31,7 @@ export default function Router() {
   const LoadablePageSix = Loadable(lazy(() => import('../pages/PageSix')), pathname);
   const LoadableNotFound = Loadable(lazy(() => import('../pages/Page404')), pathname);
   const LoadableLandingPage = Loadable(lazy(() => import('../pages/LandingPage')), pathname);
+  const LoadableRequestPage = Loadable(lazy(() => import('../pages/Request')), pathname);
 
   return useRoutes([
     {
@@ -50,6 +52,7 @@ export default function Router() {
         { path: 'home', element: <LoadablePageOne /> },
         { path: 'transactions', element: <LoadablePageTwo /> },
         { path: 'queue', element: <LoadablePageThree /> },
+        { path: 'request', element: <Request /> }, 
         // Other dashboard routes...
       ]
     },

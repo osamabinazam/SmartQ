@@ -1,5 +1,4 @@
 // ----------------------------------------------------------------------
-
 function path(root, sublink) {
   return `${root}${sublink}`;
 }
@@ -32,7 +31,8 @@ export const PATH_DASHBOARD = {
   general: {
     home: path(ROOTS_DASHBOARD, '/home'),
     transactions: path(ROOTS_DASHBOARD, '/transactions'),
-    queue: path(ROOTS_DASHBOARD, '/queue')
+    queue: path(ROOTS_DASHBOARD, '/queue'),
+    request: path(ROOTS_DASHBOARD, '/request') 
   },
   app: {
     root: path(ROOTS_DASHBOARD, '/app'),
