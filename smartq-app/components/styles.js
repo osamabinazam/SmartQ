@@ -10,7 +10,7 @@ export const Colors = {
   secondary: '#E5E7EB',
   tertiary: '#1F2937',
   darkLight: '#9CA3AF',
-  brand: '#3dc4d5',
+  brand: '#3cc0f0',
   brandSecondary: '#4ecdc4',
   green: '#10B981',
   red: '#EF4444',
@@ -50,15 +50,17 @@ export const Avatar = styled.Image`
   height: 100px;
   margin: auto;
   border-radius: 50px;
-  border-width: 6px;
-  border-color: ${brand};
-  margin-bottom: 10px;
+  border-width: 4px;
+  border-color: ${tertiary};
+  margin-bottom: 24px;
+  margin-left: 17px;
   margin-top: 10px;
 `
 
 export const PageLogo = styled.Image`
   width: 250px;
-  height: 200px;
+  height: 104px;
+  margin-top: 64px;
 `
 
 export const PageTitle = styled.Text`
@@ -126,12 +128,12 @@ export const RightIcon = styled.TouchableOpacity`
 `
 
 export const StyledButton = styled.TouchableOpacity`
-  padding: 15px;
+padding: 15px;
   background-color: ${(props) => (props.isSignUp ? brandSecondary : brand)};
   justify-content: center;
   border-radius: 5px;
   align-items: center;
-  margin-vertical: 32px;
+  margin-vertical: 8px;
   height: 60px;
 `
 export const ButtonText = styled.Text`
@@ -150,7 +152,7 @@ export const DividerLine = styled.View`
   width: 90%;
   align-self: center;
   background-color: ${darkLight};
-  margin-top: 16px;
+  margin-vertical: 16px;
 `
 export const ExtraView = styled.View`
   justify-content: center;

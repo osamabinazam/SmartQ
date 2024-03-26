@@ -31,16 +31,26 @@ const Profile = () => {
       <StatusBar style='auto' />
       <InnerContainer>
         <WelcomeContainer>
-          <PageTitle welcome={true}>Welcome to SmartQ!</PageTitle>
-          <StyledTextBox>
-            <SubTitle welcome={true}>Shafique Ahmed</SubTitle>
-            <SubTitle welcome={true}>shafiqued17z@gmail.com</SubTitle>
-            <Avatar
+          {/* <PageTitle welcome={true}>Welcome to SmartQ!</PageTitle>
+           */}
+           <Avatar
               resizeMode='cover'
               source={require('./../assets/pp.jpeg')}
             />
-
-            <DividerLine />
+          <StyledTextBox>
+            <SubTitle welcome={true}>Shafique Ahmed</SubTitle>
+            <SubTitle welcome={true}>shafiqued17z@gmail.com</SubTitle>
+                   {/* <DividerLine /> */}
+                  {/* <DividerLine/> */}
+            <StyledButton onPress={handleLogout}>
+              <ButtonText>About</ButtonText>
+            </StyledButton>
+            <StyledButton onPress={handleLogout}>
+              <ButtonText>Privacy Policy</ButtonText>
+            </StyledButton>
+            <StyledButton onPress={handleLogout}>
+              <ButtonText>Share App</ButtonText>
+            </StyledButton>
             <StyledButton onPress={handleLogout}>
               <ButtonText>Log out</ButtonText>
             </StyledButton>
