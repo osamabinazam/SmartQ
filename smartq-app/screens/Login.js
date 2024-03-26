@@ -43,7 +43,7 @@ const Login = () => {
 
   const showAlert = () => {
     Alert.alert(
-      'SmartQ iOS Team',
+      'SmartQ Mobile Team',
       'Reset Password Feature Under Development. Please Hold on!'
     )
   }
@@ -56,7 +56,7 @@ const Login = () => {
           <PageLogo
             //style={{ marginTop: 50 }}
             resizeMode='cover'
-            source={require('./../assets/icon.png')}
+            source={require('./../assets/sd.png')}
           />
           <PageTitle>SmartQ</PageTitle>
           <SubTitle>Log into SmartQ</SubTitle>

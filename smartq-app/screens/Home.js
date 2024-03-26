@@ -49,6 +49,7 @@ function Home() {
     },
     title: {
       fontSize: 28,
+      marginTop: 16,
       fontWeight: "bold",
       color: "#000",
       paddingLeft: 8,
