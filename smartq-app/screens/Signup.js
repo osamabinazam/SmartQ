@@ -32,8 +32,6 @@ const { brand, darkLight } = Colors
 const Signup = () => {
   //deal with hide and show password
   const [hidePassword, setHidePassword] = useState(true)
-  const [show, setShow] = useState(false)
-  const [date, setDate] = useState(new Date(2000, 0, 1))
   const navigation = useNavigation()
   const [selectedGender, setSelectedGender] = useState('')
 
@@ -41,13 +39,30 @@ const Signup = () => {
     setSelectedGender(itemValue)
   }
 
-  const handleCreateAccountSubmit = () => {
+  const handleCreateAccountSubmit = (values) => {
+    // Extract only the relevant signup values
+    const { userName, email, gender, password, confirmPassword } = values
+
+    // Log the signup values in a clear format
+    console.log('Signup Values:', {
+      email,
+      userName,
+      gender,
+      password,
+      confirmPassword,
+    })
     navigation.navigate('Profile')
   }
 
-  // Actual date of birth to be sent
+  {
+    /** All of the date of birth logic is coded because of changes to database schema
+  const [show, setShow] = useState(false)
+  const [date, setDate] = useState(new Date(2000, 0, 1))
+  
+  //Actual date of birth to be sent
   const [dob, setDob] = useState()
 
+  //dob function
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date
     setShow(false)
@@ -60,23 +75,25 @@ const Signup = () => {
     // Corrected: Set show state to true when date icon is pressed
     setShow(true)
   }
+  */
+  }
 
   return (
     <StyledContainer>
       <StatusBar style='auto' />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <InnerContainer>
           {/* <PageLogo
           //style={{ marginTop: 50 }}
           resizeMode='cover'
           source={require('./../assets/icon.png')}
         /> */}
-
-          <PageTitle>SmartQ</PageTitle>
-          <SubTitle>Sign up for SmartQ</SubTitle>
-
+          <>
+            <PageTitle>SmartQ</PageTitle>
+            <SubTitle>Sign up for SmartQ</SubTitle>
+          </>
           {/* date & time picker calendar */}
-          {show && (
+          {/* {show && (
             <DateTimePicker
               testID='dateTimePicker'
               value={date}
@@ -84,39 +101,40 @@ const Signup = () => {
               is24Hour={true}
               onChange={onChange}
             />
-          )}
+          )} */}
 
           {/* Input fields */}
           <Formik
             initialValues={{
-              fullName: '',
+              userName: '',
               email: '',
-              dateOfBirth: '',
+              // dateOfBirth: '',
               password: '',
               confirmPassword: '',
             }}
-            onSubmit={(values) => {
-              console.log(values)
-              // Corrected: Use handleCreateAccountSubmit instead of handleSignupSubmit
-              handleCreateAccountSubmit()
-            }}
+            onSubmit={(values) => handleCreateAccountSubmit(values)}
+            // onSubmit={(values) => {
+            //   console.log(values)
+            //   Corrected: Use handleCreateAccountSubmit instead of handleSignupSubmit
+            //   handleCreateAccountSubmit(values)
+            // }}
           >
             {({
               handleChange,
               handleBlur,
-              //handleSubmit,
+              handleSubmit,
               //handleSignupSubmit,
               values,
             }) => (
               <StyledTextBox>
                 <TextInput
-                  label={'Full Name'}
+                  label={'Username'}
                   icon={'person'}
-                  placeholder={'Your Name'}
+                  placeholder={'Username e.g shafique7z'}
                   placeholderTextColor={darkLight}
-                  onChangeText={handleChange('fullName')}
-                  onBlur={handleBlur('fullName')}
-                  value={values.fullName}
+                  onChangeText={handleChange('userName')}
+                  onBlur={handleBlur('userName')}
+                  value={values.userName}
                 />
                 <TextInput
                   label={'Email'}
@@ -137,7 +155,7 @@ const Signup = () => {
                   onBlur={handleBlur('gender')}
                   value={values.gender}
                 />
-                <TextInput
+                {/* <TextInput
                   label={'Date of Birth'}
                   icon={'calendar'}
                   placeholder={'YYYY - MM - DD'}
@@ -148,7 +166,7 @@ const Signup = () => {
                   isDate={true}
                   editable={false}
                   showDatePicker={showDatePicker}
-                />
+                /> */}
                 <TextInput
                   label='Password'
                   icon='lock'

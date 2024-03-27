@@ -51,7 +51,7 @@ const Login = () => {
   return (
     <StyledContainer>
       <StatusBar style='auto' />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <InnerContainer>
           <PageLogo
             //style={{ marginTop: 50 }}
