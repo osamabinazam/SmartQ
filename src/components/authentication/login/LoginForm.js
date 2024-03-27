@@ -14,18 +14,12 @@ import { LoadingButton } from '@mui/lab';
 import { PATH_AUTH } from '../../../routes/paths';
 // hooks
 import useAuth from '../../../hooks/useAuth';
-// import useIsMountedRef from '../../../hooks/useIsMountedRef';
-//
-// import { MIconButton } from '../../@material-extend';
-
-// import axiosInstance from 'src/utils/axios';
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const { login } = useAuth();
-  // const isMountedRef = useIsMountedRef();
-  // const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+ 
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -42,21 +36,8 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
-      login(values.email, values.password); // console.log(values)
-      // try {
-      //   axiosInstance.post('/api/auth/login', {username:values.email, password:values.password}).then((response) => {
-      //     console.log(response);
-      //   }
-      //   );
-      // } catch (error) {
-      //   console.log("Getting Error")
-      //   console.error(error);
-      //   // if (isMountedRef.current) {
-      //   //   setErrors({ afterSubmit: error.code });
-      //   //   setSubmitting(false);
-      //   //   enqueueSnackbar(error.message, { variant: 'error', action });
-      //   // }
-      // }
+      login(values.email, values.password); 
+    
     }
   });
 

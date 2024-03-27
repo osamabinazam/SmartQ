@@ -12,9 +12,7 @@ import downloadFill from '@iconify/icons-eva/download-fill';
 import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
-// import diagonalArrowRightUpFill from '@iconify/icons-eva/diagonal-arrow-right-up-fill';
-// import diagonalArrowLeftDownFill from '@iconify/icons-eva/diagonal-arrow-left-down-fill';
-// material
+
 import { useTheme } from '@mui/material/styles';
 import {
   Box,
@@ -33,9 +31,7 @@ import {
   Typography,
   TableContainer
 } from '@mui/material';
-// utils
-// import { fCurrency } from '../../utils/formatNumber';
-//
+
 import Label from '../Label';
 import Scrollbar from '../Scrollbar';
 import { MIconButton } from '../@material-extend';
@@ -198,7 +194,7 @@ export default function UpcomingAppointments() {
   return (
     <>
       <Card>
-        <CardHeader title="Upcoming Appointments" sx={{ mb: 3 }} />
+        <CardHeader title="current Queue" sx={{ mb: 3 }} />
         <Scrollbar>
           <TableContainer sx={{ minWidth: 720 }}>
             <Table>
