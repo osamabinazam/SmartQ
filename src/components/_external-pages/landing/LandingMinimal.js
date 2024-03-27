@@ -100,12 +100,12 @@ export default function LandingMinimalHelps() {
         <Box sx={{ mb: { xs: 10, md: 25 } }}>
           <MotionInView variants={varFadeInUp}>
             <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.secondary', textAlign: 'center' }}>
-              Minimal
+              SmartQ
             </Typography>
           </MotionInView>
           <MotionInView variants={varFadeInDown}>
             <Typography variant="h2" sx={{ textAlign: 'center' }}>
-              What minimal helps you?
+              What SmartQ helps you?
             </Typography>
           </MotionInView>
         </Box>

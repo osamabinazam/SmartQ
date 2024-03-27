@@ -2,6 +2,11 @@ import React, { useRef, useState } from 'react';
 import { format } from 'date-fns';
 import { Icon } from '@iconify/react';
 import { Link as RouterLink } from 'react-router-dom';
+import downloadFill from '@iconify/icons-eva/download-fill';
+import shareFill from '@iconify/icons-eva/share-fill';
+import printerFill from '@iconify/icons-eva/printer-fill';
+import trash2Outline from '@iconify/icons-eva/trash-2-outline';
+
 import {
   Card,
   Table,
@@ -73,13 +78,28 @@ function MoreMenuButton({ onClick }) {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <MenuItem onClick={onClick}>
-          <Typography variant="body2">Option 1</Typography>
+          <Icon icon={downloadFill} width={20} height={20} />
+          <Typography variant="body2" sx={{ ml: 2 }}>
+            Download
+          </Typography>
         </MenuItem>
         <MenuItem onClick={onClick}>
-          <Typography variant="body2">Option 2</Typography>
+          <Icon icon={shareFill} width={20} height={20} />
+          <Typography variant="body2" sx={{ ml: 2 }}>
+            Share
+          </Typography>
         </MenuItem>
         <MenuItem onClick={onClick}>
-          <Typography variant="body2">Option 3</Typography>
+          <Icon icon={printerFill} width={20} height={20} />
+          <Typography variant="body2" sx={{ ml: 2 }}>
+            Print
+          </Typography>
+        </MenuItem>
+        <MenuItem onClick={onClick} sx={{ color: 'error.main' }}>
+          <Icon icon={trash2Outline} width={20} height={20} />
+          <Typography variant="body2" sx={{ ml: 2 }}>
+            Delete
+          </Typography>
         </MenuItem>
       </Menu>
     </>

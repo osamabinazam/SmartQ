@@ -4,7 +4,6 @@ import MoreMenuButton from './MoreMenuButton';
 import Scrollbar from '../Scrollbar'; 
 import { Link as RouterLink } from 'react-router-dom'; 
 
-
 const VerticalTableData = [
   {
     id: '1',
@@ -27,11 +26,25 @@ const VerticalTableData = [
     name: 'Smith',
     avatar: '/static/mock-images/avatars/avatar_4.jpg',
   },
-
-  // Add more data as needed
+ 
 ];
 
 const VerticalTable = () => {
+  const handleDownload = (rowData) => {
+    console.log('Downloading:', rowData.name);
+  };
+
+  const handlePrint = (rowData) => {
+    console.log('Printing:', rowData.name);
+  };
+
+  const handleShare = (rowData) => {
+    console.log('Sharing:', rowData.name);
+  };
+  const handleDelete = (rowData) => {
+    console.log('Deleting:', rowData.name);
+  };
+
   return (
     <Box sx={{ backgroundColor: 'background.paper', padding: '16px', borderRadius: '8px', position: 'relative' }}>
       <Typography variant="h6" sx={{ marginBottom: '16px' }}>Upcoming Queue</Typography>
@@ -55,24 +68,21 @@ const VerticalTable = () => {
                       </Box>
                     </Box>
                   </TableCell>
-                 
                   <TableCell align="right">
                     <MoreMenuButton
-                      onDownload={() => {}}
-                      onPrint={() => {}}
-                      onShare={() => {}}
-                      onDelete={() => {}}
+                      onDownload={() => handleDownload(row)}
+                      onPrint={() => handlePrint(row)}
+                      onShare={() => handleShare(row)}
+                      onDelete={() => handleDelete(row)}
                     />
                   </TableCell>
                 </TableRow>
               ))}
-          
               <TableRow>
                 <TableCell colSpan={2}>
                   <Divider sx={{ width: '100%' }} />
                 </TableCell>
               </TableRow>
-             
               <TableRow>
                 <TableCell colSpan={2} align="right">
                   <Button

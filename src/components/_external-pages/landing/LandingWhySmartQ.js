@@ -58,7 +58,7 @@ export default function LandingWhySmartQ() {
 
               <MotionInView variants={varFadeInUp}>
                 <Typography variant="h2" sx={{ mb: 3, color: 'common.primary.main' }}>
-                Why SmartQ?
+                Our Services?
                 </Typography>
               </MotionInView>
 

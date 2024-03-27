@@ -53,7 +53,7 @@ export default function Router() {
         { path: 'transactions', element: <LoadablePageTwo /> },
         { path: 'queue', element: <LoadablePageThree /> },
         { path: 'request', element: <Request /> }, 
-        // Other dashboard routes...
+     
       ]
     },
     {

@@ -1,5 +1,3 @@
-// MoreMenuButton.js
-
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';

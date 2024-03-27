@@ -7,9 +7,12 @@ import Scrollbar from '../Scrollbar';
 import { MIconButton } from '../@material-extend';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
+import downloadFill from '@iconify/icons-eva/download-fill';
+import shareFill from '@iconify/icons-eva/share-fill';
+import printerFill from '@iconify/icons-eva/printer-fill';
+import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import PropTypes from 'prop-types';
 import MAvatar from '../@material-extend/MAvatar'; // Import MAvatar component
-
 
 const CompleteQueueMockData = [
   {
@@ -67,13 +70,28 @@ function MoreMenuButton({ onClick }) {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <MenuItem onClick={onClick}>
-          <Typography variant="body2">Option 1</Typography>
+          <Icon icon={downloadFill} width={20} height={20} />
+          <Typography variant="body2" sx={{ ml: 2 }}>
+            Download
+          </Typography>
         </MenuItem>
         <MenuItem onClick={onClick}>
-          <Typography variant="body2">Option 2</Typography>
+          <Icon icon={shareFill} width={20} height={20} />
+          <Typography variant="body2" sx={{ ml: 2 }}>
+            Share
+          </Typography>
         </MenuItem>
         <MenuItem onClick={onClick}>
-          <Typography variant="body2">Option 3</Typography>
+          <Icon icon={printerFill} width={20} height={20} />
+          <Typography variant="body2" sx={{ ml: 2 }}>
+            Print
+          </Typography>
+        </MenuItem>
+        <MenuItem onClick={onClick} sx={{ color: 'error.main' }}>
+          <Icon icon={trash2Outline} width={20} height={20} />
+          <Typography variant="body2" sx={{ ml: 2 }}>
+            Delete
+          </Typography>
         </MenuItem>
       </Menu>
     </>

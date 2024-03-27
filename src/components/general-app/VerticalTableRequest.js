@@ -3,18 +3,18 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typog
 import MoreMenuButton from './MoreMenuButton'; 
 import Scrollbar from '../Scrollbar'; 
 import { Link as RouterLink } from 'react-router-dom'; 
-import MAvatar from '../@material-extend/MAvatar'; // Import MAvatar component
+import MAvatar from '../@material-extend/MAvatar'; 
 
 const VerticalTableRequestData = [
   {
     id: '1',
     name: 'John Doe',
-    avatar: '/static/mock-images/avatars/avatar_1.jpg', // Add avatar URL
+    avatar: '/static/mock-images/avatars/avatar_1.jpg', 
   },
   {
     id: '2',
     name: 'Jane Smith',
-    avatar: '/static/mock-images/avatars/avatar_2.jpg', // Add avatar URL
+    avatar: '/static/mock-images/avatars/avatar_2.jpg', 
   },
   {
     id: '3',

@@ -1,6 +1,3 @@
-// import { useState } from 'react';
-// material
-import DraftsIcon from '@mui/icons-material/Drafts';
 import { styled } from '@mui/material/styles';
 import {
   Grid,
@@ -11,9 +8,8 @@ import {
   ListItemIcon,
   ListItemButton,
 } from '@mui/material';
-// routes
-// import { PATH_PAGE } from '../../../routes/paths';
-// components
+import DraftsIcon from '@mui/icons-material/Drafts';
+
 import Page from '../../Page';
 import { Block } from '../Block';
 
@@ -31,76 +27,32 @@ const ListWrapperStyle = styled(Paper)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-// function ListItemLink(props) {
-//   return <ListItemButton component="a" {...props} />;
-// }
-
 export default function ListsComponent() {
-  // const [open, setOpen] = useState(true);
-  // const [setSelectedIndex] = useState(1);
-  // const [checked, setChecked] = useState([0]);
-  // const [toggle, setToggle] = useState(['wifi']);
-
-  // const handleClick = () => {
-  //   setOpen(!open);
-  // };
-
-  // const handleListItemClick = (event, index) => {
-  //   setSelectedIndex(index);
-  // };
-
-  // const handleCheck = (value) => () => {
-  //   const currentIndex = checked.indexOf(value);
-  //   const newChecked = [...checked];
-  //   if (currentIndex === -1) {
-  //     newChecked.push(value);
-  //   } else {
-  //     newChecked.splice(currentIndex, 1);
-  //   }
-  //   setChecked(newChecked);
-  // };
-
-  // const handleToggle = (value) => () => {
-  //   const currentIndex = toggle.indexOf(value);
-  //   const newChecked = [...toggle];
-
-  //   if (currentIndex === -1) {
-  //     newChecked.push(value);
-  //   } else {
-  //     newChecked.splice(currentIndex, 1);
-  //   }
-
-  //   setToggle(newChecked);
-  // };
-
   return (
     <RootStyle>
-      
-
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Block title="">
               <ListWrapperStyle>
                 <List component="nav" aria-label="main mailbox folders">
-                  
-                    <ListItemIcon>
-                     
-                    </ListItemIcon>
-                    <ListItemText primary="Predictive Features: Anticipate and minimize wait times using Maps and historical data." />
-                 
                   <ListItemButton>
                     <ListItemIcon>
                       <DraftsIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Real-Time Queue Management: Effortlessly control and monitor your queues." />
+                    <ListItemText primary="Real-time Scheduling: Book appointments instantly with live updates." />
                   </ListItemButton>
-
                   <ListItemButton>
                     <ListItemIcon>
                       <DraftsIcon />
                     </ListItemIcon>
-                    <ListItemText primary="User-Friendly Interface: A modern and intuitive platform for both vendors and customers." />
+                    <ListItemText primary="Seamless Integration: Our platform integrates smoothly with various public services." />
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <DraftsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="User-Centric Design: An intuitive interface for effortless navigation." />
                   </ListItemButton>
                 </List>
               </ListWrapperStyle>
