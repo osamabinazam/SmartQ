@@ -63,14 +63,7 @@ export default function RegisterForm() {
           "vendor"
           );
         console.log("Done ")
-        // enqueueSnackbar('Register success', {
-        //   variant: 'success',
-        //   action: (key) => (
-        //     <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-        //       <Icon icon={closeFill} />
-        //     </MIconButton>
-        //   )
-        // });
+        
         if (isMountedRef.current) {
           setSubmitting(false);
         }

@@ -11,9 +11,9 @@ export default function QueueInfo() {
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle2">Queue ID</Typography>
+        <Typography variant="subtitle2">Start</Typography>
          <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
-          <Typography variant="span" color={'text.secondary'}>Start at: {format(new Date(1627556329038),'p')}</Typography>
+          <Typography variant="span" color={'text.secondary'}>Time: {format(new Date(1627556329038),'p')}</Typography>
           
         </Stack> 
 
