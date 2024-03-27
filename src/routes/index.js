@@ -89,6 +89,16 @@ export default function Router() {
         }
       ]
     },
+    // Landing Page 
+    {
+      path: '/',
+      element: <MainLayout />,
+      children: [
+        { element: <LandingPage /> },
+        { path: '/about', element: <About /> },
+        { path: '/contact', element: <Contact /> }
+      ]
+    },
 
     // Main Routes
     {
@@ -99,11 +109,11 @@ export default function Router() {
         { path: '*', element: <Navigate to="/404" replace /> }
       ]
     },
-    {
-      path: '/',
-      element: <MainLayout />,
-      children: [{ element: <LandingPage /> }]
-    },
+    // {
+    //   path: '/',
+    //   element: <MainLayout />,
+    //   children: [{ element: <LandingPage /> }]
+    // },
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }
@@ -120,3 +130,7 @@ const PageSix = Loadable(lazy(() => import('../pages/PageSix')));
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 // Main
 const LandingPage = Loadable(lazy(() => import('../pages/LandingPage')));
+
+// Landing 
+const About = Loadable(lazy(() => import('../pages/About')));
+const Contact = Loadable(lazy(() => import('../pages/Contact')));
