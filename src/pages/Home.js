@@ -7,6 +7,7 @@ import {
 // hooks
 import useAuth from '../hooks/useAuth';
 import useSettings from '../hooks/useSettings';
+// import { useEffect } from 'react';
 // components
 import Page from '../components/Page';
 import {
@@ -16,28 +17,44 @@ import {
   // AppFeatured,
   AppNewInvoice,
   // AppTopAuthors,
-  AppTopRelated,
-  AppAreaInstalled,
+  // AppTopRelated,
+  // AppAreaInstalled,
   AppTotalDownloads,
   AppTotalInstalled,
-  AppCurrentDownload,
+  // AppCurrentDownload,
   AppTotalActiveUsers,
   // AppTopInstalledCountries
 } from '../components/general-app';
 import UpcomingAppointments from 'src/components/general-app/UpcomingAppointments';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
+
 export default function GeneralApp() {
+
+  const { isAuthenticated, user } = useAuth();
+  
+
+  
+
+  console.log(user)
+  const navigate = useNavigate();
+  console.log(isAuthenticated);
+
+  if  (!isAuthenticated) {
+    
+    // navigate('/auth/login', { replace: true });
+  }
+
   const { themeStretch } = useSettings();
-  const { user } = useAuth();
 
   return (
     <Page title="Home">
       <Container maxWidth={themeStretch ? false : 'xl'} spacing={3}>
         <Grid container spacing={3}>
           <Grid item xs={12}   >
-            <AppWelcome displayName="Osama"/>
+            <AppWelcome displayName={user.username}/>
           </Grid>
 
           <Grid item xs={12} md={4}>
@@ -46,11 +63,11 @@ export default function GeneralApp() {
 
           <Grid item xs={12} md={4}>
             <AppTotalInstalled />
-          </Grid>
+          </Grid> 
 
           <Grid item xs={12} md={4}>
             <AppTotalDownloads />
-          </Grid>
+          </Grid> 
           
           <Grid item xs={12} >
             <UpcomingAppointments />
@@ -58,21 +75,21 @@ export default function GeneralApp() {
 
           
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentDownload />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
             <AppAreaInstalled />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} lg={8}>
             <AppNewInvoice />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppTopRelated />
-          </Grid>
+          </Grid> */}
 
           {/* <Grid item xs={12} md={6} lg={4}>
             <AppTopInstalledCountries />
