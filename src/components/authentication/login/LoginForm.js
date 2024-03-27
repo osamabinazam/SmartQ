@@ -10,6 +10,8 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // material
 import { Link, Stack, Alert, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 // routes
 import { PATH_AUTH } from '../../../routes/paths';
 // hooks
@@ -22,8 +24,20 @@ import useAuth from '../../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
+
 export default function LoginForm() {
   const { login } = useAuth();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, navigate])
+
+  
+
+  
   // const isMountedRef = useIsMountedRef();
   // const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
@@ -42,7 +56,10 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
-      login(values.email, values.password); // console.log(values)
+      await login(values.email, values.password); // console.log(values)
+      if (isAuthenticated) {
+        navigate('/dashboard', { replace: true });
+      }
       // try {
       //   axiosInstance.post('/api/auth/login', {username:values.email, password:values.password}).then((response) => {
       //     console.log(response);
