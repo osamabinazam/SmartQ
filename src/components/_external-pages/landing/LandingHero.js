@@ -7,7 +7,6 @@ import { styled } from '@mui/material/styles';
 import { 
   Button, 
   Box, 
-  // Link, 
   Container, 
   Typography, 
   Stack 
@@ -33,14 +32,14 @@ const RootStyle = styled(motion.div)(({ theme }) => ({
   }
 }));
 
-const ContentStyle = styled((props) => <Stack spacing={5} {...props} />)(({ theme }) => ({
+const ContentStyle = styled((props) => <Stack spacing={2} {...props} />)(({ theme }) => ({
   zIndex: 10,
   maxWidth: 520,
   margin: 'auto',
   textAlign: 'center',
   position: 'relative',
-  paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(15),
+  paddingTop: theme.spacing(8),
+  paddingBottom: theme.spacing(8),
   [theme.breakpoints.up('md')]: {
     margin: 'unset',
     textAlign: 'left'
@@ -83,17 +82,35 @@ export default function LandingHero() {
         <Container maxWidth="lg">
           <ContentStyle>
             <motion.div variants={varFadeInRight}>
-              <Typography variant="h3" sx={{ color: 'common.white' }}>
-                <Typography component="span" variant="h3" sx={{ color: 'primary.main' }}>
-                  Welcome to SmartQ
+              <Typography variant="h4" sx={{ color: 'common.white', mt: 0 }}>
+                <Typography component="span" variant="h4" sx={{ color: 'primary.main' }}>
+                  <br /><br /> Welcome to SmartQ:
                 </Typography>
-                :Revolutionizing Your Appointment Experience
+                Revolutionizing Your Appointment Experience
               </Typography>
             </motion.div>
 
             <motion.div variants={varFadeInRight}>
-              <Typography sx={{ color: 'common.white' }}>
-              At SmartQ, we believe in transforming the way you manage appointments. Experience efficiency, convenience, and a seamless service landscape with our innovative platform. Say goodbye to long queues and hello to a new era of appointment scheduling.
+              <Typography sx={{ color: 'common.white', mt: 0 }}>
+                Experience the future of public service appointments in Pakistan. Our innovative web and mobile platform, developed in collaboration with Everycorner, revolutionizes how you schedule and manage appointments across various public sectors. Say goodbye to long queues and inefficient processes.
+              </Typography>
+            </motion.div>
+
+            <motion.div variants={varFadeInRight}>
+              <Typography variant="h5" sx={{ color: 'common.white', mt: 0 }}>Our Solution</Typography>
+              <Typography sx={{ color: 'common.white', mt: 0 }}>
+                Utilizing cutting-edge technology like real-time data analytics, GPS, and predictive algorithms, SmartQ streamlines appointment scheduling, making it faster, more efficient, and user-friendly.
+              </Typography>
+            </motion.div>
+
+            <motion.div variants={varFadeInRight}>
+              <Typography variant="h5" sx={{ color: 'common.white', mt: 0 }}>Services We Offer</Typography>
+              <Typography sx={{ color: 'common.white', mt: 0 }}>
+                <ul>
+                  <li>Real-time Scheduling: Book appointments instantly with live updates.</li>
+                  <li>Seamless Integration: Our platform integrates smoothly with various public services.</li>
+                  <li>User-Centric Design: An intuitive interface for effortless navigation.</li>
+                </ul>
               </Typography>
             </motion.div>
 
@@ -109,14 +126,6 @@ export default function LandingHero() {
               </Button>
             </motion.div>
 
-            {/* <Stack direction="row" spacing={1.5} justifyContent={{ xs: 'center', md: 'flex-start' }}>
-              <motion.img variants={varFadeInRight} src="/static/home/ic_sketch.svg" />
-              <motion.img variants={varFadeInRight} src="/static/home/ic_figma.svg" />
-              <motion.img variants={varFadeInRight} src="/static/home/ic_material.svg" />
-              <motion.img variants={varFadeInRight} src="/static/home/ic_react.svg" />
-              <motion.img variants={varFadeInRight} src="/static/home/ic_js.svg" />
-              <motion.img variants={varFadeInRight} src="/static/home/ic_ts.svg" />
-            </Stack> */}
           </ContentStyle>
         </Container>
       </RootStyle>

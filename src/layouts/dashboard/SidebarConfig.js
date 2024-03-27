@@ -25,7 +25,7 @@ const sidebarConfig = [
       { title: 'Home', path: PATH_DASHBOARD.general.home, icon: ICONS.dashboard },
       { title: 'Manage Queue', path: PATH_DASHBOARD.general.queue, icon: ICONS.ecommerce },
       { title: 'Transactions', path: PATH_DASHBOARD.general.transactions, icon: ICONS.analytics },
-      { title: 'Requests', path: PATH_DASHBOARD.app.pageFour, icon: ICONS.analytics },
+      { title: 'Requests', path: PATH_DASHBOARD.general.request, icon: ICONS.analytics },
       { title: 'History', path: PATH_DASHBOARD.app.pageFive, icon: ICONS.analytics }
     ]
   },
