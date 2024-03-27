@@ -15,7 +15,7 @@ import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
 // import diagonalArrowRightUpFill from '@iconify/icons-eva/diagonal-arrow-right-up-fill';
 // import diagonalArrowLeftDownFill from '@iconify/icons-eva/diagonal-arrow-left-down-fill';
 // material
-import { useTheme } from '@mui/material/styles';
+// import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Card,
@@ -187,8 +187,8 @@ function MoreMenuButton({ onDownload, onPrint, onShare, onDelete }) {
 }
 
 export default function UpcomingAppointments() {
-  const theme = useTheme();
-  const isLight = theme.palette.mode === 'light';
+  // const theme = useTheme();
+  // const isLight = theme.palette.mode === 'light';
 
   const handleClickDownload = () => {};
   const handleClickPrint = () => {};
