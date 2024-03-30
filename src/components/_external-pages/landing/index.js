@@ -1,7 +1,7 @@
 export { default as LandingHero } from './LandingHero';
 export { default as LandingMinimal } from './LandingMinimal';
 export { default as LandingDarkMode } from './LandingWhySmartQ';
-export { default as LandingThemeColor } from './LandingThemeColor';
+//export { default as LandingThemeColor } from './LandingThemeColor';
 export { default as LandingPricingPlans } from './LandingPricingPlans';
 export { default as LandingAdvertisement } from './LandingAdvertisement';
 export { default as LandingCleanInterfaces } from './LandingCleanInterfaces';

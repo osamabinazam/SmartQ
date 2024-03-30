@@ -1,4 +1,3 @@
-// routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // components
 import SvgIconStyle from '../../components/SvgIconStyle';
@@ -51,3 +50,6 @@ const sidebarConfig = [
 ];
 
 export default sidebarConfig;
+
+
+    

@@ -6,11 +6,11 @@ import {
   LandingHero,
   LandingMinimal,
   LandingDarkMode,
-  LandingThemeColor,
   LandingPricingPlans,
   LandingAdvertisement,
   LandingCleanInterfaces,
-  LandingHugePackElements
+  LandingHugePackElements,
+
 } from '../components/_external-pages/landing';
 
 // ----------------------------------------------------------------------
@@ -22,7 +22,8 @@ const RootStyle = styled(Page)({
 const ContentStyle = styled('div')(({ theme }) => ({
   overflow: 'hidden',
   position: 'relative',
-  backgroundColor: theme.palette.background.default
+  backgroundColor: theme.palette.background.default,
+  // marginBottom: theme.spacing(0)
 }));
 
 // ----------------------------------------------------------------------
@@ -34,7 +35,7 @@ export default function LandingPage() {
       <ContentStyle>
         <LandingDarkMode />
         <LandingMinimal />
-        <LandingThemeColor />
+     
         <LandingCleanInterfaces />
         <LandingPricingPlans />
         

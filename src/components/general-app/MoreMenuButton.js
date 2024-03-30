@@ -1,77 +1,57 @@
-import React, { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import { Menu, MenuItem, Typography, Divider } from '@mui/material';
-import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
-import downloadFill from '@iconify/icons-eva/download-fill';
-import printerFill from '@iconify/icons-eva/printer-fill';
-import shareFill from '@iconify/icons-eva/share-fill';
-import trash2Outline from '@iconify/icons-eva/trash-2-outline';
-import { MIconButton } from '../@material-extend';
+// MoreMenuButton.js
 
-function MoreMenuButton({ onDownload, onPrint, onShare, onDelete }) {
-  const menuRef = useRef(null);
-  const [open, setOpen] = useState(false);
+import React from 'react';
+import { Button, Menu, MenuItem, Typography, Icon } from '@mui/material'; // Import Icon component
+import { Check as CheckIcon, Close as CloseIcon, MoreVert as MoreVertIcon } from '@mui/icons-material';
 
-  const handleOpen = () => {
-    setOpen(true);
+const MoreMenuButton = ({ onAccept, onDecline }) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setAnchorEl(null);
+  };
+
+  const handleAccept = () => {
+    onAccept && onAccept(); // Call the onAccept function passed as a prop if it exists
+    handleClose(); // Close the menu
+  };
+
+  const handleDecline = () => {
+    onDecline && onDecline(); // Call the onDecline function passed as a prop if it exists
+    handleClose(); // Close the menu
   };
 
   return (
     <>
-      <MIconButton ref={menuRef} size="large" onClick={handleOpen}>
-        <Icon icon={moreVerticalFill} width={20} height={20} />
-      </MIconButton>
-
+      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} variant="text" endIcon={<MoreVertIcon />}>
+        {/* Three dots icon */}
+      </Button>
       <Menu
-        open={open}
-        anchorEl={menuRef.current}
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
         onClose={handleClose}
-        PaperProps={{
-          sx: { width: 200, maxWidth: '100%' }
-        }}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem onClick={onDownload}>
-          <Icon icon={downloadFill} width={20} height={20} />
+        <MenuItem onClick={handleAccept}>
+          <CheckIcon />
           <Typography variant="body2" sx={{ ml: 2 }}>
-            Download
+            Accept
           </Typography>
         </MenuItem>
-        <MenuItem onClick={onPrint}>
-          <Icon icon={printerFill} width={20} height={20} />
+        <MenuItem onClick={handleDecline}>
+          <CloseIcon />
           <Typography variant="body2" sx={{ ml: 2 }}>
-            Print
-          </Typography>
-        </MenuItem>
-        <MenuItem onClick={onShare}>
-          <Icon icon={shareFill} width={20} height={20} />
-          <Typography variant="body2" sx={{ ml: 2 }}>
-            Share
-          </Typography>
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={onDelete} sx={{ color: 'error.main' }}>
-          <Icon icon={trash2Outline} width={20} height={20} />
-          <Typography variant="body2" sx={{ ml: 2 }}>
-            Delete
+            Decline
           </Typography>
         </MenuItem>
       </Menu>
     </>
   );
-}
-
-MoreMenuButton.propTypes = {
-  onDownload: PropTypes.func,
-  onPrint: PropTypes.func,
-  onShare: PropTypes.func,
-  onDelete: PropTypes.func
 };
 
 export default MoreMenuButton;

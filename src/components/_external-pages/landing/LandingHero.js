@@ -107,7 +107,6 @@ export default function LandingHero() {
                 Live Preview
               </Button>
             </motion.div>
-
           </ContentStyle>
         </Container>
       </RootStyle>

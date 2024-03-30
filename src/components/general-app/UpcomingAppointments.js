@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
-import { Button, Card, CardHeader, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, IconButton, Menu, MenuItem, Avatar } from '@mui/material';
+import { Button, Card, CardHeader, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, IconButton, Menu, MenuItem, Avatar, Box } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DownloadIcon from '@mui/icons-material/CloudDownload';
 import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 
 const UpcomingAppointmentMockData = [
   {
@@ -77,6 +76,7 @@ export default function UpcomingAppointments() {
   const handleCloseMenu = (id) => {
     setAnchorEl({ ...anchorEl, [id]: null });
   };
+
   const handleDownload = () => {
     const { name, date, type, category } = editedRowData;
     const formattedDate = format(new Date(date), 'dd MMM yyyy p');
@@ -134,7 +134,7 @@ export default function UpcomingAppointments() {
           action={
             <>
               {isEditing ? (
-                <>
+                <Box sx={{ display: 'flex', gap: '10px' }}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -149,7 +149,7 @@ export default function UpcomingAppointments() {
                   >
                     Cancel
                   </Button>
-                </>
+                </Box>
               ) : (
                 <Button
                   variant="contained"
@@ -233,4 +233,3 @@ export default function UpcomingAppointments() {
      </>
    );
  }
- 

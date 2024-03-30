@@ -1,31 +1,25 @@
-// material
-import { alpha, useTheme, styled } from '@mui/material/styles';
-import { Box, Grid, Card, Container, Typography, useMediaQuery } from '@mui/material';
-//
+import React from 'react';
+import { Container, Typography, Grid, Card, Box, useMediaQuery } from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
 import { varFadeInUp, MotionInView, varFadeInDown } from '../../animate';
-
-// ----------------------------------------------------------------------
 
 const CARDS = [
   {
-    icon: '/static/icons/ic_design.svg',
-    title: 'UI & UX Design',
+    title: 'Real-time Scheduling',
     description:
-      'The set is built on the principles of the atomic design system. It helps you to create projects fastest and easily customized packages for your projects.'
+      'Instantly book appointments with dynamic, live updates ensuring you are always in sync with available slots, eliminating waiting times and streamlining your scheduling experience.'
   },
   {
-    icon: '/static/icons/ic_code.svg',
-    title: 'Development',
-    description: 'Easy to customize and extend each component, saving you time and money.'
+    title: 'Seamless Integration',
+    description:
+      'Experience effortless coordination with various public services as our platform seamlessly integrates, providing you with a unified interface to access and manage appointments across diverse sectors, enhancing efficiency and convenience.'
   },
   {
-    icon: '/static/brand/logo_single.svg',
-    title: 'Branding',
-    description: 'Consistent design in colors, fonts ... makes brand recognition easy.'
+    title: 'User-Centric Design',
+    description:
+      'Our platform boasts an intuitively crafted interface, prioritizing user experience with easy-to-navigate features, ensuring smooth and hassle-free interactions, ultimately empowering users with intuitive controls and seamless navigation for optimal productivity.'
   }
 ];
-
-const shadowIcon = (color) => `drop-shadow(2px 2px 2px ${alpha(color, 0.48)})`;
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(15),
@@ -34,60 +28,43 @@ const RootStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const CardStyle = styled(Card)(({ theme }) => {
-  const shadowCard = (opacity) =>
-    theme.palette.mode === 'light'
-      ? alpha(theme.palette.grey[500], opacity)
-      : alpha(theme.palette.common.black, opacity);
-
-  return {
-    maxWidth: 380,
-    minHeight: 440,
-    margin: 'auto',
-    textAlign: 'center',
-    padding: theme.spacing(10, 5, 0),
-    boxShadow: `-40px 40px 80px 0 ${shadowCard(0.48)}`,
+const CardStyle = styled(Card)(({ theme }) => ({
+  maxWidth: 380,
+  minHeight: 440,
+  margin: 'auto',
+  textAlign: 'center',
+  padding: theme.spacing(10, 5, 0),
+  boxShadow: `-40px 40px 80px 0 ${theme.palette.mode === 'light' ? theme.palette.grey[500] : theme.palette.common.black}`,
+  [theme.breakpoints.up('md')]: {
+    boxShadow: 'none',
+    backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]
+  },
+  '&.cardLeft': {
+    [theme.breakpoints.up('md')]: { marginTop: -40 }
+  },
+  '&.cardCenter': {
     [theme.breakpoints.up('md')]: {
-      boxShadow: 'none',
-      backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]
-    },
-    '&.cardLeft': {
-      [theme.breakpoints.up('md')]: { marginTop: -40 }
-    },
-    '&.cardCenter': {
-      [theme.breakpoints.up('md')]: {
-        marginTop: -80,
+      marginTop: -80,
+      backgroundColor: theme.palette.background.paper,
+      boxShadow: `-40px 40px 80px 0 ${theme.palette.mode === 'light' ? theme.palette.grey[500] : theme.palette.common.black}`,
+      '&:before': {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: -1,
+        content: "''",
+        margin: 'auto',
+        position: 'absolute',
+        width: 'calc(100% - 40px)',
+        height: 'calc(100% - 40px)',
+        borderRadius: theme.shape.borderRadiusMd,
         backgroundColor: theme.palette.background.paper,
-        boxShadow: `-40px 40px 80px 0 ${shadowCard(0.4)}`,
-        '&:before': {
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: -1,
-          content: "''",
-          margin: 'auto',
-          position: 'absolute',
-          width: 'calc(100% - 40px)',
-          height: 'calc(100% - 40px)',
-          borderRadius: theme.shape.borderRadiusMd,
-          backgroundColor: theme.palette.background.paper,
-          boxShadow: `-20px 20px 40px 0 ${shadowCard(0.12)}`
-        }
+        boxShadow: `-20px 20px 40px 0 ${theme.palette.mode === 'light' ? theme.palette.grey[500] : theme.palette.common.black}`
       }
     }
-  };
-});
-
-const CardIconStyle = styled('img')(({ theme }) => ({
-  width: 40,
-  height: 40,
-  margin: 'auto',
-  marginBottom: theme.spacing(10),
-  filter: shadowIcon(theme.palette.primary.main)
+  }
 }));
-
-// ----------------------------------------------------------------------
 
 export default function LandingMinimalHelps() {
   const theme = useTheme();
@@ -96,7 +73,7 @@ export default function LandingMinimalHelps() {
 
   return (
     <RootStyle>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl"> {/* Changed to xl */}
         <Box sx={{ mb: { xs: 10, md: 25 } }}>
           <MotionInView variants={varFadeInUp}>
             <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.secondary', textAlign: 'center' }}>
@@ -104,7 +81,7 @@ export default function LandingMinimalHelps() {
             </Typography>
           </MotionInView>
           <MotionInView variants={varFadeInDown}>
-            <Typography variant="h2" sx={{ textAlign: 'center' }}>
+            <Typography variant="h2" sx={{ textAlign: 'center', fontSize: 36 }}> {/* Increased font size */}
               What SmartQ helps you?
             </Typography>
           </MotionInView>
@@ -115,19 +92,7 @@ export default function LandingMinimalHelps() {
             <Grid key={card.title} item xs={12} md={4}>
               <MotionInView variants={varFadeInUp}>
                 <CardStyle className={(index === 0 && 'cardLeft') || (index === 1 && 'cardCenter')}>
-                  <CardIconStyle
-                    src={card.icon}
-                    alt={card.title}
-                    sx={{
-                      ...(index === 0 && {
-                        filter: (theme) => shadowIcon(theme.palette.info.main)
-                      }),
-                      ...(index === 1 && {
-                        filter: (theme) => shadowIcon(theme.palette.error.main)
-                      })
-                    }}
-                  />
-                  <Typography variant="h5" paragraph>
+                  <Typography variant="h4" paragraph sx={{ mb: 2 }}> {/* Increased font size */}
                     {card.title}
                   </Typography>
                   <Typography sx={{ color: isLight ? 'text.secondary' : 'common.white' }}>
