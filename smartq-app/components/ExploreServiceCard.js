@@ -1,34 +1,34 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons'; // Assuming you have FontAwesome installed
-import { useState } from 'react';
+import React from 'react'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons' // Assuming you have FontAwesome installed
+import { useState } from 'react'
+import { Colors } from './styles'
 
-const ExploreServiceCard = ({item}) => {
-  const [isFavorite, setIsFavorite] = useState(false); // State for heart icon
+const ExploreServiceCard = ({ item }) => {
+  const [isFavorite, setIsFavorite] = useState(false) // State for heart icon
 
   // Function to toggle heart icon state
   const handleFavoritePress = () => {
-    setIsFavorite(!isFavorite);
-  };
+    setIsFavorite(!isFavorite)
+  }
 
   return (
     <View style={styles.container}>
       {/* Temporary Image */}
-      <Image
-        source={item.servicesThumbnail}
-        style={styles.image}
-      />
+      <Image source={item.servicesThumbnail} style={styles.image} />
 
       {/* Service Title */}
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{item.serviceTitle}</Text>
         <TouchableOpacity style={styles.dotsIcon}>
-          <FontAwesome name="ellipsis-h" size={24} color="gray" />
+          <FontAwesome name='ellipsis-h' size={24} color='gray' />
         </TouchableOpacity>
       </View>
 
       {/* Necessary Details */}
-      <Text style={styles.details}>{item.serviceProviderName} ~ {item.serviceProviderRating}</Text>
+      <Text style={styles.details}>
+        {item.serviceProviderName} ~ {item.serviceProviderRating}
+      </Text>
       <Text style={styles.details}>{item.openingHours}</Text>
 
       {/* Price */}
@@ -38,7 +38,7 @@ const ExploreServiceCard = ({item}) => {
           <FontAwesome
             name={isFavorite ? 'heart' : 'heart-o'}
             size={24}
-            color="#3cc0f0"
+            color={Colors.brand}
           />
         </TouchableOpacity>
       </View>
@@ -58,8 +58,8 @@ const ExploreServiceCard = ({item}) => {
       {/* Divider Line */}
       <View style={styles.divider} />
     </View>
-  );
-};
+  )
+}
 
 const styles = {
   container: {
@@ -121,7 +121,7 @@ const styles = {
     marginRight: 8,
   },
   buttonText: {
-    color: '#3cc0f0',
+    color: Colors.brand,
     fontWeight: 'bold',
   },
   //q: what is gray color code?
@@ -133,10 +133,10 @@ const styles = {
   outlinedButton: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: '#3cc0f0',
+    borderColor: Colors.brand,
   },
   filledButton: {
-    backgroundColor: '#3cc0f0',
+    backgroundColor: Colors.brand,
   },
   filledButtonText: {
     color: '#ffffff',
@@ -146,6 +146,6 @@ const styles = {
     borderColor: 'lightgray',
     marginVertical: 16,
   },
-};
+}
 
-export default ExploreServiceCard;
+export default ExploreServiceCard

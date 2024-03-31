@@ -7,6 +7,7 @@ import Explore from './Explore'
 import Queues from './Queues'
 import Profile from './Profile'
 import Home from './Home'
+import { Colors } from '../components/styles';
 
 const Tab = createBottomTabNavigator()
 
@@ -46,7 +47,7 @@ const BottomNavigator = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'blue',
+        activeTintColor: Colors.brand,
         inactiveTintColor: 'gray',
       }}
     >
