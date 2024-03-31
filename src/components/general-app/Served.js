@@ -9,7 +9,7 @@ export default function Served() {
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle2">Served</Typography>
+        <Typography variant="subtitle2">End Time</Typography>
 
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
           <Typography variant="span" color={'text.secondary'}>Time: 1 hour 20 minutes</Typography>

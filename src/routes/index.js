@@ -10,83 +10,60 @@ import Login from 'src/pages/authentication/Login';
 import Register from 'src/pages/authentication/Register';
 import ResetPassword from 'src/pages/authentication/ResetPassword';
 import VerifyCode from 'src/pages/authentication/VerifyCode';
+import NewPasswordForm from 'src/pages/authentication/NewPasswordForm';
+import Request from 'src/pages/Request';
 
 // ----------------------------------------------------------------------
 
-const Loadable = (Component) => (props) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { pathname } = useLocation();
-  const isDashboard = pathname.includes('/dashboard');
-
-  return (
-    <Suspense
-      fallback={
-        <LoadingScreen
-          sx={{
-            ...(!isDashboard && {
-              top: 0,
-              left: 0,
-              width: 1,
-              zIndex: 9999,
-              position: 'fixed'
-            })
-          }}
-        />
-      }
-    >
-      <Component {...props} />
-    </Suspense>
-  );
+const Loadable = (Component) => {
+  return (props) => <Suspense fallback={<LoadingScreen />}><Component {...props} /></Suspense>;
 };
 
 export default function Router() {
+  const { pathname } = useLocation();
+
+  // Loadable components
+  const LoadablePageOne = Loadable(lazy(() => import('../pages/Home')), pathname);
+  const LoadablePageTwo = Loadable(lazy(() => import('../pages/Transactions')), pathname);
+  const LoadablePageThree = Loadable(lazy(() => import('../pages/Queues')), pathname);
+  const LoadablePageFour = Loadable(lazy(() => import('../pages/PageFour')), pathname);
+  const LoadablePageFive = Loadable(lazy(() => import('../pages/PageFive')), pathname);
+  const LoadablePageSix = Loadable(lazy(() => import('../pages/PageSix')), pathname);
+  const LoadableNotFound = Loadable(lazy(() => import('../pages/Page404')), pathname);
+  const LoadableLandingPage = Loadable(lazy(() => import('../pages/LandingPage')), pathname);
+  const LoadableRequestPage = Loadable(lazy(() => import('../pages/Request')), pathname);
+
   return useRoutes([
     {
       path: 'auth',
       children: [
-        {
-          path: 'login',
-          element: (
-
-              <Login />
-
-          )
-        },
-        {
-          path: 'register',
-          element: (
-
-              <Register />
-
-          )
-        },
-        { path: 'login-unprotected', element: <Login /> },
-        { path: 'register-unprotected', element: <Register /> },
+        { path: 'login', element: <Login /> },
+        { path: 'register', element: <Register /> },
         { path: 'reset-password', element: <ResetPassword /> },
-        { path: 'verify', element: <VerifyCode /> }
+        { path: 'verify', element: <VerifyCode /> },
+        { path: 'new-password', element: <NewPasswordForm /> } 
       ]
     },
-    // Dashboard Routes
     {
-
       path: 'dashboard',
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/dashboard/home" replace /> },
-        { path: 'home', element: <PageOne /> },
-        { path: 'transactions', element: <PageTwo /> },
-        { path: 'queue', element: <PageThree /> },
-        { path: 'login', element: <Login /> },
-        { path: 'register', element: <Register /> },
-        {
-          path: 'app',
-          children: [
-            { element: <Navigate to="/dashboard/app/four" replace /> },
-            { path: 'four', element: <PageFour /> },
-            { path: 'five', element: <PageFive /> },
-            { path: 'six', element: <PageSix /> }
-          ]
-        }
+        { path: 'home', element: <LoadablePageOne /> },
+        { path: 'transactions', element: <LoadablePageTwo /> },
+        { path: 'queue', element: <LoadablePageThree /> },
+        { path: 'request', element: <Request /> }, 
+        // Other dashboard routes...
+      ]
+    },
+    // Landing Page 
+    {
+      path: '/',
+      element: <MainLayout />,
+      children: [
+        { element: <LandingPage /> },
+        { path: '/about', element: <About /> },
+        { path: '/contact', element: <Contact /> }
       ]
     },
 
@@ -95,15 +72,15 @@ export default function Router() {
       path: '*',
       element: <LogoOnlyLayout />,
       children: [
-        { path: '404', element: <NotFound /> },
+        { path: '404', element: <LoadableNotFound /> },
         { path: '*', element: <Navigate to="/404" replace /> }
       ]
     },
-    {
-      path: '/',
-      element: <MainLayout />,
-      children: [{ element: <LandingPage /> }]
-    },
+    // {
+    //   path: '/',
+    //   element: <MainLayout />,
+    //   children: [{ element: <LandingPage /> }]
+    // },
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }
@@ -120,3 +97,7 @@ const PageSix = Loadable(lazy(() => import('../pages/PageSix')));
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 // Main
 const LandingPage = Loadable(lazy(() => import('../pages/LandingPage')));
+
+// Landing 
+const About = Loadable(lazy(() => import('../pages/About')));
+const Contact = Loadable(lazy(() => import('../pages/Contact')));

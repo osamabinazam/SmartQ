@@ -14,7 +14,7 @@ import {
 // routes
 // import { PATH_PAGE } from '../../../routes/paths';
 // components
-import Page from '../../../components/Page';
+import Page from '../../Page';
 import { Block } from '../Block';
 
 // ----------------------------------------------------------------------

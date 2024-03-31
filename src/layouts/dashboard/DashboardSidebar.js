@@ -6,6 +6,7 @@ import { alpha, styled } from '@mui/material/styles';
 import { Box, Link, Stack, Avatar, Drawer, Tooltip, Typography, CardActionArea } from '@mui/material';
 // hooks
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
+import useAuth from '../../hooks/useAuth';
 // components
 import Logo from '../../components/Logo';
 import Scrollbar from '../../components/Scrollbar';
@@ -13,6 +14,7 @@ import NavSection from '../../components/NavSection';
 //
 import { MHidden } from '../../components/@material-extend';
 import sidebarConfig from './SidebarConfig';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -87,6 +89,14 @@ DashboardSidebar.propTypes = {
 };
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
+  const { isAuthenticated, user } = useAuth();
+  console.log("Jefsd")
+
+  const navigate = useNavigate();
+  if  (!user){
+    console.log(isAuthenticated);
+    navigate('/auth/login', { replace: true });
+  }
   const { pathname } = useLocation();
 
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
@@ -139,10 +149,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
               <Avatar alt="My Avatar" src="/static/mock-images/avatars/avatar_default.jpg" />
               <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                  Dr. John Doe
+                 {user?.username}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  Vendor 
+                  {user?.email} 
                 </Typography>
               </Box>
             </AccountStyle>

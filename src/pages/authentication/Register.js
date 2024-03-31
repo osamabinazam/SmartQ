@@ -1,4 +1,3 @@
-// import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
@@ -11,10 +10,12 @@ import { PATH_AUTH } from '../../routes/paths';
 import AuthLayout from '../../layouts/AuthLayout';
 // components
 import Page from '../../components/Page';
-import { MHidden } from '../../components/@material-extend';
+// import { MHidden } from '../../../components/@material-extend';
+import {MHidden} from '../../components/@material-extend';
 import { RegisterForm } from '../../components/authentication/register';
 import AuthFirebaseSocials from '../../components/authentication/AuthFirebaseSocial';
-import { AuthProvider } from 'src/contexts/JWTContext';
+import {  useNavigate } from 'react-router-dom';
+
 
 // ----------------------------------------------------------------------
 
@@ -46,10 +47,15 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Register() {
-  const { method } = useAuth();
+  const navigate = useNavigate(); 
+  const { method, isAuthenticated } = useAuth();
+  if (isAuthenticated) {
+    navigate('/dashboard', { replace: true });
+  }
+
+
 
   return (
-    <AuthProvider>
       <RootStyle title="Register ">
       <AuthLayout>
         Already have an account? &nbsp;
@@ -104,7 +110,6 @@ export default function Register() {
         </ContentStyle>
       </Container>
     </RootStyle>
-    </AuthProvider>
     
   );
 }
