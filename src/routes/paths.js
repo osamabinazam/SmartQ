@@ -19,6 +19,15 @@ export const PATH_AUTH = {
 };
 
 
+export const PATH_LANDING ={
+  root: '/',
+  home: path('/', '/home'),
+  about: path('/', '/about'),
+  contact: path('/', '/contact'),
+
+}
+
+
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   auth:{

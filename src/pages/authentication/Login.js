@@ -1,7 +1,16 @@
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Card, Stack, Link, Container, Typography, Button } from '@mui/material';
+import { 
+  Box, 
+  Card, 
+  Stack, 
+  Link, 
+  // Tooltip, 
+  Container, 
+  Typography, 
+  Button 
+} from '@mui/material';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // hooks
@@ -11,9 +20,9 @@ import AuthLayout from '../../layouts/AuthLayout';
 // components
 import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
-import { LoginForm } from 'src/components/authentication/login';
+import { LoginForm } from '../../components/authentication/login';
 import AuthFirebaseSocials from '../../components/authentication/AuthFirebaseSocial';
-import { AuthProvider } from 'src/contexts/JWTContext';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -45,11 +54,20 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
-  const { method, login } = useAuth();
+  const { method, login, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  if (isAuthenticated) {
+    navigate('/dashboard', { replace: true });
+  }else{
+    console.log('Not Authenticated');
+    // navigate('/auth/login', { replace: true });
+  }
+
+
 
   const handleLoginAuth0 = async () => {
     try {
-      console.log("first")
       await login();
     } catch (error) {
       console.error(error);
@@ -57,11 +75,9 @@ export default function Login() {
   };
 
   return (
-    <AuthProvider>
-
-      <RootStyle title="Login">
+    <RootStyle title="Login | SmartQ">
       <AuthLayout>
-        Don’t have an account? &nbsp;
+        Don't have an account? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
           Get started
         </Link>
@@ -69,9 +85,6 @@ export default function Login() {
 
       <MHidden width="mdDown">
         <SectionStyle>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Hi, Welcome Back
-          </Typography>
           <img src="/static/illustrations/illustration_login.png" alt="login" />
         </SectionStyle>
       </MHidden>
@@ -80,11 +93,15 @@ export default function Login() {
         <ContentStyle>
           <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h4" gutterBottom>
-                Sign in to SmartQ
+              <Typography color="primary" variant="h4" gutterBottom>
+                Welcome Back
               </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Login to continue</Typography>
             </Box>
+
+            {/* <Tooltip title={capitalCase(method)}>
+              <Box component="img" src={`/static/auth/ic_${method}.png`} sx={{ width: 32, height: 32 }} />
+            </Tooltip> */}
           </Stack>
 
           {method === 'firebase' && <AuthFirebaseSocials />}
@@ -99,8 +116,8 @@ export default function Login() {
 
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              Don’t have an account?&nbsp;
-              <Link to={PATH_AUTH.register}  component={RouterLink}  variant="subtitle2" >
+              Don't have an account?&nbsp;
+              <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
                 Get started
               </Link>
             </Typography>
@@ -108,7 +125,5 @@ export default function Login() {
         </ContentStyle>
       </Container>
     </RootStyle>
-
-    </AuthProvider>
   );
 }

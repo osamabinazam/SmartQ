@@ -1,10 +1,10 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
-import { useSnackbar } from 'notistack';
+// import { useSnackbar } from 'notistack';
 import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
-import closeFill from '@iconify/icons-eva/close-fill';
+// import closeFill from '@iconify/icons-eva/close-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // material
 import {
@@ -18,24 +18,22 @@ import { LoadingButton } from '@mui/lab';
 import useAuth from '../../../hooks/useAuth';
 import useIsMountedRef from '../../../hooks/useIsMountedRef';
 //
-import { MIconButton } from '../../@material-extend';
+// import { MIconButton } from '../../@material-extend';
 
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
   const { register } = useAuth();
   const isMountedRef = useIsMountedRef();
-const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
+// const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
-    lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
+   
     username: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Username required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    phone_number: Yup.string().required('Phone number is required'),
     password: Yup.string().required('Password is required'),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
@@ -45,29 +43,24 @@ const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
+
       username: '',
       email: '',
-      phone_number: '',
       password: '',
       confirmPassword: '',
       gender: 'male'
     },
     validationSchema: RegisterSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
-      console.log(values)
 
+      //  submitinng  the form  to the server 
       try {
         await register(
-          values.firstName,
-          values.lastName,
           values.username,
           values.email,
-          values.phone_number,
           values.gender,
           values.password,
-          "Vendor"
+          "vendor"
           );
         console.log("Done ")
         
@@ -88,10 +81,14 @@ const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
 
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+
+
+  //  Handle eye icon click to show password
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
 
+  // Handle eye icon click to show confirm password
   const handleShowConfirmPassword = () => {
     setShowConfirmPassword((show) => !show);
   };
@@ -102,7 +99,7 @@ const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
         <Stack spacing={3}>
           {errors.afterSubmit && <Alert severity="error">{errors.afterSubmit}</Alert>}
 
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+          {/* <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
               label="First name"
@@ -118,7 +115,7 @@ const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
               error={Boolean(touched.lastName && errors.lastName)}
               helperText={touched.lastName && errors.lastName}
             />
-          </Stack>
+          </Stack> */}
 
           <TextField
             fullWidth
@@ -138,19 +135,19 @@ const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
             helperText={touched.email && errors.email}
           />
 
-          <TextField
+          {/* <TextField
             fullWidth
             label="Phone number"
             {...getFieldProps('phone_number')}
             error={Boolean(touched.phone_number && errors.phone_number)}
             helperText={touched.phone_number && errors.phone_number}
-          />
+          /> */}
 
           <RadioGroup row {...getFieldProps('gender')}>
-            <FormControlLabel value="Male" control={<Radio />} label="Male" />
-            <FormControlLabel value="Female" control={<Radio />} label="Female" />
-            <FormControlLabel value="Other" control={<Radio />} label="Other" />
-            <FormControlLabel value="n/a" control={<Radio />} label="Not Applicable" />
+            <FormControlLabel value="male" control={<Radio />} label="Male" />
+            <FormControlLabel value="female" control={<Radio />} label="Female" />
+            <FormControlLabel value="other" control={<Radio />} label="Other" />
+            {/* <FormControlLabel value="n/a" control={<Radio />} label="Not Applicable" /> */}
           </RadioGroup>
 
           <TextField
@@ -175,7 +172,7 @@ const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
           <TextField
             fullWidth
             autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
+            type={showConfirmPassword ? 'text' : 'password'}
             label="Confirm Password"
             {...getFieldProps('confirmPassword')}
             error={Boolean(touched.confirmPassword && errors.confirmPassword)}

@@ -6,6 +6,40 @@ import DownloadIcon from '@mui/icons-material/CloudDownload';
 import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
+// import { sentenceCase } from 'change-case';
+import { Icon } from '@iconify/react';
+import { Link as RouterLink } from 'react-router-dom';
+import bookFill from '@iconify/icons-eva/book-fill';
+import heartFill from '@iconify/icons-eva/heart-fill';
+import shareFill from '@iconify/icons-eva/share-fill';
+import printerFill from '@iconify/icons-eva/printer-fill';
+import downloadFill from '@iconify/icons-eva/download-fill';
+import trash2Outline from '@iconify/icons-eva/trash-2-outline';
+import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
+import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
+
+// import { useTheme } from '@mui/material/styles';
+import {
+  Box,
+  Card,
+  Menu,
+  Table,
+  Avatar,
+  Button,
+  Divider,
+  MenuItem,
+  TableRow,
+  TableBody,
+  TableCell,
+  TableHead,
+  CardHeader,
+  Typography,
+  TableContainer
+} from '@mui/material';
+
+import Label from '../Label';
+import Scrollbar from '../Scrollbar';
+import { MIconButton } from '../@material-extend';
 
 const UpcomingAppointmentMockData = [
   {
@@ -114,7 +148,8 @@ export default function UpcomingAppointments() {
     }
     handleCloseMenu(editedRowData.id);
   };
-
+export default function UpcomingAppointments() {
+ 
   const handleDelete = () => {
     const updatedRows = editableRows.filter(row => row.id !== editedRowData.id);
     setEditableRows(updatedRows);

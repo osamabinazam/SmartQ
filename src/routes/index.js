@@ -56,6 +56,18 @@ export default function Router() {
      
       ]
     },
+    // Landing Page 
+    {
+      path: '/',
+      element: <MainLayout />,
+      children: [
+        { element: <LandingPage /> },
+        { path: '/about', element: <About /> },
+        { path: '/contact', element: <Contact /> }
+      ]
+    },
+
+    // Main Routes
     {
       path: '*',
       element: <LogoOnlyLayout />,
@@ -64,11 +76,28 @@ export default function Router() {
         { path: '*', element: <Navigate to="/404" replace /> }
       ]
     },
-    {
-      path: '/',
-      element: <MainLayout />,
-      children: [{ element: <LoadableLandingPage /> }]
-    },
+    // {
+    //   path: '/',
+    //   element: <MainLayout />,
+    //   children: [{ element: <LandingPage /> }]
+    // },
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }
+
+// IMPORT COMPONENTS
+
+// Dashboard
+const PageOne = Loadable(lazy(() => import('../pages/Home')));
+const PageTwo = Loadable(lazy(() => import('../pages/Transactions')));
+const PageThree = Loadable(lazy(() => import('../pages/Queues')));
+const PageFour = Loadable(lazy(() => import('../pages/PageFour')));
+const PageFive = Loadable(lazy(() => import('../pages/PageFive')));
+const PageSix = Loadable(lazy(() => import('../pages/PageSix')));
+const NotFound = Loadable(lazy(() => import('../pages/Page404')));
+// Main
+const LandingPage = Loadable(lazy(() => import('../pages/LandingPage')));
+
+// Landing 
+const About = Loadable(lazy(() => import('../pages/About')));
+const Contact = Loadable(lazy(() => import('../pages/Contact')));
