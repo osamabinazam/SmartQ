@@ -1,6 +1,11 @@
-import PropTypes from 'prop-types';
-import { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { format } from 'date-fns';
+import { Button, Card, CardHeader, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, IconButton, Menu, MenuItem, Avatar, Box } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DownloadIcon from '@mui/icons-material/CloudDownload';
+import PrintIcon from '@mui/icons-material/Print';
+import ShareIcon from '@mui/icons-material/Share';
+import DeleteIcon from '@mui/icons-material/Delete';
 // import { sentenceCase } from 'change-case';
 import { Icon } from '@iconify/react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -36,8 +41,6 @@ import Label from '../Label';
 import Scrollbar from '../Scrollbar';
 import { MIconButton } from '../@material-extend';
 
-// ----------------------------------------------------------------------
-
 const UpcomingAppointmentMockData = [
   {
     id: '1',
@@ -71,205 +74,197 @@ const UpcomingAppointmentMockData = [
     name: 'Sadia Khan',
     avatar: null,
     type: 'Birth Certificate',
-    message: 'PAdditional note and message from customer.',
+    message: 'Additional note and message from customer.',
     category: 'Nadra',
     date: 1627547330510,
   },
-  
 ];
 
-// ----------------------------------------------------------------------
-
-AvatarIcon.propTypes = {
-  icon: PropTypes.object
-};
-
-function AvatarIcon({ icon }) {
-  return (
-    <Avatar
-      sx={{
-        width: 48,
-        height: 48,
-        color: 'text.secondary',
-        bgcolor: 'background.neutral'
-      }}
-    >
-      <Icon icon={icon} width={24} height={24} />
-    </Avatar>
-  );
-}
-
-function renderAvatar(transitions) {
-  if (transitions.category === 'Books') {
-    return <AvatarIcon icon={bookFill} />;
-  }
-  if (transitions.category === 'Beauty & Health') {
-    return <AvatarIcon icon={heartFill} />;
-  }
-  return transitions.avatar ? (
-    <Avatar
-      alt={transitions.category}
-      src={transitions.avatar}
-      sx={{ width: 48, height: 48, boxShadow: (theme) => theme.customShadows.z8 }}
-    />
-  ) : null;
-}
-
-MoreMenuButton.propTypes = {
-  onDelete: PropTypes.func,
-  onDownload: PropTypes.func,
-  onPrint: PropTypes.func,
-  onShare: PropTypes.func
-};
-
-function MoreMenuButton({ onDownload, onPrint, onShare, onDelete }) {
-  const menuRef = useRef(null);
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <>
-      <>
-        <MIconButton ref={menuRef} size="large" onClick={handleOpen}>
-          <Icon icon={moreVerticalFill} width={20} height={20} />
-        </MIconButton>
-      </>
-
-      <Menu
-        open={open}
-        anchorEl={menuRef.current}
-        onClose={handleClose}
-        PaperProps={{
-          sx: { width: 200, maxWidth: '100%' }
-        }}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <MenuItem onClick={onDownload}>
-          <Icon icon={downloadFill} width={20} height={20} />
-          <Typography variant="body2" sx={{ ml: 2 }}>
-            Download
-          </Typography>
-        </MenuItem>
-        <MenuItem onClick={onPrint}>
-          <Icon icon={printerFill} width={20} height={20} />
-          <Typography variant="body2" sx={{ ml: 2 }}>
-            Print
-          </Typography>
-        </MenuItem>
-        <MenuItem onClick={onShare}>
-          <Icon icon={shareFill} width={20} height={20} />
-          <Typography variant="body2" sx={{ ml: 2 }}>
-            Share
-          </Typography>
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={onDelete} sx={{ color: 'error.main' }}>
-          <Icon icon={trash2Outline} width={20} height={20} />
-          <Typography variant="body2" sx={{ ml: 2 }}>
-            Delete
-          </Typography>
-        </MenuItem>
-      </Menu>
-    </>
-  );
-}
-
 export default function UpcomingAppointments() {
-  // const theme = useTheme();
-  // const isLight = theme.palette.mode === 'light';
+  const [editableRows, setEditableRows] = useState(UpcomingAppointmentMockData); 
+  const [isEditing, setIsEditing] = useState(false); 
+  const [editedRowData, setEditedRowData] = useState(null); 
+  const [anchorEl, setAnchorEl] = useState({}); 
+  const handleEditRow = (rowData) => {
+    setIsEditing(true);
+    setEditedRowData({ ...rowData }); 
+    handleCloseMenu(rowData.id);
+  };
 
-  const handleClickDownload = () => {};
-  const handleClickPrint = () => {};
-  const handleClickShare = () => {};
-  const handleClickDelete = () => {};
+  const handleSaveRow = () => {
+    setIsEditing(false);
+    console.log('Saving edited row:', editedRowData);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditedRowData(null);
+    console.log('Canceling edit');
+  };
+
+  const handleClickMenu = (event, rowData) => {
+    setAnchorEl({ ...anchorEl, [rowData.id]: event.currentTarget });
+    setEditedRowData(rowData);
+  };
+
+  const handleCloseMenu = (id) => {
+    setAnchorEl({ ...anchorEl, [id]: null });
+  };
+
+  const handleDownload = () => {
+    const { name, date, type, category } = editedRowData;
+    const formattedDate = format(new Date(date), 'dd MMM yyyy p');
+    const dataToDownload = `Name: ${name}\nTime: ${formattedDate}\nService Type: ${type}\nCategory: ${category}`;
+    const blob = new Blob([dataToDownload], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'appointment_details.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    handleCloseMenu(editedRowData.id);
+  };
+
+  const handlePrint = () => {
+    window.print();
+    handleCloseMenu(editedRowData.id);
+  };
+
+  const handleShare = () => {
+    if (navigator.share) {
+      const { name, type, message } = editedRowData;
+      navigator.share({
+        title: 'Appointment Details',
+        text: `Name: ${name}, Type: ${type}, Message: ${message}`,
+      }).then(() => {
+        console.log('Data shared successfully');
+      }).catch((error) => {
+        console.error('Error sharing data:', error);
+      });
+    } else {
+      console.log('Web Share API not supported');
+    }
+    handleCloseMenu(editedRowData.id);
+  };
+export default function UpcomingAppointments() {
+ 
+  const handleDelete = () => {
+    const updatedRows = editableRows.filter(row => row.id !== editedRowData.id);
+    setEditableRows(updatedRows);
+    setIsEditing(false);
+    handleCloseMenu(editedRowData.id);
+  };
 
   return (
     <>
       <Card>
-        <CardHeader title="current Queue" sx={{ mb: 3 }} />
-        <Scrollbar>
-          <TableContainer sx={{ minWidth: 720 }}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Customer Name</TableCell>
-                  <TableCell>Time</TableCell>
-                  <TableCell>Service Type</TableCell>
-                  <TableCell>Category</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {UpcomingAppointmentMockData.map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell>
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Box sx={{ position: 'relative' }}>
-                          {renderAvatar(row)}
-                          <Box>
-                    
-                          </Box>
-                        </Box>
-                        <Box sx={{ ml: 2 }}>
-                          <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                            {row.name}
-                          </Typography>
-                          <Typography variant="body2" sx={{color:'text.secondary'}}> {row.message}</Typography>
-                        </Box>
-                      </Box>
-                    </TableCell>
-
-                    <TableCell>
-                      <Typography variant="subtitle2">{format(new Date(row.date), 'dd MMM yyyy')}</Typography>
-                      <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        {format(new Date(row.date), 'p')}
-                      </Typography>
-                    </TableCell>
-
-                    <TableCell>{row.type}</TableCell>
-
-                    <TableCell>
-                      <Label>
-                            {row.category}
-                      </Label>
-                    </TableCell>
-
-                    <TableCell align="right">
-                      <MoreMenuButton
-                        onDownload={handleClickDownload}
-                        onPrint={handleClickPrint}
-                        onShare={handleClickShare}
-                        onDelete={handleClickDelete}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Scrollbar>
-
-        <Divider />
-
-        <Box sx={{ p: 2, textAlign: 'right' }}>
-          <Button
-            to="#"
-            size="small"
-            color="inherit"
-            component={RouterLink}
-            endIcon={<Icon icon={arrowIosForwardFill} />}
-          >
-            View All
-          </Button>
-        </Box>
-      </Card>
-    </>
-  );
-}
+        <CardHeader
+          title={
+            <Typography variant="h6" component="div">
+              Current Queue
+            </Typography>
+          }
+          action={
+            <>
+              {isEditing ? (
+                <Box sx={{ display: 'flex', gap: '10px' }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSaveRow}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleCancelEdit}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setIsEditing(true)}
+                  disabled={isEditing}
+                >
+                  Edit
+                </Button>
+              )}
+            </>
+          }
+          sx={{ mb: 3 }}
+        />
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Customer</TableCell>
+                <TableCell>Time</TableCell>
+                <TableCell>Service Type</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell align="right">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {editableRows.map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell>
+                    <Avatar src={row.avatar} />
+                    {row.name}
+                  </TableCell>
+                  <TableCell>
+                    {format(new Date(row.date), 'dd MMM yyyy p')}
+                  </TableCell>
+                  <TableCell>{row.type}</TableCell>
+                  <TableCell>{row.category}</TableCell>
+                  <TableCell align="right">
+                    {!isEditing ? (
+                      <>
+                        <IconButton
+                           aria-label="more"
+                           aria-controls={`menu-${row.id}`}
+                           aria-haspopup="true"
+                           onClick={(event) => handleClickMenu(event, row)}
+                         >
+                           <MoreVertIcon />
+                         </IconButton>
+                         <Menu
+                           id={`menu-${row.id}`}
+                           anchorEl={anchorEl[row.id]}
+                           open={Boolean(anchorEl[row.id])}
+                           onClose={() => handleCloseMenu(row.id)}
+                         >
+                           <MenuItem onClick={handleDownload}>
+                             <DownloadIcon fontSize="small" sx={{ mr: 1 }} />
+                             Download
+                           </MenuItem>
+                           <MenuItem onClick={handlePrint}>
+                             <PrintIcon fontSize="small" sx={{ mr: 1 }} />
+                             Print
+                           </MenuItem>
+                           <MenuItem onClick={handleShare}>
+                             <ShareIcon fontSize="small" sx={{ mr: 1 }} />
+                             Share
+                           </MenuItem>
+                           <MenuItem onClick={handleDelete}>
+                             <DeleteIcon fontSize="small" sx={{ mr: 1 }} />
+                             Delete
+                           </MenuItem>
+                         </Menu>
+                       </>
+                     ) : null}
+                   </TableCell>
+                 </TableRow>
+               ))}
+             </TableBody>
+           </Table>
+         </TableContainer>
+       </Card>
+     </>
+   );
+ }

@@ -1,4 +1,3 @@
-// routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // components
 import SvgIconStyle from '../../components/SvgIconStyle';
@@ -27,6 +26,7 @@ const sidebarConfig = [
       { title: 'Transactions', path: PATH_DASHBOARD.general.transactions, icon: ICONS.analytics },
       { title: 'Requests', path: PATH_DASHBOARD.general.request, icon: ICONS.analytics },
       { title: 'History', path: PATH_DASHBOARD.app.pageFive, icon: ICONS.analytics }
+   //   { title: 'User', path: PATH_DASHBOARD.app.user, icon: ICONS.user } // Add the "User" item
     ]
   },
 
@@ -50,3 +50,6 @@ const sidebarConfig = [
 ];
 
 export default sidebarConfig;
+
+
+    

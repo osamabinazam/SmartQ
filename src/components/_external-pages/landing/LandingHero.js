@@ -27,7 +27,7 @@ const RootStyle = styled(motion.div)(({ theme }) => ({
     width: '100%',
     height: '100vh',
     display: 'flex',
-    position: 'fixed',
+    justifyContent: 'center', // Center horizontally
     alignItems: 'center'
   }
 }));
@@ -97,24 +97,6 @@ export default function LandingHero() {
             </motion.div>
 
             <motion.div variants={varFadeInRight}>
-              <Typography variant="h5" sx={{ color: 'common.white', mt: 0 }}>Our Solution</Typography>
-              <Typography sx={{ color: 'common.white', mt: 0 }}>
-                Utilizing cutting-edge technology like real-time data analytics, GPS, and predictive algorithms, SmartQ streamlines appointment scheduling, making it faster, more efficient, and user-friendly.
-              </Typography>
-            </motion.div>
-
-            <motion.div variants={varFadeInRight}>
-              <Typography variant="h5" sx={{ color: 'common.white', mt: 0 }}>Services We Offer</Typography>
-              <Typography sx={{ color: 'common.white', mt: 0 }}>
-                <ul>
-                  <li>Real-time Scheduling: Book appointments instantly with live updates.</li>
-                  <li>Seamless Integration: Our platform integrates smoothly with various public services.</li>
-                  <li>User-Centric Design: An intuitive interface for effortless navigation.</li>
-                </ul>
-              </Typography>
-            </motion.div>
-
-            <motion.div variants={varFadeInRight}>
               <Button
                 size="large"
                 variant="contained"
@@ -125,7 +107,6 @@ export default function LandingHero() {
                 Live Preview
               </Button>
             </motion.div>
-
           </ContentStyle>
         </Container>
       </RootStyle>

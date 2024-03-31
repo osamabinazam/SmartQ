@@ -1,29 +1,13 @@
-import React, { useRef, useState } from 'react';
-import { format } from 'date-fns';
-import { Icon } from '@iconify/react';
-import { Link as RouterLink } from 'react-router-dom';
-import {
-  Card,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-  Box,
-  Button,
-  Divider,
-  CardHeader,
-  Menu,
-  MenuItem
-} from '@mui/material';
+import React, { useState } from 'react';
+import { Card, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Box, Button, Divider, CardHeader } from '@mui/material';
 import Scrollbar from '../Scrollbar';
-import { MIconButton } from '../@material-extend';
-import PropTypes from 'prop-types';
+import MAvatar from '../@material-extend/MAvatar'; // Import MAvatar component
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import { Icon } from '@iconify/react';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
-import MAvatar from '../@material-extend/MAvatar'; // Import MAvatar component
+import { Link as RouterLink } from 'react-router-dom';
 
 const CurrentQueueRequestMockData = [
   {
@@ -31,63 +15,41 @@ const CurrentQueueRequestMockData = [
     name: 'Simran Waswani',
     service: 'Urologist',
     time: '09:00 AM',
-    status: 'Completed',
-    avatar: '/static/mock-images/avatars/avatar_1.jpg' // Add avatar URL
+    avatar: '/static/mock-images/avatars/avatar_1.jpg', // Add avatar URL
+    status: ''
   },
   {
     id: '2',
     name: 'Shafique Ahmed',
     service: 'Gynecologist',
     time: '10:00 AM',
-    status: 'Pending',
-    avatar: '/static/mock-images/avatars/avatar_2.jpg' // Add avatar URL
+    avatar: '/static/mock-images/avatars/avatar_2.jpg', // Add avatar URL
+    status: ''
   }
 ];
 
-function MoreMenuButton({ onClick }) {
-  const menuRef = useRef(null);
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <>
-      <MIconButton ref={menuRef} size="large" onClick={handleOpen}>
-        <Icon icon={moreVerticalFill} width={20} height={20} />
-      </MIconButton>
-
-      <Menu
-        open={open}
-        anchorEl={menuRef.current}
-        onClose={handleClose}
-        PaperProps={{
-          sx: { width: 200, maxWidth: '100%' }
-        }}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <MenuItem onClick={onClick}>
-          <Typography variant="body2">Option 1</Typography>
-        </MenuItem>
-        <MenuItem onClick={onClick}>
-          <Typography variant="body2">Option 2</Typography>
-        </MenuItem>
-        <MenuItem onClick={onClick}>
-          <Typography variant="body2">Option 3</Typography>
-        </MenuItem>
-      </Menu>
-    </>
-  );
-}
-
 export default function CurrentQueueRequest() {
-  const handleClickOption = () => {};
+  const [data, setData] = useState(CurrentQueueRequestMockData);
+
+  const handleAccept = (id) => {
+    const updatedData = data.map(item => {
+      if (item.id === id) {
+        return { ...item, status: 'Accepted' };
+      }
+      return item;
+    });
+    setData(updatedData);
+  };
+
+  const handleDecline = (id) => {
+    const updatedData = data.map(item => {
+      if (item.id === id) {
+        return { ...item, status: 'Declined' };
+      }
+      return item;
+    });
+    setData(updatedData);
+  };
 
   return (
     <>
@@ -101,12 +63,11 @@ export default function CurrentQueueRequest() {
                   <TableCell>Name</TableCell>
                   <TableCell>Service</TableCell>
                   <TableCell>Time</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell align="right">Options</TableCell>
+                  <TableCell align="right">Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {CurrentQueueRequestMockData.map((row) => (
+                {data.map((row) => (
                   <TableRow key={row.id}>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -118,9 +79,27 @@ export default function CurrentQueueRequest() {
                     </TableCell>
                     <TableCell>{row.service}</TableCell>
                     <TableCell>{row.time}</TableCell>
-                    <TableCell>{row.status}</TableCell>
                     <TableCell align="right">
-                      <MoreMenuButton onClick={handleClickOption} />
+                      {row.status === '' && (
+                        <>
+                          <Button size="small" sx={{ mr: 1 }} variant="contained" color="success" onClick={() => handleAccept(row.id)}>
+                            Accept
+                          </Button>
+                          <Button size="small" variant="contained" color="error" onClick={() => handleDecline(row.id)}>
+                            Decline
+                          </Button>
+                        </>
+                      )}
+                      {row.status === 'Accepted' && (
+                        <Typography variant="body2" color="success.main">
+                          Accepted
+                        </Typography>
+                      )}
+                      {row.status === 'Declined' && (
+                        <Typography variant="body2" color="error.main">
+                          Declined
+                        </Typography>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}
