@@ -74,7 +74,6 @@ function AuthProvider({ children }) {
         const accessToken = window.localStorage.getItem('accessToken');
 
         if (accessToken && isValidToken(accessToken)) {
-          console.log("Hiiii ");
           setSession(accessToken);
 
           const response = await axios.get('/api/auth/my-account');
@@ -129,7 +128,7 @@ function AuthProvider({ children }) {
   };
 
   const register = async (username, email, gender, password) => {
-    const response = await axios.post('/api/users', {
+    const response = await axios.post('/api/auth/register', {
       username,
       email,
       password,

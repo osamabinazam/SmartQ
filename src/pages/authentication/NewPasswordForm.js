@@ -66,7 +66,7 @@ const NewPasswordForm = ({ onSubmit }) => {
   };
 
   const handleLogin = () => {
-    navigate('/auth/login');
+    // navigate('/auth/login');
   };
 
   return (

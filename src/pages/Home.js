@@ -34,11 +34,7 @@ import { useNavigate } from 'react-router-dom';
 export default function GeneralApp() {
 
   const { isAuthenticated, user } = useAuth();
-  
 
-  
-
-  console.log(user)
   const navigate = useNavigate();
   console.log(isAuthenticated);
 
@@ -54,7 +50,7 @@ export default function GeneralApp() {
       <Container maxWidth={themeStretch ? false : 'xl'} spacing={3}>
         <Grid container spacing={3}>
           <Grid item xs={12}   >
-            <AppWelcome displayName={user.username}/>
+            <AppWelcome displayName="Osama"/>
           </Grid>
 
           <Grid item xs={12} md={4}>
