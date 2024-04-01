@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Typography, Grid, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
+import { LocalizationProvider, DesktopDatePicker } from '@mui/lab';
+import DateAdapter from '@mui/lab/AdapterDateFns';
 import Page from '../components/Page';
 import UpcomingAppointments from '../components/general-app/UpcomingAppointments';
 import VerticalTable from '../components/general-app/VerticalTable';
@@ -8,8 +10,8 @@ import CompleteQueue from '../components/general-app/CompleteQueue';
 export default function PageThree() {
   const [open, setOpen] = useState(false);
   const [queueData, setQueueData] = useState({
-    startTime: '',
-    endTime: '',
+    startTime: null,
+    endTime: null,
     capacity: ''
   });
 
@@ -26,10 +28,10 @@ export default function PageThree() {
     handleClose();
   };
 
-  const handleInputChange = (e, field) => {
+  const handleInputChange = (date, field) => {
     setQueueData({
       ...queueData,
-      [field]: e.target.value
+      [field]: date
     });
   };
 
@@ -57,25 +59,20 @@ export default function PageThree() {
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogTitle>Creating New Queue</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="start-time"
-            label="Start Time"
-            type="text"
-            fullWidth
-            value={queueData.startTime}
-            onChange={(e) => handleInputChange(e, 'startTime')}
-          />
-          <TextField
-            margin="dense"
-            id="end-time"
-            label="End Time"
-            type="text"
-            fullWidth
-            value={queueData.endTime}
-            onChange={(e) => handleInputChange(e, 'endTime')}
-          />
+          <LocalizationProvider dateAdapter={DateAdapter}>
+            <DesktopDatePicker
+              label="Start Time"
+              value={queueData.startTime}
+              onChange={(date) => handleInputChange(date, 'startTime')}
+              renderInput={(params) => <TextField {...params} margin="dense" fullWidth />}
+            />
+            <DesktopDatePicker
+              label="End Time"
+              value={queueData.endTime}
+              onChange={(date) => handleInputChange(date, 'endTime')}
+              renderInput={(params) => <TextField {...params} margin="dense" fullWidth />}
+            />
+          </LocalizationProvider>
           <TextField
             margin="dense"
             id="capacity"
@@ -83,14 +80,12 @@ export default function PageThree() {
             type="text"
             fullWidth
             value={queueData.capacity}
-            onChange={(e) => handleInputChange(e, 'capacity')}
+            onChange={(e) => setQueueData({...queueData, capacity: e.target.value})}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary" sx={{ border: '1px solid red', color: 'red' }}>Cancel</Button>
           <Button onClick={handleCreateQueue} color="primary" sx={{ border: '1px solid', borderColor: 'primary.main', '&:hover': { borderColor: 'primary.dark' } }}>Create</Button>
-
-
         </DialogActions>
       </Dialog>
     </Page>
