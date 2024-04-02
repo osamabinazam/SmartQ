@@ -5,7 +5,6 @@ import DateAdapter from '@mui/lab/AdapterDateFns';
 import Page from '../components/Page';
 import UpcomingAppointments from '../components/general-app/UpcomingAppointments';
 import VerticalTable from '../components/general-app/VerticalTable';
-import CompleteQueue from '../components/general-app/CompleteQueue';
 
 export default function PageThree() {
   const [open, setOpen] = useState(false);
@@ -50,9 +49,6 @@ export default function PageThree() {
             <div style={{ width: '100%' }}>
               <VerticalTable />
             </div>
-          </Grid>
-          <Grid item xs={12}>
-            <CompleteQueue />
           </Grid>
         </Grid>
       </Container>
