@@ -10,9 +10,12 @@ const getIcon = (name) => (
 
 const ICONS = {
   user: getIcon('ic_user'),
-  ecommerce: getIcon('ic_ecommerce'),
-  analytics: getIcon('ic_analytics'),
-  dashboard: getIcon('ic_dashboard')
+  ecommerce: getIcon('queue-svgrepo-com'),
+  analytics: getIcon('product-request-svgrepo-com'),
+  dashboard: getIcon('icons8-home'),
+ // dashboard: getIcon('payment-methods-svgrepo-com'),
+  Product: getIcon('payment-methods-svgrepo-com'),
+ History:  getIcon('data-sync-file-icon'),
 };
 
 const sidebarConfig = [
@@ -23,9 +26,9 @@ const sidebarConfig = [
     items: [
       { title: 'Home', path: PATH_DASHBOARD.general.home,icon: ICONS.dashboard },
       { title: 'Manage Queue', path: PATH_DASHBOARD.general.queue, icon: ICONS.ecommerce },
-      { title: 'Payment(optional)', path: PATH_DASHBOARD.general.transactions, icon: ICONS.analytics },
+      { title: 'Payment(optional)', path: PATH_DASHBOARD.general.transactions, icon: ICONS.Product },
       { title: 'Requests', path: PATH_DASHBOARD.general.request, icon: ICONS.analytics },
-      { title: 'History', path: PATH_DASHBOARD.general.pageFive, icon: ICONS.analytics }
+      { title: 'History', path: PATH_DASHBOARD.general.pageFive, icon: ICONS.History }
    //   { title: 'User', path: PATH_DASHBOARD.app.user, icon: ICONS.user } // Add the "User" item
     ]
   },
