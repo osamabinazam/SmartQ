@@ -27,6 +27,7 @@ import {
 } from '../components/general-app';
 import UpcomingAppointments from 'src/components/general-app/UpcomingAppointments';
 import { useNavigate } from 'react-router-dom';
+import NotActiveQueue from 'src/pages/NotActiveQueue';
 
 // ----------------------------------------------------------------------
 
@@ -36,11 +37,11 @@ export default function GeneralApp() {
   const { isAuthenticated, user } = useAuth();
 
   const navigate = useNavigate();
-  console.log(isAuthenticated);
+
 
   if  (!isAuthenticated) {
     
-    // navigate('/auth/login', { replace: true });
+    navigate('/auth/login', { replace: true });
   }
 
   const { themeStretch } = useSettings();
@@ -50,8 +51,12 @@ export default function GeneralApp() {
       <Container maxWidth={themeStretch ? false : 'xl'} spacing={3}>
         <Grid container spacing={3}>
           <Grid item xs={12}   >
-            <AppWelcome displayName="Osama"/>
+            <AppWelcome displayName={user?.username}/>
           </Grid>
+          
+          {/* <Grid item xs={12} >
+            <NotActiveQueue />
+          </Grid> */}
 
           <Grid item xs={12} md={4}>
             <AppTotalActiveUsers />

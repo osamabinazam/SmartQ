@@ -60,8 +60,8 @@ export default function Login() {
   if (isAuthenticated) {
     navigate('/dashboard', { replace: true });
   }else{
-    console.log('Not Authenticated');
-    // navigate('/auth/login', { replace: true });
+  
+    navigate('/auth/login', { replace: true });
   }
 
 

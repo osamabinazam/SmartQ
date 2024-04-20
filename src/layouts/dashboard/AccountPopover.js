@@ -12,6 +12,7 @@ import { MIconButton } from '../../components/@material-extend';
 import MenuPopover from '../../components/MenuPopover';
 import useAuth from '../../hooks/useAuth';
 
+
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
@@ -22,11 +23,20 @@ const MENU_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
+
+
+
+
 export default function AccountPopover() {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
+  const handleLogout = () => {
+    console.log("Logout Button is pressed ");
+    logout();
+    
+  };
   const handleOpen = () => {
     setOpen(true);
   };
@@ -94,7 +104,7 @@ export default function AccountPopover() {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
+          <Button fullWidth color="inherit" variant="outlined"  onClick={handleLogout} >
             Logout
           </Button>
         </Box>

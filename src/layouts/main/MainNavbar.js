@@ -53,7 +53,7 @@ const MainNavbar = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-  //   navigate('/auth/login');
+    navigate('/auth/login');
   };
 
   const handleRegister = () => {

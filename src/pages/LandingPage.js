@@ -43,9 +43,9 @@ export default function LandingPage() {
     if (isAuthenticated) {
       navigate('/', { replace: true });
     }
-    // else{
-    //   // navigate('/auth/login', { replace: true });
-    // }
+    else{
+      // navigate('/auth/login', { replace: true });
+    }
   }, [isAuthenticated, navigate]);
 
   return (
