@@ -19,7 +19,7 @@ export default function PageTwo() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="Transactions | SmartQ">
+    <Page title="Payment(optional)| SmartQ">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} >
