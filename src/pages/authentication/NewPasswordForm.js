@@ -68,7 +68,6 @@ const NewPasswordForm = ({ onSubmit }) => {
   const handleLogin = () => {
     navigate('/auth/login');
   };
-  
 
   return (
     <RootStyle title="New Password">

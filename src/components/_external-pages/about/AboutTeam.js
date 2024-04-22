@@ -10,98 +10,100 @@ import linkedinFill from '@iconify/icons-eva/linkedin-fill';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
 import roundArrowRightAlt from '@iconify/icons-ic/round-arrow-right-alt';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
-import { Box, Card, Container, Typography, IconButton } from '@mui/material';
+// material
 import { useTheme } from '@mui/material/styles';
-import { varFadeIn, varFadeInUp, varFadeInDown } from '../../animate';
+import { Box, Card, Button, Container, Typography, IconButton } from '@mui/material';
+// utils
+// import mockData from '../../../utils/mock-data';
+//
+import { varFadeIn, varFadeInUp, MotionInView, varFadeInDown } from '../../animate';
 import { CarouselControlsArrowsBasic2 } from '../../carousel';
+import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
+
+// ----------------------------------------------------------------------
+
+// const MOCK_MEMBERS = [...Array(5)].map((_, index) => ({
+//   id: mockData.id(index),
+//   name: mockData.name.fullName(index),
+//   role: mockData.role(index),
+//   avatar: mockData.image.avatar(index)
+// }));
 
 const MEMBERS = [
   {
-    id: 1,
-    name: "Osama Bin Azam",
-    role: "Backend Developer",
-    avatar: "/static/profiles/Osama_1.jpg",
-    socialLinks: {
-      facebook: 'https://www.facebook.com/osama.bin.azam',
-      instagram: 'https://www.instagram.com/osama.bin.azam',
-      linkedin: 'https://www.linkedin.com/in/osama-bin-azam',
-      twitter: 'https://www.twitter.com/osama.bin.azam'
-    }
+    id:1,
+    name:"Osama Bin Azam",
+    role:"Backend Developer",
+    avatar:"/static/profiles/Osama_1.jpg"
   },
+
   {
-    id: 2,
-    name: "Shafique Ahmed",
-    role: "App Developer",
-    avatar: "/static/profiles/Osama_1.jpg",
-    socialLinks: {
-      facebook: 'https://www.facebook.com/shafique.ahmed',
-      instagram: 'https://www.instagram.com/shafique.ahmed',
-      linkedin: 'https://www.linkedin.com/in/shafique-ahmed',
-      twitter: 'https://www.twitter.com/shafique.ahmed'
-    }
+    id:2,
+    name:"Shafique Ahmed",
+    role:"App Developer",
+    avatar:"/static/profiles/Osama_1.jpg"
   },
+
   {
-    id: 3,
-    name: "Simran Waswani",
-    role: "Frontend Developer",
-    avatar: "/static/profiles/Osama_1.jpg",
-    socialLinks: {
-      facebook: 'https://www.facebook.com/simran.waswani',
-      instagram: 'https://www.instagram.com/simran.waswani',
-      linkedin: 'https://www.linkedin.com/in/simran-waswani',
-      twitter: 'https://www.twitter.com/simran.waswani'
-    }
+    id:3,
+    name:"Simran Waswani",
+    role:"Frontend Developer",
+    avatar:"/static/profiles/Osama_1.jpg"
   },
+
   {
-    id: 4,
-    name: "Hanood Tunio",
-    role: "Frontend Designer",
-    avatar: "/static/profiles/bunny.png",
-    socialLinks: {
-      facebook: 'https://www.facebook.com/hanood.tunio',
-      instagram: 'https://www.instagram.com/hanood.tunio',
-      linkedin: 'https://www.linkedin.com/in/hanood-tunio',
-      twitter: 'https://www.twitter.com/hanood.tunio'
-    }
-  }
-];
+    id:4,
+    name:"Hanood Tunio",
+    role:"Frontend Designer",
+    avatar:"/static/profiles/bunny.png"
+  },
+
+  {
+    id:5,
+    name:"Hadiqa Gul",
+    role:"Marketing Manager",
+    avatar:"/static/profiles/Osama_1.jpg"
+  },
+
+  {
+    id:6,
+    name:"Aditiya kapoor",
+    role:"Graphics Designer",
+    avatar:"/static/profiles/Osama_1.jpg"
+  },
+]
+
+// ----------------------------------------------------------------------
+
+MemberCard.propTypes = {
+  member: PropTypes.shape({
+    id: PropTypes.string,
+    avatar: PropTypes.string,
+    name: PropTypes.string,
+    role: PropTypes.string
+  })
+};
 
 function MemberCard({ member }) {
-  const { name, role, avatar, socialLinks } = member;
-
+  // console.log(member)
+  const { name, role, avatar } = member;
   return (
-    <Card key={name} sx={{ p: 2, mx: 1.5, height: 400 }}> {/* Increased height */}
+    <Card key={name} sx={{ p: 1, mx: 1.5 }}>
       <Typography variant="subtitle1" sx={{ mt: 2, mb: 0.5 }}>
         {name}
       </Typography>
       <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
         {role}
       </Typography>
-      <Box
-        component="img"
-        src={avatar}
-        sx={{
-          width: '100%',
-          maxHeight: '250px', // Set maximum height for the image
-          objectFit: 'cover',
-          borderRadius: 1.5
-        }}
-      />
-      <Box sx={{ mt: 2, mb: 1, display: 'flex', justifyContent: 'center' }}>
-        <IconButton component="a" href={socialLinks.facebook} target="_blank" rel="noopener noreferrer">
-          <Icon icon={facebookFill} width={20} height={20} />
-        </IconButton>
-        <IconButton component="a" href={socialLinks.instagram} target="_blank" rel="noopener noreferrer">
-          <Icon icon={instagramFilled} width={20} height={20} />
-        </IconButton>
-        <IconButton component="a" href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
-          <Icon icon={linkedinFill} width={20} height={20} />
-        </IconButton>
-        <IconButton component="a" href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
-          <Icon icon={twitterFill} width={20} height={20} />
-        </IconButton>
-      </Box>
-    </Card>
+      <Box component="img" src={avatar} sx={{ width: '100%', height: '100%' , borderRadius: 1.5 }} />
+       <Box sx={{ mt: 2, mb: 1 }}>
+       {[facebookFill, instagramFilled, linkedinFill, twitterFill].map((social, index) => (
+        <IconButton key={index}>
+            <Icon icon={social} width={20} height={20} />
+           </IconButton>
+         ))}
+       </Box>
+     </Card>
   );
 }
 
@@ -140,30 +142,38 @@ export default function AboutTeam() {
 
   return (
     <Container maxWidth="lg" sx={{ pb: 10, textAlign: 'center' }}>
-      <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.secondary' }}>
-        Dream team
-      </Typography>
+      <MotionInView variants={varFadeInDown}>
+        <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.secondary' }}>
+          Dream team
+        </Typography>
+      </MotionInView>
 
-      <Typography variant="h2" sx={{ mb: 3 }}>
-        Great team is the key
-      </Typography>
+      <MotionInView variants={varFadeInUp}>
+        <Typography variant="h2" sx={{ mb: 3 }}>
+          Great team is the key
+        </Typography>
+      </MotionInView>
 
-      <Typography
-        sx={{
-          mb: 10,
-          mx: 'auto',
-          maxWidth: 630,
-          color: (theme) => (theme.palette.mode === 'light' ? 'text.secondary' : 'common.white')
-        }}
-      >
-        SmartQ will provide you support if you have any problems, our support team will reply within a day and we
-        also have detailed documentation.
-      </Typography>
+      <MotionInView variants={varFadeInUp}>
+        <Typography
+          sx={{
+            mb: 10,
+            mx: 'auto',
+            maxWidth: 630,
+            color: (theme) => (theme.palette.mode === 'light' ? 'text.secondary' : 'common.white')
+          }}
+        >
+          Minimal will provide you support if you have any problems, our support team will reply within a day and we
+          also have detailed documentation.
+        </Typography>
+      </MotionInView>
 
       <Box sx={{ position: 'relative' }}>
         <Slider ref={carouselRef} {...settings}>
           {MEMBERS.map((member) => (
-            <MemberCard key={member.id} member={member} />
+            <MotionInView key={member.id} variants={varFadeIn}>
+              <MemberCard member={member} />
+            </MotionInView>
           ))}
         </Slider>
         <CarouselControlsArrowsBasic2
@@ -172,6 +182,15 @@ export default function AboutTeam() {
           sx={{ transform: 'translateY(-64px)' }}
         />
       </Box>
+      {/* <Button
+        variant="outlined"
+        color="inherit"
+        size="large"
+        endIcon={<Icon icon={roundArrowRightAlt} width={24} height={24} />}
+        sx={{ mx: 'auto' }}
+      >
+        View all team members
+      </Button> */}
     </Container>
   );
 }
