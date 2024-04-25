@@ -96,7 +96,7 @@ export default function AboutWhat() {
           <Grid item xs={12} md={6} lg={5}>
             <MotionInView variants={varFadeInRight}>
               <Typography variant="h2" sx={{ mb: 3 }}>
-                What is SmartQ?
+                What is minimal?
               </Typography>
             </MotionInView>
 
@@ -106,11 +106,10 @@ export default function AboutWhat() {
                   color: (theme) => (theme.palette.mode === 'light' ? 'text.secondary' : 'common.white')
                 }}
               >
-                SmartQ stands as the pinnacle of queue management solutions, offering unparalleled ease of use and
-                robust functionality. With its intuitive interface and comprehensive features, SmartQ streamlines
-                service management for both businesses and customers. Enjoy effortless setup, customizable templates,
-                and seamless front-end editing capabilities, empowering you to optimize service operations with
-                unparalleled efficiency and effectiveness. Say hello to a new era of service management with SmartQ.
+                Our theme is the most advanced and user-friendly theme you will find on the market, we have
+                documentation and video to help set your site really easily, pre-installed demos you can import in one
+                click and everything from the theme options to page content can be edited from the front-end. This is
+                the theme you are looking for.
               </Typography>
             </MotionInView>
 

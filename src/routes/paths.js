@@ -41,9 +41,7 @@ export const PATH_DASHBOARD = {
     home: path(ROOTS_DASHBOARD, '/home'),
     transactions: path(ROOTS_DASHBOARD, '/transactions'),
     queue: path(ROOTS_DASHBOARD, '/queue'),
-    request: path(ROOTS_DASHBOARD, '/request'),
-    // Add path for PageFive
-    pageFive: path(ROOTS_DASHBOARD, '/page-five')
+    request: path(ROOTS_DASHBOARD, '/request') 
   },
   app: {
     root: path(ROOTS_DASHBOARD, '/app'),

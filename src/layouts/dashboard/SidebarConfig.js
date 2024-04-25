@@ -9,10 +9,13 @@ const getIcon = (name) => (
 );
 
 const ICONS = {
-  user: getIcon('ic_user'),
-  ecommerce: getIcon('ic_ecommerce'),
-  analytics: getIcon('ic_analytics'),
-  dashboard: getIcon('ic_dashboard')
+  ser: getIcon('ic_user'),
+  ecommerce: getIcon('queue-svgrepo-com'),
+  analytics: getIcon('product-request-svgrepo-com'),
+  dashboard: getIcon('icons8-home'),
+  product: getIcon('payment-methods-svgrepo-com'),
+ history:  getIcon('data-sync-file-icon'),
+
 };
 
 const sidebarConfig = [
@@ -21,11 +24,11 @@ const sidebarConfig = [
   {
     subheader: 'general',
     items: [
-      { title: 'Home', path: PATH_DASHBOARD.general.home,icon: ICONS.dashboard },
+      { title: 'Home', path: PATH_DASHBOARD.general.home, icon: ICONS.dashboard },
       { title: 'Manage Queue', path: PATH_DASHBOARD.general.queue, icon: ICONS.ecommerce },
-      { title: 'Transactions', path: PATH_DASHBOARD.general.transactions, icon: ICONS.analytics },
+      { title: 'Transactions', path: PATH_DASHBOARD.general.transactions, icon: ICONS.product },
       { title: 'Requests', path: PATH_DASHBOARD.general.request, icon: ICONS.analytics },
-      { title: 'History', path: PATH_DASHBOARD.app.pageFive, icon: ICONS.analytics }
+      { title: 'History', path: PATH_DASHBOARD.app.pageFive, icon: ICONS.history }
    //   { title: 'User', path: PATH_DASHBOARD.app.user, icon: ICONS.user } // Add the "User" item
     ]
   },
@@ -50,3 +53,6 @@ const sidebarConfig = [
 ];
 
 export default sidebarConfig;
+
+
+    
