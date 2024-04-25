@@ -24,26 +24,23 @@ import SuspendIcon from '@mui/icons-material/Pause';
 
 const VerticalTableData = [
   {
-    id: '1',
     queueId: 18765,
     startTime: '09:00 AM',
     endTime: '10:00 AM',
   },
   {
-    id: '2',
     queueId: 18766,
     startTime: '10:00 AM',
     endTime: '11:00 AM',
   },
   {
-    id: '3',
     queueId: 18767,
     startTime: '11:00 AM',
     endTime: '12:00 PM',
   },
 ];
 
-const VerticalTable = () => {
+const VerticalTable = ({ hasUpcomingQueue }) => {
   const [editableRowId, setEditableRowId] = useState(null);
   const [editedRowData, setEditedRowData] = useState(null);
   const [anchorEl, setAnchorEl] = useState({});
@@ -109,50 +106,56 @@ const VerticalTable = () => {
       <Box sx={{ marginBottom: '16px' }}>
         <Typography variant="h6">Upcoming Queue</Typography>
       </Box>
-      <TableContainer sx={{ maxHeight: 'calc(100vh - 240px)', overflowY: 'auto', position: 'relative'}}>
-        <Table sx={{ border: 'none' }}>
-          <TableHead>
-            <TableRow>
-              <TableCell style={{ border: 'none' }}>Queue ID</TableCell>
-              <TableCell style={{ border: 'none' }}>Start Time</TableCell>
-              <TableCell style={{ border: 'none' }}>End Time</TableCell>
-              <TableCell>Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {verticalTableData.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell>
-                  {row.id === editableRowId ? (
-                    <TextField size="small" value={editedRowData.queueId} onChange={(e) => handleInputChange(e, 'queueId')} />
-                  ) : (
-                    row.queueId
-                  )}
-                </TableCell>
-                <TableCell>
-                  {row.id === editableRowId ? (
-                    <TextField size="small" value={editedRowData.startTime} onChange={(e) => handleInputChange(e, 'startTime')} />
-                  ) : (
-                    row.startTime
-                  )}
-                </TableCell>
-                <TableCell>
-                  {row.id === editableRowId ? (
-                    <TextField size="small" value={editedRowData.endTime} onChange={(e) => handleInputChange(e, 'endTime')} />
-                  ) : (
-                    row.endTime
-                  )}
-                </TableCell>
-                <TableCell align="right">
-                  <IconButton aria-label="more" onClick={(event) => handleClickMenu(event, row)}>
-                    <MoreVertIcon />
-                  </IconButton>
-                </TableCell>
+      {hasUpcomingQueue ? (
+        <TableContainer sx={{ maxHeight: 'calc(100vh - 240px)', overflowY: 'auto', position: 'relative'}}>
+          <Table sx={{ border: 'none' }}>
+            <TableHead>
+              <TableRow>
+                <TableCell style={{ border: 'none' }}>Queue ID</TableCell>
+                <TableCell style={{ border: 'none' }}>Start Time</TableCell>
+                <TableCell style={{ border: 'none' }}>End Time</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {verticalTableData.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    {row.id === editableRowId ? (
+                      <TextField size="small" value={editedRowData.queueId} onChange={(e) => handleInputChange(e, 'queueId')} />
+                    ) : (
+                      row.queueId
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {row.id === editableRowId ? (
+                      <TextField size="small" value={editedRowData.startTime} onChange={(e) => handleInputChange(e, 'startTime')} />
+                    ) : (
+                      row.startTime
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {row.id === editableRowId ? (
+                      <TextField size="small" value={editedRowData.endTime} onChange={(e) => handleInputChange(e, 'endTime')} />
+                    ) : (
+                      row.endTime
+                    )}
+                  </TableCell>
+                  <TableCell align="right">
+                    <IconButton aria-label="more" onClick={(event) => handleClickMenu(event, row)}>
+                      <MoreVertIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Typography variant="body1" align="center">
+          There are no upcoming queues.
+        </Typography>
+      )}
       {editableRowId && (
         <Box sx={{ mt: 2 }}>
           <Button variant="contained" color="primary" onClick={handleSaveRow}>
