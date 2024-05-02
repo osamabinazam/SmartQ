@@ -6,18 +6,6 @@ import DownloadIcon from '@mui/icons-material/CloudDownload';
 import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
-// import { sentenceCase } from 'change-case';
-import { Icon } from '@iconify/react';
-import { Link as RouterLink } from 'react-router-dom';
-import bookFill from '@iconify/icons-eva/book-fill';
-import heartFill from '@iconify/icons-eva/heart-fill';
-import shareFill from '@iconify/icons-eva/share-fill';
-import printerFill from '@iconify/icons-eva/printer-fill';
-import downloadFill from '@iconify/icons-eva/download-fill';
-import trash2Outline from '@iconify/icons-eva/trash-2-outline';
-import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
-import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
-
 
 import Label from '../Label';
 import Scrollbar from '../Scrollbar';
@@ -62,14 +50,12 @@ const UpcomingAppointmentMockData = [
   },
 ];
 
-
-
-
-  export default function UpcomingAppointments() {
-    const [editableRows, setEditableRows] = useState(UpcomingAppointmentMockData);
+export default function UpcomingAppointments({ hasCurrentQueue }) {
+  const [editableRows, setEditableRows] = useState(UpcomingAppointmentMockData);
   const [isEditing, setIsEditing] = useState(false);
   const [editedRowData, setEditedRowData] = useState(null);
   const [anchorEl, setAnchorEl] = useState({});
+
   const handleEditRow = (rowData) => {
     setIsEditing(true);
     setEditedRowData({ ...rowData });
@@ -134,121 +120,133 @@ const UpcomingAppointmentMockData = [
     handleCloseMenu(editedRowData.id);
   };
 
-    const handleDelete = () => {
-      const updatedRows = editableRows.filter(row => row.id !== editedRowData.id);
-      setEditableRows(updatedRows);
-      setIsEditing(false);
-      handleCloseMenu(editedRowData.id);
-    };
+  const handleDelete = () => {
+    const updatedRows = editableRows.filter(row => row.id !== editedRowData.id);
+    setEditableRows(updatedRows);
+    setIsEditing(false);
+    handleCloseMenu(editedRowData.id);
+  };
 
-    return (
-      <>
-        <Card>
-          <CardHeader
-            title={
-              <Typography variant="h6" component="div">
-                Current Queue
-              </Typography>
-            }
-            action={
-              <>
-                {isEditing ? (
-                  <Box sx={{ display: 'flex', gap: '10px' }}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleSaveRow}
-                    >
-                      Save
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={handleCancelEdit}
-                    >
-                      Cancel
-                    </Button>
-                  </Box>
-                ) : (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => setIsEditing(true)}
-                    disabled={isEditing}
-                  >
-                    Edit
-                  </Button>
-                )}
-              </>
-            }
-            sx={{ mb: 3 }}
-          />
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Customer</TableCell>
-                  <TableCell>Time</TableCell>
-                  <TableCell>Service Type</TableCell>
-                  <TableCell>Category</TableCell>
-                  <TableCell align="right">Actions</TableCell>
+  return (
+    <Card>
+      <CardHeader
+        title={
+          <Typography variant="h6" component="div">
+            Current Queue
+          </Typography>
+        }
+        action={
+          <>
+            {isEditing ? (
+              <Box sx={{ display: 'flex', gap: '10px' }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSaveRow}
+                >
+                  Save
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleCancelEdit}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            ) : (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setIsEditing(true)}
+                disabled={isEditing}
+              >
+                Edit
+              </Button>
+            )}
+          </>
+        }
+        sx={{ mb: 3 }}
+      />
+      {editableRows.length === 0 && !hasCurrentQueue ? (
+        <Typography variant="body1" align="center" sx={{ p: 2 }}>
+          There are no upcoming appointments and no current queue.
+        </Typography>
+      ) : editableRows.length === 0 && hasCurrentQueue ? (
+        <Typography variant="body1" align="center" sx={{ p: 2 }}>
+          There are no upcoming appointments.
+        </Typography>
+      ) : !hasCurrentQueue ? (
+        <Typography variant="body1" align="center" sx={{ p: 2 }}>
+          There is no current queue.
+        </Typography>
+      ) : (
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Customer</TableCell>
+                <TableCell>Time</TableCell>
+                <TableCell>Service Type</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell align="right">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {editableRows.map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell>
+                    <Avatar src={row.avatar} />
+                    {row.name}
+                  </TableCell>
+                  <TableCell>
+                    {format(new Date(row.date), 'dd MMM yyyy p')}
+                  </TableCell>
+                  <TableCell>{row.type}</TableCell>
+                  <TableCell>{row.category}</TableCell>
+                  <TableCell align="right">
+                    {!isEditing ? (
+                      <>
+                        <IconButton
+                          aria-label="more"
+                          aria-controls={`menu-${row.id}`}
+                          aria-haspopup="true"
+                          onClick={(event) => handleClickMenu(event, row)}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                        <Menu
+                          id={`menu-${row.id}`}
+                          anchorEl={anchorEl[row.id]}
+                          open={Boolean(anchorEl[row.id])}
+                          onClose={() => handleCloseMenu(row.id)}
+                        >
+                          <MenuItem onClick={handleDownload}>
+                            <DownloadIcon fontSize="small" sx={{ mr: 1 }} />
+                            Download
+                          </MenuItem>
+                          <MenuItem onClick={handlePrint}>
+                            <PrintIcon fontSize="small" sx={{ mr: 1 }} />
+                            Print
+                          </MenuItem>
+                          <MenuItem onClick={handleShare}>
+                            <ShareIcon fontSize="small" sx={{ mr: 1 }} />
+                            Share
+                          </MenuItem>
+                          <MenuItem onClick={handleDelete}>
+                            <DeleteIcon fontSize="small" sx={{ mr: 1 }} />
+                            Delete
+                          </MenuItem>
+                        </Menu>
+                      </>
+                    ) : null}
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {editableRows.map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell>
-                      <Avatar src={row.avatar} />
-                      {row.name}
-                    </TableCell>
-                    <TableCell>
-                      {format(new Date(row.date), 'dd MMM yyyy p')}
-                    </TableCell>
-                    <TableCell>{row.type}</TableCell>
-                    <TableCell>{row.category}</TableCell>
-                    <TableCell align="right">
-                      {!isEditing ? (
-                        <>
-                          <IconButton
-                            aria-label="more"
-                            aria-controls={`menu-${row.id}`}
-                            aria-haspopup="true"
-                            onClick={(event) => handleClickMenu(event, row)}
-                          >
-                            <MoreVertIcon />
-                          </IconButton>
-                          <Menu
-                            id={`menu-${row.id}`}
-                            anchorEl={anchorEl[row.id]}
-                            open={Boolean(anchorEl[row.id])}
-                            onClose={() => handleCloseMenu(row.id)}
-                          >
-                            <MenuItem onClick={handleDownload}>
-                              <DownloadIcon fontSize="small" sx={{ mr: 1 }} />
-                              Download
-                            </MenuItem>
-                            <MenuItem onClick={handlePrint}>
-                              <PrintIcon fontSize="small" sx={{ mr: 1 }} />
-                              Print
-                            </MenuItem>
-                            <MenuItem onClick={handleShare}>
-                              <ShareIcon fontSize="small" sx={{ mr: 1 }} />
-                              Share
-                            </MenuItem>
-                            <MenuItem onClick={handleDelete}>
-                              <DeleteIcon fontSize="small" sx={{ mr: 1 }} />
-                              Delete
-                            </MenuItem>
-                          </Menu>
-                        </>
-                      ) : null}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
-      </>
-    );
-  }
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </Card>
+  );
+}
