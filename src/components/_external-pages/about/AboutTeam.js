@@ -26,7 +26,7 @@ const MEMBERS = [
       facebook: 'https://www.facebook.com/osamabinazm.8086/',
       instagram: 'https://www.instagram.com/osamabinazam.8086/',
       linkedin: 'https://www.linkedin.com/in/osama-bin-azam/',
-      twitter: 'https://www.github.com/osamabinazam'
+      github: 'https://www.github.com/osamabinazam'
     }
   },
   {
@@ -35,10 +35,10 @@ const MEMBERS = [
     role: "App Developer",
     avatar: "/static/profiles/shafique.jpeg",
     socialLinks: {
-      facebook: 'https://www.facebook.com/shafique.ahmed',
-      instagram: 'https://www.instagram.com/shafique.ahmed',
-      linkedin: 'https://www.linkedin.com/in/shafique-ahmed',
-      twitter: 'https://www.twitter.com/shafique.ahmed'
+      facebook: 'https://www.facebook.com/shafique17z',
+      instagram: 'https://www.instagram.com/shafique7z/',
+      linkedin: 'https://www.linkedin.com/in/shafique17z/',
+      github: 'https://www.github.com/shafique17z'
     }
   },
   {
@@ -47,10 +47,10 @@ const MEMBERS = [
     role: "Frontend Developer",
     avatar: "/static/profiles/simran.jpeg",
     socialLinks: {
-      facebook: 'https://www.facebook.com/simran.waswani',
-      instagram: 'https://www.instagram.com/simran.waswani',
-      linkedin: 'https://www.linkedin.com/in/simran-waswani',
-      twitter: 'https://www.twitter.com/simran.waswani'
+      facebook: 'https://www.facebook.com/profile.php?id=100073694071309',
+      instagram: 'https://www.instagram.com/simi_waswani/',
+      linkedin: 'https://www.linkedin.com/in/simran-vaswani-83942a252/',
+      github: 'https://github.com/simranwaswani'
     }
   },
   // {
@@ -99,7 +99,7 @@ function MemberCard({ member }) {
         <IconButton component="a" href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
           <Icon icon={linkedinFill} width={20} height={20} />
         </IconButton>
-        <IconButton component="a" href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
+        <IconButton component="a" href={socialLinks.github} target="_blank" rel="noopener noreferrer">
           <Icon icon={githubFill} width={20} height={20} />
         </IconButton>
       </Box>
