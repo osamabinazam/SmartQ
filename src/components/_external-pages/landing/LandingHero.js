@@ -27,7 +27,7 @@ const RootStyle = styled(motion.div)(({ theme }) => ({
     width: '100%',
     height: '100vh',
     display: 'flex',
-    justifyContent: 'center', // Center horizontally
+    justifyContent: 'fixed', // Center horizontally
     alignItems: 'center'
   }
 }));
@@ -86,7 +86,7 @@ export default function LandingHero() {
                 <Typography component="span" variant="h4" sx={{ color: 'primary.main' }}>
                   <br /><br /> Welcome to SmartQ:
                 </Typography>
-                Revolutionizing Your Appointment Experience
+                 Revolutionizing Your Appointment Experience
               </Typography>
             </motion.div>
 
@@ -104,13 +104,13 @@ export default function LandingHero() {
                 to={PATH_DASHBOARD.root}
                 startIcon={<Icon icon={flashFill} width={20} height={20} />}
               >
-                Live Preview
+                Start Now
               </Button>
             </motion.div>
           </ContentStyle>
         </Container>
       </RootStyle>
-      <Box sx={{ height: { md: '100vh' } }} />
+      
     </>
   );
 }

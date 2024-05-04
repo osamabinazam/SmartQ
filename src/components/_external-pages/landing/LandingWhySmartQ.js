@@ -1,5 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { Box, Grid, Container, Typography, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import Lists from './Lists';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import { 
   MotionInView, 
@@ -56,6 +57,7 @@ export default function LandingWhySmartQ() {
 
         <Grid container spacing={5} direction="row-reverse" justifyContent="space-between">
           <Grid item xs={12} >
+
             <ContentStyle>
               <MotionInView variants={varFadeInUp}>
                 <Typography variant="h2" sx={{ mb: 3, color: 'White' }}>
@@ -63,24 +65,12 @@ export default function LandingWhySmartQ() {
                 </Typography>
               </MotionInView>
 
+
+
               <MotionInView variants={varFadeInUp}>
                 <Typography sx={{ color: 'common.Black', mb: 5 }}>
-                  <ListWrapperStyle>
-                    <List component="nav" aria-label="main mailbox folders">
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <DraftsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="SmartQ, in partnership with Everycorner, is dedicated to transforming public service experiences in Pakistan." />
-                      </ListItemButton>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <DraftsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Our platform is designed to significantly reduce wait times, enhance operational efficiency, and provide a seamless user experience." />
-                      </ListItemButton>
-                    </List>
-                  </ListWrapperStyle>
+                  <Lists sx={{ width: '100%', maxWidth: 360, margin: 'auto' }} />
+                 
                 </Typography>
               </MotionInView>
             </ContentStyle>

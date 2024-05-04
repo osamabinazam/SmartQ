@@ -16,6 +16,7 @@ import {
 
   LandingHugePackElements,
 } from '../components/_external-pages/landing';
+import LandingWhySmartQ from 'src/components/_external-pages/landing/LandingWhySmartQ';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +28,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
   overflow: 'hidden',
   position: 'relative',
   backgroundColor: theme.palette.background.default,
-  // marginBottom: theme.spacing(0)
+  marginBottom: theme.spacing(0)
 }));
 
 // ----------------------------------------------------------------------
@@ -36,9 +37,7 @@ export default function LandingPage() {
 
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
-  console.log("Hello  This  IS Landing Page");
-  console.log(user)
-  console.log(isAuthenticated);
+
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/', { replace: true });
@@ -52,11 +51,12 @@ export default function LandingPage() {
     <RootStyle title="SmartQ" id="move_top">
       <LandingHero />
       <ContentStyle>
-        <LandingDarkMode />
+        <LandingWhySmartQ />
+        <LandingHugePackElements />
         <LandingMinimal />
      
         <LandingCleanInterfaces />
-        <LandingPricingPlans />
+        {/* <LandingPricingPlans /> */}
         
       </ContentStyle>
     </RootStyle>
