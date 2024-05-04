@@ -29,11 +29,6 @@ export default function LoginForm() {
   const { login } = useAuth();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard', { replace: true });
-    }
-  }, [isAuthenticated, navigate])
 
   
 
@@ -55,6 +50,7 @@ export default function LoginForm() {
       userType:'vendor'
     },
     validationSchema: LoginSchema,
+    
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
       await login(values.email, values.password); // console.log(values)
       if (isAuthenticated) {

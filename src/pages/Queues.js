@@ -4,8 +4,27 @@ import Page from '../components/Page';
 import UpcomingAppointments from '../components/general-app/UpcomingAppointments';
 import VerticalTable from '../components/general-app/VerticalTable';
 import CompleteQueue from '../components/general-app/CompleteQueue';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useAuth from 'src/hooks/useAuth';
 
 export default function PageThree() {
+  const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/auth/login', { replace: true });
+    }
+
+    if (isAuthenticated && user?.usertype !== 'vendor') {
+      navigate('/auth/401', { replace: true });
+    }
+  }
+  , [isAuthenticated, navigate, user.usertype]);
+
+
+
   const [open, setOpen] = useState(false);
   const [queueData, setQueueData] = useState({
     startTime: '',

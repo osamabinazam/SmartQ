@@ -12,6 +12,7 @@ import ResetPassword from 'src/pages/authentication/ResetPassword';
 import VerifyCode from 'src/pages/authentication/VerifyCode';
 import NewPasswordForm from 'src/pages/authentication/NewPasswordForm';
 import Request from 'src/pages/Request';
+import Page401 from 'src/pages/Page401';
 
 // ----------------------------------------------------------------------
 
@@ -26,10 +27,11 @@ export default function Router() {
   const LoadablePageOne = Loadable(lazy(() => import('../pages/Home')), pathname);
   const LoadablePageTwo = Loadable(lazy(() => import('../pages/Transactions')), pathname);
   const LoadablePageThree = Loadable(lazy(() => import('../pages/Queues')), pathname);
-  const LoadablePageFour = Loadable(lazy(() => import('../pages/PageFour')), pathname);
-  const LoadablePageFive = Loadable(lazy(() => import('../pages/PageFive')), pathname);
-  const LoadablePageSix = Loadable(lazy(() => import('../pages/PageSix')), pathname);
+  // const LoadablePageFour = Loadable(lazy(() => import('../pages/PageFour')), pathname);
+  // const LoadablePageFive = Loadable(lazy(() => import('../pages/PageFive')), pathname);
+  // const LoadablePageSix = Loadable(lazy(() => import('../pages/PageSix')), pathname);
   const LoadableNotFound = Loadable(lazy(() => import('../pages/Page404')), pathname);
+  const LoadablePage401 = Loadable(lazy(() => import('../pages/Page401')), pathname);
   const LoadableLandingPage = Loadable(lazy(() => import('../pages/LandingPage')), pathname);
   const LoadableRequestPage = Loadable(lazy(() => import('../pages/Request')), pathname);
 
@@ -41,7 +43,8 @@ export default function Router() {
         { path: 'register', element: <Register /> },
         { path: 'reset-password', element: <ResetPassword /> },
         { path: 'verify', element: <VerifyCode /> },
-        { path: 'new-password', element: <NewPasswordForm /> } 
+        { path: 'new-password', element: <NewPasswordForm /> } ,
+        { path: '401', element: <LoadablePage401 />}
       ]
     },
     {
@@ -62,8 +65,8 @@ export default function Router() {
       element: <MainLayout />,
       children: [
         { element: <LandingPage /> },
-        { path: '/about', element: <About /> },
-        { path: '/contact', element: <Contact /> }
+        { path: 'about', element: <About /> },
+        { path: 'contact', element: <Contact /> }
       ]
     },
 

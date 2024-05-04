@@ -24,6 +24,7 @@ import { LoginForm } from '../../components/authentication/login';
 import AuthFirebaseSocials from '../../components/authentication/AuthFirebaseSocial';
 import { useNavigate } from 'react-router-dom';
 
+import { useEffect } from 'react';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -57,14 +58,11 @@ export default function Login() {
   const { method, login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  if (isAuthenticated) {
-    navigate('/dashboard', { replace: true });
-  }else{
-  
-    navigate('/auth/login', { replace: true });
-  }
-
-
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleLoginAuth0 = async () => {
     try {

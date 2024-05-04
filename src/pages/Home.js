@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import axiosInstance from 'src/utils/axios';
 
+
 // ----------------------------------------------------------------------
 
 
@@ -42,9 +43,13 @@ export default function GeneralApp() {
       navigate('/auth/login', { replace: true });
     }
 
+     if (isAuthenticated && user?.usertype !== 'vendor') {
+      navigate('/auth/401', { replace: true });
+    }
+
     fetchQueueData();
 
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, user.usertype]);
 
   const fetchQueueData = async () => {
     try {
@@ -76,7 +81,7 @@ export default function GeneralApp() {
         <AppWelcome displayName={user?.username} />
 
 
-        {queueData.queueStatus ? (
+        { queueData.queueStatus ? (
           <>
             <Typography xs={12} md={6} variant="h3" component="div" sx={{ color: 'primary.main', display: 'flex', flexDirection: 'column', alignItems: 'left', justifyContent: 'space-between', paddingTop: '20px' }}>
               Active Queue
