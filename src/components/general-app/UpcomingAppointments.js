@@ -6,6 +6,8 @@ import DownloadIcon from '@mui/icons-material/CloudDownload';
 import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useEffect } from 'react';
+import axiosInstance from '../../utils/axios';
 
 import Label from '../Label';
 import Scrollbar from '../Scrollbar';
@@ -50,7 +52,10 @@ const UpcomingAppointmentMockData = [
   },
 ];
 
-export default function UpcomingAppointments({ hasCurrentQueue }) {
+export default function UpcomingAppointments({ isActive, queueid }) {
+
+  console.log("Is Active: ", isActive)
+
   const [editableRows, setEditableRows] = useState(UpcomingAppointmentMockData);
   const [isEditing, setIsEditing] = useState(false);
   const [editedRowData, setEditedRowData] = useState(null);
@@ -127,12 +132,48 @@ export default function UpcomingAppointments({ hasCurrentQueue }) {
     handleCloseMenu(editedRowData.id);
   };
 
+  /**
+   * Get Data from API
+   */
+
+  const [UpcomingAppointments, setUpcomingAppointments] = useState([]);
+
+  
+  useEffect(() => {
+
+    if (!isActive) {
+      setEditableRows([]);
+    }
+
+    fetchUpcomingAppointments();
+
+
+  }
+  , [isActive]);
+
+  const fetchUpcomingAppointments = async () => {
+
+    console.log("Queue ID: ", queueid);
+    const data ={
+      queueid: queueid
+    }
+
+    try {
+      const response = await axiosInstance.post('/api/appointment/upcoming', data);
+      console.log(response.data);
+      setUpcomingAppointments(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
   return (
     <Card>
       <CardHeader
         title={
           <Typography variant="h6" component="div">
-            Current Queue
+            Upcomming Appointments
           </Typography>
         }
         action={
@@ -168,19 +209,7 @@ export default function UpcomingAppointments({ hasCurrentQueue }) {
         }
         sx={{ mb: 3 }}
       />
-      {editableRows.length === 0 && !hasCurrentQueue ? (
-        <Typography variant="body1" align="center" sx={{ p: 2 }}>
-          There are no upcoming appointments and no current queue.
-        </Typography>
-      ) : editableRows.length === 0 && hasCurrentQueue ? (
-        <Typography variant="body1" align="center" sx={{ p: 2 }}>
-          There are no upcoming appointments.
-        </Typography>
-      ) : !hasCurrentQueue ? (
-        <Typography variant="body1" align="center" sx={{ p: 2 }}>
-          There is no current queue.
-        </Typography>
-      ) : (
+      {
         <TableContainer>
           <Table>
             <TableHead>
@@ -246,7 +275,7 @@ export default function UpcomingAppointments({ hasCurrentQueue }) {
             </TableBody>
           </Table>
         </TableContainer>
-      )}
+      }
     </Card>
   );
 }

@@ -1,22 +1,19 @@
 import React from 'react';
-import { format } from 'date-fns';
 import { Box, Card, Typography, Stack } from '@mui/material';
 import { fNumber } from '../../utils/formatNumber';
 
-const QUEUE_ID = 18765;
+const SERVED_CUSTOMERS = 4876;
 
-const QueueInfo = ({ hasCurrentQueue }) => {
+export default function RemaingAppointments( {data}) {
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle2">Start</Typography>
+        <Typography variant="subtitle2">Remaining Appointments</Typography>
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
-          <Typography variant="span" color={'text.secondary'}>Time: {format(new Date(1627556329038), 'p')}</Typography>
+        <Typography variant="h3">{data}</Typography>
         </Stack>
-        <Typography variant="h3">{fNumber(QUEUE_ID)}</Typography>
+        
       </Box>
     </Card>
   );
 }
-
-export default QueueInfo;
