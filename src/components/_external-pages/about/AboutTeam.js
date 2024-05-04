@@ -5,9 +5,10 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 import { Icon } from '@iconify/react';
-import twitterFill from '@iconify/icons-eva/twitter-fill';
+import githubFill from '@iconify/icons-eva/github-fill';
 import linkedinFill from '@iconify/icons-eva/linkedin-fill';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
+
 import roundArrowRightAlt from '@iconify/icons-ic/round-arrow-right-alt';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 import { Box, Card, Container, Typography, IconButton } from '@mui/material';
@@ -22,17 +23,17 @@ const MEMBERS = [
     role: "Backend Developer",
     avatar: "/static/profiles/Osama_1.jpg",
     socialLinks: {
-      facebook: 'https://www.facebook.com/osama.bin.azam',
-      instagram: 'https://www.instagram.com/osama.bin.azam',
-      linkedin: 'https://www.linkedin.com/in/osama-bin-azam',
-      twitter: 'https://www.twitter.com/osama.bin.azam'
+      facebook: 'https://www.facebook.com/osamabinazm.8086/',
+      instagram: 'https://www.instagram.com/osamabinazam.8086/',
+      linkedin: 'https://www.linkedin.com/in/osama-bin-azam/',
+      twitter: 'https://www.github.com/osamabinazam'
     }
   },
   {
     id: 2,
     name: "Shafique Ahmed",
     role: "App Developer",
-    avatar: "/static/profiles/Osama_1.jpg",
+    avatar: "/static/profiles/shafique.jpeg",
     socialLinks: {
       facebook: 'https://www.facebook.com/shafique.ahmed',
       instagram: 'https://www.instagram.com/shafique.ahmed',
@@ -44,7 +45,7 @@ const MEMBERS = [
     id: 3,
     name: "Simran Waswani",
     role: "Frontend Developer",
-    avatar: "/static/profiles/Osama_1.jpg",
+    avatar: "/static/profiles/simran.jpeg",
     socialLinks: {
       facebook: 'https://www.facebook.com/simran.waswani',
       instagram: 'https://www.instagram.com/simran.waswani',
@@ -52,25 +53,25 @@ const MEMBERS = [
       twitter: 'https://www.twitter.com/simran.waswani'
     }
   },
-  {
-    id: 4,
-    name: "Hanood Tunio",
-    role: "Frontend Designer",
-    avatar: "/static/profiles/bunny.png",
-    socialLinks: {
-      facebook: 'https://www.facebook.com/hanood.tunio',
-      instagram: 'https://www.instagram.com/hanood.tunio',
-      linkedin: 'https://www.linkedin.com/in/hanood-tunio',
-      twitter: 'https://www.twitter.com/hanood.tunio'
-    }
-  }
+  // {
+  //   id: 4,
+  //   name: "Hanood Tunio",
+  //   role: "Frontend Designer",
+  //   avatar: "/static/profiles/bunny.png",
+  //   socialLinks: {
+  //     facebook: 'https://www.facebook.com/hanood.tunio',
+  //     instagram: 'https://www.instagram.com/hanood.tunio',
+  //     linkedin: 'https://www.linkedin.com/in/hanood-tunio',
+  //     twitter: 'https://www.twitter.com/hanood.tunio'
+  //   }
+  // }
 ];
 
 function MemberCard({ member }) {
   const { name, role, avatar, socialLinks } = member;
 
   return (
-    <Card key={name} sx={{ p: 2, mx: 1.5, height: 400 }}> {/* Increased height */}
+    <Card key={name} sx={{ p: 2, mx: 1, height: 470 }}> {/* Increased height */}
       <Typography variant="subtitle1" sx={{ mt: 2, mb: 0.5 }}>
         {name}
       </Typography>
@@ -82,9 +83,10 @@ function MemberCard({ member }) {
         src={avatar}
         sx={{
           width: '100%',
-          maxHeight: '250px', // Set maximum height for the image
+          maxHeight: '300px', // Set maximum height for the image
           objectFit: 'cover',
-          borderRadius: 1.5
+          borderRadius: 1.5,
+          height: '300px'
         }}
       />
       <Box sx={{ mt: 2, mb: 1, display: 'flex', justifyContent: 'center' }}>
@@ -98,7 +100,7 @@ function MemberCard({ member }) {
           <Icon icon={linkedinFill} width={20} height={20} />
         </IconButton>
         <IconButton component="a" href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
-          <Icon icon={twitterFill} width={20} height={20} />
+          <Icon icon={githubFill} width={20} height={20} />
         </IconButton>
       </Box>
     </Card>

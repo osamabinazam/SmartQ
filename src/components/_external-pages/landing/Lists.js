@@ -1,48 +1,104 @@
-// import { styled } from '@mui/material/styles';
-// import { Grid, List, Paper, Container, ListItemText, ListItemIcon, ListItemButton, Typography } from '@mui/material';
-// import DraftsIcon from '@mui/icons-material/Drafts';
-// import Page from '../../Page';
-// import { Block } from '../Block';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import { styled } from '@mui/material/styles';
+import { Grid, List, Paper, Container, ListItemText, ListItemIcon, ListItemButton, Typography } from '@mui/material';
+import { Block } from '../Block';
+import Page from 'src/components/Page';
+import DoneIcon from '@mui/icons-material/Done';
+const RootStyle = styled(Page)(({ theme }) => ({
+  paddingTop: theme.spacing(11),
+  paddingBottom: theme.spacing(15)
+}));
 
-// const RootStyle = styled(Page)(({ theme }) => ({
-//   paddingTop: theme.spacing(11),
-//   paddingBottom: theme.spacing(15),
-// }));
+const ListWrapperStyle = styled(Paper)(({ theme }) => ({
+  width: '50vw',
+  
+  borderRadius: theme.spacing(2),
+  
+}));
+
+export default function ListsComponent() {
+  return (
+    <RootStyle>
+      <Container maxWidth="lg">
+        <Grid container >
+          <Grid item xs={12}>
+            <Block >
+              <Typography variant="h3"  fontWeight="bold" color="primary" gutterBottom>
+                Features
+              </Typography>
+              <ListWrapperStyle>
+                <List component="nav" aria-label="main mailbox folders">
+                  <ListItemButton>
+                    <ListItemIcon>
+                    <DoneIcon sx={{ color: 'primary.main', fontWeight: 'bold', fontFamily: 'Georgia, serif', fontSize: 32 }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography variant="h6">
+                        Appointment Scheduling
+                      </Typography>
+                      }
+                    />
+                  </ListItemButton>
+
+                  <ListItemButton>
+                    <ListItemIcon>
+                    <DoneIcon sx={{ color: 'primary.main', fontWeight: 'bold', fontFamily: 'Georgia, serif', fontSize: 32 }} />
 
 
-// const ListWrapperStyle = styled(Paper)(({ theme }) => ({
-//   width: '100%',
-//   border: `solid 1px ${theme.palette.divider}`,
-//   backgroundColor: theme.palette.background.paper,
-// }));
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography variant="h6">
+                          Real-time Monitoring
+                        </Typography>
+                        
+                      }
+                    />
+                  </ListItemButton>
 
-// export default function ListsComponent() {
-//   return (
-//     <RootStyle>
-//       <Container maxWidth="lg">
-//         <Grid container spacing={3}>
-//           <Grid item xs={12}>
-//             <Block title="">
-//               <ListWrapperStyle>
-//                 <List component="nav" aria-label="main mailbox folders">
-//                   <ListItemButton>
-//                     <ListItemIcon>
-//                       <DraftsIcon />
-//                     </ListItemIcon>
-//                     <ListItemText primary="SmartQ, in partnership with Everycorner, is dedicated to transforming public service experiences in Pakistan." />
-//                   </ListItemButton>
-//                   <ListItemButton>
-//                     <ListItemIcon>
-//                       <DraftsIcon />
-//                     </ListItemIcon>
-//                     <ListItemText primary="Our platform is designed to significantly reduce wait times, enhance operational efficiency, and provide a seamless user experience." />
-//                   </ListItemButton>
-//                 </List>
-//               </ListWrapperStyle>
-//             </Block>
-//           </Grid>
-//         </Grid>
-//       </Container>
-//     </RootStyle>
-//   );
-// }
+                  <ListItemButton>
+                    <ListItemIcon>
+                    <DoneIcon sx={{ color: 'primary.main', fontWeight: 'bold', fontFamily: 'Georgia, serif', fontSize: 32 }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography variant="h6">
+                            Queue Management
+                        </Typography>
+                      }
+                    />
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItemIcon>
+                    <DoneIcon sx={{ color: 'primary.main', fontWeight: 'bold', fontFamily: 'Georgia, serif', fontSize: 32 }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography variant="h6">
+                         Geo Location Tracking
+                        </Typography>
+                      }
+                    />
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItemIcon>
+                    <DoneIcon sx={{ color: 'primary.main', fontWeight: 'bold', fontFamily: 'Georgia, serif', fontSize: 32 }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography variant="h6">
+                            Real-time Updates
+                        </Typography>
+                      }
+                    />
+                  </ListItemButton>
+                </List>
+              </ListWrapperStyle>
+            </Block>
+          </Grid>
+        </Grid>
+      </Container>
+    </RootStyle>
+  );
+}
