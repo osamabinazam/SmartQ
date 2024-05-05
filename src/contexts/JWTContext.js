@@ -131,7 +131,7 @@ function AuthProvider({ children }) {
       email,
       password,
       gender,
-      userType: 'vendor'
+      usertype: 'vendor'
       
     });
     const { tokens, user } = await response.data;
