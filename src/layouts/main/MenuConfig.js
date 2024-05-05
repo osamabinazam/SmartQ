@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import fileFill from '@iconify/icons-eva/file-fill';
+import aboutFill from '@iconify/icons-eva/info-fill'; // Add this import for the "About" icon
 // routes
 // import { PATH_DASHBOARD } from '../../routes/paths';
 import { PATH_LANDING } from '../../routes/paths';
@@ -19,7 +20,7 @@ const menuConfig = [
     icon: <Icon icon={homeFill} {...ICON_SIZE} />
   },
   // { title: 'Dashboard', path: PATH_DASHBOARD.root, icon: <Icon icon={fileFill} {...ICON_SIZE} /> },
-  { title: 'About', path:PATH_LANDING.about, icon: <Icon icon={fileFill} {...ICON_SIZE} /> },
+  { title: 'About', path:PATH_LANDING.about, icon: <Icon icon={aboutFill} {...ICON_SIZE} /> },
   { title: 'Contact', path: PATH_LANDING.contact, icon: <Icon icon={fileFill} {...ICON_SIZE} />}
 ];
 

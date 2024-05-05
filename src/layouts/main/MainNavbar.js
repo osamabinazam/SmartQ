@@ -1,20 +1,18 @@
-import { Link as RouterLink, useLocation } from 'react-router-dom';
-// material
+import React from 'react';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Box, Button, AppBar, Toolbar, Container } from '@mui/material';
-// hooks
+import { Stack, Box, Typography,Button, AppBar, Toolbar, Container } from '@mui/material';
 import useOffSetTop from '../../hooks/useOffSetTop';
-// components
 import Logo from '../../components/Logo';
-// import Label from '../../components/Label';
 import { MHidden } from '../../components/@material-extend';
-//
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
-import { useNavigate } from 'react-router-dom';
-
-// ----------------------------------------------------------------------
+import useAuth from 'src/hooks/useAuth';
+import AccountPopover from '../dashboard/AccountPopover';
+import { Icon } from '@iconify/react';
+import fileFill from '@iconify/icons-eva/file-fill';
+import { PATH_DASHBOARD } from '../../routes/paths'; // Ensure this path is defined
 
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 88;
@@ -43,14 +41,22 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
   boxShadow: theme.customShadows.z8
 }));
 
-// ----------------------------------------------------------------------
-
 const MainNavbar = () => {
   const isOffset = useOffSetTop(100);
+  const { isAuthenticated, user } = useAuth();
   const { pathname } = useLocation();
   const isHome = pathname === '/';
-
   const navigate = useNavigate();
+
+  // Dynamically modify the navConfig based on authentication status
+  const dynamicNavConfig = isAuthenticated ? [
+    ...navConfig,
+    {
+      title: 'Dashboard',
+      path: PATH_DASHBOARD.root,  // Adjust the dashboard path as needed
+      icon: <Icon icon={fileFill} width={22} height={22} />
+    }
+  ] : navConfig;
 
   const handleLogin = () => {
     navigate('/auth/login');
@@ -60,56 +66,45 @@ const MainNavbar = () => {
     navigate('/auth/register');
   };
 
-
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
-      <ToolbarStyle
-        disableGutters
-        sx={{
-          ...(isOffset && {
-            bgcolor: 'background.default',
-            height: { md: APP_BAR_DESKTOP - 16 }
-          })
-        }}
-      >
-        <Container
-          maxWidth="lg"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}
-        >
+      <ToolbarStyle disableGutters sx={{ ...(isOffset && { bgcolor: 'background.default', height: { md: APP_BAR_DESKTOP - 16 } }) }}>
+        <Container maxWidth="lg" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <RouterLink to="/">
             <Logo />
           </RouterLink>
           <Box sx={{ flexGrow: 1 }} />
 
-          <MHidden width="mdDown">
-            <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />
-          </MHidden>
-          <MHidden width="mdUp">
-            <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />
-          </MHidden>
-
-          <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button variant="contained" target="_blank" onClick={handleLogin}>
-              Login
-            </Button>
-            <Button variant="contained" target="_blank" onClick={handleRegister}>
-              Register
-            </Button>
-          </Box>
-
-
+          {isAuthenticated ? (
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Typography variant="h6" sx={{ flexGrow: 0 }}>
+                Hello, {user?.username || 'User'}
+              </Typography>
+              <AccountPopover />
+            </Stack>
+          ) : (
+            <>
+              <MHidden width="mdDown">
+                <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={dynamicNavConfig} />
+              </MHidden>
+              <MHidden width="mdUp">
+                <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={dynamicNavConfig} />
+              </MHidden>
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                <Button variant="contained" onClick={handleLogin}>
+                  Login
+                </Button>
+                <Button variant="contained" onClick={handleRegister}>
+                  Register
+                </Button>
+              </Box>
+            </>
+          )}
         </Container>
-
-
       </ToolbarStyle>
-
       {isOffset && <ToolbarShadowStyle />}
     </AppBar>
   );
-}
+};
 
 export default MainNavbar;

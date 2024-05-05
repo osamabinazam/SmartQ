@@ -15,6 +15,7 @@ import {
 import { PATH_DASHBOARD } from '../../../routes/paths';
 //
 import { varFadeIn, varFadeInUp, varWrapEnter, varFadeInRight } from '../../animate';
+import useAuth from 'src/hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -72,6 +73,7 @@ const HeroImgStyle = styled(motion.img)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function LandingHero() {
+  const { isAuthenticated } = useAuth();
   return (
     <>
       <RootStyle initial="initial" animate="animate" variants={varWrapEnter}>
@@ -84,7 +86,7 @@ export default function LandingHero() {
             <motion.div variants={varFadeInRight}>
               <Typography variant="h4" sx={{ color: 'common.white', mt: 0 }}>
                 <Typography component="span" variant="h4" sx={{ color: 'primary.main' }}>
-                  <br /><br /> Welcome to SmartQ:
+                  <br /><br /> Welcome to SmartQ: 
                 </Typography>
                  Revolutionizing Your Appointment Experience
               </Typography>
@@ -104,7 +106,7 @@ export default function LandingHero() {
                 to={PATH_DASHBOARD.root}
                 startIcon={<Icon icon={flashFill} width={20} height={20} />}
               >
-                Start Now
+               {isAuthenticated ? 'Go To Dashboard' : 'Start Now'}
               </Button>
             </motion.div>
           </ContentStyle>
