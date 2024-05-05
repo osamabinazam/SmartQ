@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
-import { Box, Button, TextField, Typography, Container, InputAdornment, IconButton } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import Page from '../../components/Page'; 
-import LogoOnlyLayout from '../../layouts/LogoOnlyLayout'; 
+import { Box, Stack, TextField, Alert, Typography, Container, IconButton, InputAdornment } from '@mui/material';
+import { Form, useFormik, FormikProvider } from 'formik';
+import eyeFill from '@iconify/icons-eva/eye-fill';
+// import closeFill from '@iconify/icons-eva/close-fill';
+import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import * as Yup from 'yup';
+import Page from '../../components/Page';
+import LogoOnlyLayout from '../../layouts/LogoOnlyLayout';
+import { LoadingButton } from '@mui/lab';
+import { useState, useEffect } from 'react';
+import useAuth from 'src/hooks/useAuth';
+import { Icon } from '@iconify/react';
+import { useSnackbar } from 'notistack';
+import { useLocation } from 'react-router-dom';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
+
 
 const RootStyle = styled(Page)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  height: '100vh', 
+  height: '100vh',
   padding: theme.spacing(12, 0)
 }));
 
@@ -19,121 +31,161 @@ const ContentBox = styled(Box)(({ theme }) => ({
   width: '100%',
   maxWidth: '400px',
   textAlign: 'center',
-  margin: 'auto', 
+  margin: 'auto',
 }));
 
-const NewPasswordForm = ({ onSubmit }) => {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [showPassword, setShowPassword] = useState(true); 
-  const [showConfirmPassword, setShowConfirmPassword] = useState(true); 
+const validationSchema = Yup.object().shape({
+  password: Yup.string().required('Password is required'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required('Confirm password is required'),
+});
+
+export default function NewPasswordForm() {
   const navigate = useNavigate();
+  const isMountedRef = useIsMountedRef();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+  const location = useLocation(); // Use location to access state
+  const { isAuthenticated , resetPassword } = useAuth()
 
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
 
-  const handleToggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
+  const email = location.state?.email; // Access email passed via state
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  console.log(email)
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true })
+    }
 
-    setPasswordError('');
-    setConfirmPasswordError('');
+    if (!email) {
+      enqueueSnackbar('Email not provided, please try again.', { variant: 'error' });
+      navigate('/auth/reset-password', {replace: true}); // Redirect back if no email found
+    }
+  }, [isAuthenticated, navigate, email, enqueueSnackbar]);
+
+
+  
 
  
-    if (!password) {
-      setPasswordError('Password is required');
-      return;
-    }
 
-    if (!confirmPassword) {
-      setConfirmPasswordError('Please confirm your password');
-      return;
-    }
+  const formik = useFormik({
+    initialValues: {
+      password: '',
+      confirmPassword: '',
+      showPassword: false,
+      showConfirmPassword: false
+    },
+    validationSchema: validationSchema,
 
-    if (password !== confirmPassword) {
-      setConfirmPasswordError('Passwords do not match');
-      return;
-    }
 
-    setIsSubmitted(true);
+    onSubmit: async (values, { setErrors, setSubmitting }) => {
+
+      try{
+
+        await resetPassword(email, values.password);
+
+        if (!isAuthenticated){
+          navigate('/auth/login', { replace: true });
+        }
+
+       
+        enqueueSnackbar('Password has been reset successfully', { variant: 'success' });
+      }
+      catch (error) {
+        console.error(error);
+        if (isMountedRef.current) {
+          setErrors({ afterSubmit: error.message });
+          enqueueSnackbar(error.message ? error.message:'Encuter a problem', { variant: 'error' });
+          setSubmitting(false);
+        }
+      }
+      
+
+    }
+  });
+
+
+  const { values, errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
+
+
+  //  Handle eye icon click to show password
+  const handleShowPassword = () => {
+    setShowPassword((show) => !show);
   };
 
-  const handleLogin = () => {
-    navigate('/auth/login');
+  // Handle eye icon click to show confirm password
+  const handleShowConfirmPassword = () => {
+    setShowConfirmPassword((show) => !show);
   };
-
   return (
-    <RootStyle title="New Password">
+    <RootStyle title="Set New Password">
       <LogoOnlyLayout />
       <Container>
         <ContentBox>
-          <form onSubmit={handleSubmit}>
-            <Typography variant="h3" paragraph>
-              Set New Password
-            </Typography>
-            <TextField
-              type={showPassword ? 'password' : 'text'}
-              label="New Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              error={Boolean(passwordError)}
-              helperText={passwordError}
-              fullWidth
-              sx={{ marginBottom: '20px' }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={handleTogglePasswordVisibility} edge="end">
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              type={showConfirmPassword ? 'password' : 'text'} 
-              label="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              error={Boolean(confirmPasswordError)}
-              helperText={confirmPasswordError}
-              fullWidth
-              sx={{ marginBottom: '20px' }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={handleToggleConfirmPasswordVisibility} edge="end">
-                      {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Button type="submit" variant="contained" color="primary" sx={{ marginBottom: '20px' }}>
-              Submit
-            </Button>
-          </form>
-          {isSubmitted && (
-            <Box sx={{ textAlign: 'center', marginTop: '20px' }}>
-              <Typography variant="body1" sx={{ marginBottom: '20px' }}>
-                Your password has been changed.
-              </Typography>
-              <Button variant="contained" color="primary" onClick={handleLogin}>
-                Login
-              </Button>
-            </Box>
-          )}
+
+          <Typography variant="h3" paragraph sx={{
+            textAlign: 'left',
+            mb: 5
+
+          }}>
+            Set New Password
+          </Typography>
+
+          <FormikProvider value={formik}>
+            <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+              <Stack spacing={3}>
+                {errors.afterSubmit && <Alert severity="error">{errors.afterSubmit}</Alert>}
+
+
+                <TextField
+                  fullWidth
+                  autoComplete="current-password"
+                  type={showPassword ? 'text' : 'password'}
+                  label="Password"
+                  {...getFieldProps('password')}
+                  error={Boolean(touched.password && errors.password)}
+                  helperText={touched.password && errors.password}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleShowPassword}>
+                          <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+
+
+                <TextField
+                  fullWidth
+                  autoComplete="current-password"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  label="Confirm Password"
+                  {...getFieldProps('confirmPassword')}
+                  error={Boolean(touched.confirmPassword && errors.confirmPassword)}
+                  helperText={touched.confirmPassword && errors.confirmPassword}
+
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleShowConfirmPassword}>
+                          <Icon icon={showConfirmPassword ? eyeFill : eyeOffFill} />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+                  Register
+                </LoadingButton>
+              </Stack>
+            </Form>
+          </FormikProvider>
         </ContentBox>
       </Container>
     </RootStyle>
   );
 };
-
-export default NewPasswordForm;
