@@ -152,7 +152,27 @@ function AuthProvider({ children }) {
     dispatch({ type: 'LOGOUT' });
   };
 
-  const resetPassword = () => {};
+  const resetPassword = async (email, password) => {
+   
+    const response = await axios.post('/api/auth/new-password', {
+      email,
+      password
+    });
+
+    const data= response.data;
+
+    setSession(data.tokens.accessToken);
+    window.localStorage.setItem('user', JSON.stringify(data.user));
+    dispatch({
+      type: 'LOGIN',
+      payload: {
+        user: data.user
+      }
+    });
+    
+
+
+  };
 
   const updateProfile = () => {};
 
