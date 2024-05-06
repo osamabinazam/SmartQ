@@ -15,7 +15,8 @@ export const PATH_AUTH = {
   registerUnprotected: path(ROOTS_AUTH, '/register-unprotected'),
   resetPassword: path(ROOTS_AUTH, '/reset-password'),
   verify: path(ROOTS_AUTH, '/verify'),
-  newPassword: path(ROOTS_AUTH, '/new-password')
+  newPassword: path(ROOTS_AUTH, '/new-password'),
+  page401: path(ROOTS_AUTH, '/401')
 };
 
 
@@ -35,7 +36,8 @@ export const PATH_DASHBOARD = {
     register: path(ROOTS_DASHBOARD, '/register'),
     resetPassword: path(ROOTS_DASHBOARD, '/reset-password'),
     verify: path(ROOTS_DASHBOARD, '/verify'),
-    newPassword: path(ROOTS_DASHBOARD, '/new-password')
+    newPassword: path(ROOTS_DASHBOARD, '/new-password'),
+    page401: path(ROOTS_DASHBOARD, '/401')
   },
   general: {
     home: path(ROOTS_DASHBOARD, '/home'),

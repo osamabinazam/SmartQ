@@ -10,11 +10,12 @@ import { PATH_AUTH } from '../../routes/paths';
 import AuthLayout from '../../layouts/AuthLayout';
 // components
 import Page from '../../components/Page';
-// import { MHidden } from '../../../components/@material-extend';
+
 import {MHidden} from '../../components/@material-extend';
 import { RegisterForm } from '../../components/authentication/register';
 import AuthFirebaseSocials from '../../components/authentication/AuthFirebaseSocial';
 import {  useNavigate } from 'react-router-dom';
+import {  useEffect } from 'react';
 
 
 // ----------------------------------------------------------------------
@@ -49,9 +50,14 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Register() {
   const navigate = useNavigate(); 
   const { method, isAuthenticated } = useAuth();
-  if (isAuthenticated) {
-    navigate('/dashboard', { replace: true });
+  
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true });
+    }
   }
+  , [isAuthenticated, navigate]);
+
 
 
 

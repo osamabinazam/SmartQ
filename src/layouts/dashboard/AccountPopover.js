@@ -10,6 +10,8 @@ import { Avatar, Button, Box, Divider, MenuItem, Typography } from '@mui/materia
 // components
 import { MIconButton } from '../../components/@material-extend';
 import MenuPopover from '../../components/MenuPopover';
+import useAuth from '../../hooks/useAuth';
+
 
 // ----------------------------------------------------------------------
 
@@ -21,10 +23,20 @@ const MENU_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
+
+
+
+
 export default function AccountPopover() {
+  const { isAuthenticated, user, logout } = useAuth();
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
+  const handleLogout = () => {
+    console.log("Logout Button is pressed ");
+    logout();
+    
+  };
   const handleOpen = () => {
     setOpen(true);
   };
@@ -54,16 +66,16 @@ export default function AccountPopover() {
           })
         }}
       >
-        <Avatar alt="My Avatar" src="/static/mock-images/avatars/avatar_default.jpg" />
+        <Avatar alt="My Profile Photo" src={user?.images?.profilePhoto?.path} />
       </MIconButton>
 
       <MenuPopover open={open} onClose={handleClose} anchorEl={anchorRef.current} sx={{ width: 220 }}>
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            Dr. John Doe
+            {user?.username}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            johndoe@gmail.com
+            {user?.email}
           </Typography>
         </Box>
 
@@ -92,7 +104,7 @@ export default function AccountPopover() {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
+          <Button fullWidth color="inherit" variant="outlined"  onClick={handleLogout} >
             Logout
           </Button>
         </Box>

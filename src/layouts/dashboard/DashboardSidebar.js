@@ -90,13 +90,14 @@ DashboardSidebar.propTypes = {
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { isAuthenticated, user } = useAuth();
-  console.log("Jefsd")
 
   const navigate = useNavigate();
-  if  (!user){
-    console.log(isAuthenticated);
+  if  (!isAuthenticated){
     navigate('/auth/login', { replace: true });
   }
+
+
+
   const { pathname } = useLocation();
 
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
@@ -146,7 +147,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         ) : (
           <Link underline="none" component={RouterLink} to="#">
             <AccountStyle>
-              <Avatar alt="My Avatar" src="/static/mock-images/avatars/avatar_default.jpg" />
+              <Avatar alt="Profiel Photo" src={user?.images?.profilePhoto?.path} />
               <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                  {user?.username}

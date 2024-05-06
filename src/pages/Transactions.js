@@ -12,11 +12,26 @@ import {
   BankingRecentTransitions,
   BankingExpensesCategories
 } from '../components/general-banking';
-
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import useAuth from 'src/hooks/useAuth';
 // ----------------------------------------------------------------------
 
 export default function PageTwo() {
   const { themeStretch } = useSettings();
+  const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/auth/login', { replace: true });
+    }
+
+    if (isAuthenticated && user?.usertype !== 'vendor') {
+      navigate('/auth/401', { replace: true });
+    }
+  }
+  , [isAuthenticated, navigate, user.usertype]);
 
   return (
     <Page title="Transactions | SmartQ">

@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Divider } from '@mui/material';
 // components
 import Page from '../components/Page';
-// import { AboutHero, AboutWhat, AboutTeam, AboutVision, AboutTestimonials } from '../components/_external-pages/about';
+import { AboutHero, AboutWhat, AboutTeam, AboutVision, AboutTestimonials } from '../components/_external-pages/about';
 
 // ----------------------------------------------------------------------
 
@@ -18,12 +18,12 @@ const RootStyle = styled(Page)(({ theme }) => ({
 
 export default function About() {
   return (
-    <RootStyle title="About us ">
-      {/* <AboutHero /> */}
+    <RootStyle title="About us | Minimal-UI">
+      <AboutHero />
       {/* <AboutWhat /> */}
       {/* <AboutVision /> */}
       <Divider orientation="vertical" sx={{ my: 10, mx: 'auto', width: 2, height: 40 }} />
-      {/* <AboutTeam /> */}
+      <AboutTeam />
       {/* <AboutTestimonials /> */}
     </RootStyle>
   );

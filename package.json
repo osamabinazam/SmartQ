@@ -145,5 +145,8 @@
     "eslint-plugin-react": "^7.25.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.4.1"
+  },
+  "jest": {
+    "configFile": "jest.config.cjs"
   }
 }

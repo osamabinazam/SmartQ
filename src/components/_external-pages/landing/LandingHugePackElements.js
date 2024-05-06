@@ -1,6 +1,9 @@
+import { Link as RouterLink } from 'react-router-dom';
 // material
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Grid, Button, Container, Typography } from '@mui/material';
+// routes
+import { PATH_PAGE } from '../../../routes/paths';
 //
 import { varFadeInUp, MotionInView } from '../../animate';
 
@@ -83,16 +86,18 @@ export default function LandingHugePackElements() {
         <Grid container spacing={5} justifyContent="center">
           <Grid item xs={12} md={4} sx={{ display: 'flex', alignItems: 'center' }}>
             <ContentStyle>
-              <MotionInView variants={varFadeInUp}>
+              {/* <MotionInView variants={varFadeInUp}>
                 <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.secondary' }}>
-                  Interface Starter Kit
+                  
                 </Typography>
-              </MotionInView>
+              </MotionInView> */}
 
               <MotionInView variants={varFadeInUp}>
                 <Typography variant="h2" sx={{ mb: 3 }}>
-                  Huge pack <br />
-                  of elements
+                  Schedule Your Visit <br /> with 
+                  <Typography variant='h1' sx={{ color: 'primary.main' }}> 
+                    SmartQ
+                  </Typography>
                 </Typography>
               </MotionInView>
 
@@ -103,15 +108,21 @@ export default function LandingHugePackElements() {
                     color: isLight ? 'text.secondary' : 'common.white'
                   }}
                 >
-                  We collected most popular elements. Menu, sliders, buttons, inputs etc. are all here. Just dive in!
+                  Your gateway to hassle-free appointments
                 </Typography>
               </MotionInView>
 
-              <MotionInView variants={varFadeInUp}>
-                <Button size="large" color="inherit" variant="outlined">
+              {/* <MotionInView variants={varFadeInUp}>
+                <Button
+                  size="large"
+                  color="inherit"
+                  variant="outlined"
+                  component={RouterLink}
+                  to={PATH_PAGE.components}
+                >
                   View All Components
                 </Button>
-              </MotionInView>
+              </MotionInView> */}
             </ContentStyle>
           </Grid>
 

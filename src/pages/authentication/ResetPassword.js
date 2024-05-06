@@ -46,7 +46,7 @@ export default function ResetPassword() {
               <ResetPasswordForm onSent={handleSent} onVerified={() => setVerified(true)} />
 
               <Box sx={{ textAlign: 'center' }}>
-                <Button fullWidth size="large" component={RouterLink} to={PATH_AUTH.login} sx={{ mt: 2 }}>
+                <Button fullWidth size="large" component={RouterLink} to={PATH_AUTH.login} sx={{ mt: 1 }}>
                   Back
                 </Button>
               </Box>
