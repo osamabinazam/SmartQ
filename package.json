@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.18.0",
+    "@date-io/date-fns": "^3.0.0",
     "@emotion/cache": "^11.4.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
@@ -57,6 +58,7 @@
     "@mui/styles": "^5.0.0",
     "@mui/utils": "^5.0.0",
     "@mui/x-data-grid": "^5.0.0-beta.1",
+    "@mui/x-date-pickers": "^7.3.2",
     "@react-pdf/renderer": "^2.0.19",
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^5.14.1",
@@ -71,7 +73,7 @@
     "change-case": "^4.1.2",
     "d3-array": "^3.0.2",
     "d3-scale": "^4.0.0",
-    "date-fns": "^2.24.0",
+    "date-fns": "^2.30.0",
     "deck.gl": "^8.5.8",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
@@ -132,8 +134,10 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.5",
+    "@babel/core": "^7.24.5",
     "@babel/eslint-parser": "^7.15.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
+    "@babel/preset-env": "^7.24.5",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
