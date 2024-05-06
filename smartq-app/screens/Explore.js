@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 // Import useFocusEffect hook
 import { useFocusEffect } from '@react-navigation/native'
 import ExploreServiceCard from '../components/ExploreServiceCard'
+import { Colors } from '../components/styles'
 
 function Explore() {
   const [search, setSearch] = useState('')
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   filters: {},
   container: {
     // flex: 1,
-    paddingBottom: 60,
+    paddingBottom: 120,
     backgroundColor: '#fff',
   },
   header: {
@@ -133,15 +134,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: '#ffffff',
   },
-  // scrollViewStyles: {
-  //   // paddingVertical: 1,
-  //   // paddingHorizontal: 6,
-  // },
   title: {
     fontSize: 28,
     marginTop: 8,
     fontWeight: 'bold',
-    color: '#000',
+    color: Colors.brand,
     // paddingLeft: 8,
   },
   row: {

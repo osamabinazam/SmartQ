@@ -3,8 +3,11 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons' // Assuming you have FontAwesome installed
 import { useState } from 'react'
 import { Colors } from './styles'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import VendorProfile from '../screens/VendorProfile'
 
 const ExploreServiceCard = ({ item }) => {
+  const navigation = useNavigation()
   const [isFavorite, setIsFavorite] = useState(false) // State for heart icon
 
   // Function to toggle heart icon state
@@ -26,11 +29,12 @@ const ExploreServiceCard = ({ item }) => {
       </View>
 
       {/* Necessary Details */}
-      <Text style={styles.details}>
-        {item.serviceProviderName} ~ {item.serviceProviderRating}
-      </Text>
-      <Text style={styles.details}>{item.openingHours}</Text>
-
+      <TouchableOpacity onPress={() => navigation.navigate('VendorProfile')}>
+        <Text style={styles.details}>
+          {item.serviceProviderName} ~ {item.serviceProviderRating}
+        </Text>
+        <Text style={styles.details}>{item.openingHours}</Text>
+      </TouchableOpacity>
       {/* Price */}
       <View style={styles.priceContainer}>
         <Text style={styles.price}>{item.price}</Text>
