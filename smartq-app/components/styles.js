@@ -10,7 +10,8 @@ export const Colors = {
   secondary: '#E5E7EB',
   tertiary: '#1F2937',
   darkLight: '#9CA3AF',
-  brand: '#3cc0f0',
+  anotherBrand: '3cc0f0', //light-blue
+  brand: '#086AC5', //dark-blue
   brandSecondary: '#4ecdc4',
   green: '#10B981',
   red: '#EF4444',
@@ -29,7 +30,7 @@ const {
 
 export const StyledContainer = styled.View`
   flex: 1;
-  padding: 25px;
+  padding: 20px;
   padding-top: ${StatusBarHeight + 10}px;
   background-color: ${primary};
 `
@@ -37,6 +38,7 @@ export const StyledContainer = styled.View`
 export const InnerContainer = styled.View`
   flex: 1;
   width: 100%;
+  background-color: ${primary};
   align-items: center;
 `
 
@@ -51,9 +53,9 @@ export const Avatar = styled.Image`
   margin: auto;
   border-radius: 50px;
   border-width: 4px;
-  border-color: ${tertiary};
+  border-color: ${brand};
   margin-bottom: 24px;
-  margin-left: 17px;
+  margin-left: 10px;
   margin-top: 10px;
 `
 
@@ -128,7 +130,7 @@ export const RightIcon = styled.TouchableOpacity`
 `
 
 export const StyledButton = styled.TouchableOpacity`
-padding: 15px;
+  padding: 15px;
   background-color: ${(props) => (props.isSignUp ? brandSecondary : brand)};
   justify-content: center;
   border-radius: 5px;
@@ -146,6 +148,8 @@ export const ButtonText = styled.Text`
 export const MessageBox = styled.Text`
   text-align: center;
   font-size: 13px;
+  color: red;
+  font-style: italic;
 `
 export const DividerLine = styled.View`
   height: 1px;
