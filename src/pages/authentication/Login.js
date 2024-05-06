@@ -23,6 +23,8 @@ import { MHidden } from '../../components/@material-extend';
 import { LoginForm } from '../../components/authentication/login';
 import AuthFirebaseSocials from '../../components/authentication/AuthFirebaseSocial';
 import { useNavigate } from 'react-router-dom';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
+import { useSnackbar } from 'notistack';
 
 import { useEffect } from 'react';
 // ----------------------------------------------------------------------
@@ -57,6 +59,9 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Login() {
   const { method, login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const isMountedRef = useIsMountedRef();
+  const { enqueueSnackbar } = useSnackbar();
+
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -68,7 +73,12 @@ export default function Login() {
     try {
       await login();
     } catch (error) {
-      console.error(error);
+      console.log("this is errros")
+      if (isMountedRef.current) {
+        // setErrors({ afterSubmit: error.message });
+        enqueueSnackbar(error.message ? error.message:'Encounter a problem', { variant: 'error' });
+        // setSubmitting(false);
+      }
     }
   };
 

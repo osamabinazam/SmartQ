@@ -19,26 +19,47 @@ const RootStyle = styled(Page)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function NotActiveQueue() {
+export default function NotActiveQueue({ queueData }) {
 
-    const createQueue = () => {
-        console.log("Create Queue");
-    }
-    
+
   return (
-    <RootStyle title="404 Page Not Found | Minimal-UI">
+    <RootStyle title="Queues">
       <Container>
         <MotionContainer initial="initial" open>
-          <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
+          <Box >
             <motion.div variants={varBounceIn}>
-              <Typography variant="h3" paragraph>
-                Sorry, There is no active Queue!
-              </Typography>
+              {queueData.queueStatus ? (
+                <>
+                  <Typography xs={12} md={6} variant="h3" component="div" sx={{ color: 'primary.main', display: 'flex', flexDirection: 'column', alignItems: 'left', justifyContent: 'space-between', paddingTop: '20px' }}>
+                    Active Queue
+                    <Typography xs={12} md={6} component="div" sx={{ color: 'white', display: 'flex', flexDirection: 'row', alignItems: 'left', justifyContent: 'space-between', paddingTop: '5px', paddingBottom: '20px' }}>
+                      {queueData?.services?.name} - {queueData?.queueStartTime} to {queueData?.queueEndTime}
+                    </Typography>
+                  </Typography>
+                </>
+              ) : (
+                <Box sx={
+                  {
+                    maxWidth: 480,
+                    margin: 'auto',
+                    textAlign: 'center',
+                    mb: 5,
+                  }}>
+                  <motion.div variants={varBounceIn}>
+                    <Typography xs={12} md={6} variant="h2" component="div" sx={{ color: 'red', display: 'flex', flexDirection: 'column', alignItems: 'left', justifyContent: 'space-between', paddingTop: '20px' }}>
+                      No Active Queue
+                    </Typography>
+
+                    <Typography xs={12} md={6} variant="h4" component="div" sx={{ color: 'text.secondary', display: 'flex', flexDirection: 'column', alignItems: 'left', justifyContent: 'space-between', paddingTop: '20px' }}>
+                      It looks quiet here. Tap below to add your first queue."
+                    </Typography>
+
+                  </motion.div>å
+                </Box>
+
+              )}
             </motion.div>
 
-            <Button to="/" size="large" variant="contained" component={RouterLink} onClick={createQueue}>
-              Create Queue
-            </Button>
           </Box>
         </MotionContainer>
       </Container>

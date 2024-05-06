@@ -88,9 +88,7 @@ export default function NewPasswordForm() {
 
         if (!isAuthenticated){
           navigate('/auth/login', { replace: true });
-        }
-
-       
+        } 
         enqueueSnackbar('Password has been reset successfully', { variant: 'success' });
       }
       catch (error) {

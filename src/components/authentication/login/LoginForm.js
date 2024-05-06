@@ -16,7 +16,8 @@ import { useEffect } from 'react';
 import { PATH_AUTH } from '../../../routes/paths';
 // hooks
 import useAuth from '../../../hooks/useAuth';
-// import useIsMountedRef from '../../../hooks/useIsMountedRef';
+import useIsMountedRef from '../../../hooks/useIsMountedRef';
+import { useSnackbar } from 'notistack';
 //
 // import { MIconButton } from '../../@material-extend';
 
@@ -29,6 +30,9 @@ export default function LoginForm() {
   const { login } = useAuth();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const isMountedRef = useIsMountedRef();
+  const { enqueueSnackbar } = useSnackbar();
+
 
   
 
@@ -52,24 +56,20 @@ export default function LoginForm() {
     validationSchema: LoginSchema,
     
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
+
+      try{
       await login(values.email, values.password); // console.log(values)
       if (isAuthenticated) {
         navigate('/dashboard', { replace: true });
       }
-      // try {
-      //   axiosInstance.post('/api/auth/login', {username:values.email, password:values.password}).then((response) => {
-      //     console.log(response);
-      //   }
-      //   );
-      // } catch (error) {
-      //   console.log("Getting Error")
-      //   console.error(error);
-      //   // if (isMountedRef.current) {
-      //   //   setErrors({ afterSubmit: error.code });
-      //   //   setSubmitting(false);
-      //   //   enqueueSnackbar(error.message, { variant: 'error', action });
-      //   // }
-      // }
+    } catch (error) {
+      console.error(error);
+      if (isMountedRef.current) {
+        setErrors({ afterSubmit: error.code });
+        setSubmitting(false);
+        enqueueSnackbar(error, { variant: 'error' });
+      }
+    }
     }
   });
 
