@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Grid, Container } from '@mui/material';
 // components
 import Page from '../components/Page';
-// import { ContactHero, ContactForm, ContactMap } from '../components/_external-pages/contact';
+import { ContactHero, ContactForm, ContactMap } from '../components/_external-pages/contact';
 
 // ----------------------------------------------------------------------
 
@@ -18,16 +18,16 @@ const RootStyle = styled(Page)(({ theme }) => ({
 
 export default function Contact() {
   return (
-    <RootStyle title="Contact us ">
-      {/* <ContactHero /> */}
+    <RootStyle title="Contact us | Minimal-UI">
+      <ContactHero />
 
       <Container sx={{ my: 10 }}>
         <Grid container spacing={10}>
           <Grid item xs={12} md={6}>
-            {/* <ContactForm /> */}
+            <ContactForm />
           </Grid>
           <Grid item xs={12} md={6}>
-            {/* <ContactMap /> */}
+            <ContactMap />
           </Grid>
         </Grid>
       </Container>

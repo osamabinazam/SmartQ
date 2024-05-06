@@ -1,32 +1,27 @@
 // material
-import { 
-  Container, 
-  Grid, 
-  // Stack 
+import {
+  Container,
+  Grid,
 } from '@mui/material';
 // hooks
 import useAuth from '../hooks/useAuth';
 import useSettings from '../hooks/useSettings';
-// import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // components
 import Page from '../components/Page';
 import {
   AppWelcome,
-  // AppWidgets1,
-  // AppWidgets2,
-  // AppFeatured,
   AppNewInvoice,
-  // AppTopAuthors,
-  // AppTopRelated,
-  // AppAreaInstalled,
-  AppTotalDownloads,
-  AppTotalInstalled,
-  // AppCurrentDownload,
-  AppTotalActiveUsers,
-  // AppTopInstalledCountries
+  TotalAppointments,
+  RemainingAppointments,
+  AverageWaitTime,
+  LastUpdate,
 } from '../components/general-app';
 import UpcomingAppointments from 'src/components/general-app/UpcomingAppointments';
 import { useNavigate } from 'react-router-dom';
+import { Typography } from '@mui/material';
+import axiosInstance from 'src/utils/axios';
+
 
 // ----------------------------------------------------------------------
 
@@ -34,78 +29,110 @@ import { useNavigate } from 'react-router-dom';
 export default function GeneralApp() {
 
   const { isAuthenticated, user } = useAuth();
-  
-
-  
-
-  console.log(user)
   const navigate = useNavigate();
-  console.log(isAuthenticated);
+  const { themeStretch } = useSettings();
 
-  if  (!isAuthenticated) {
-    
-    // navigate('/auth/login', { replace: true });
+
+  // States to hold data
+  const [queueData, setQueueData] = useState([]);
+  const [updateTime, setUpdateTime] = useState();
+
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/auth/login', { replace: true });
+    }
+
+     if (isAuthenticated && user?.usertype !== 'vendor') {
+      navigate('/auth/401', { replace: true });
+    }
+
+    fetchQueueData();
+
+  }, [isAuthenticated, navigate, user.usertype]);
+
+  const fetchQueueData = async () => {
+    try {
+      const startTime = new Date(); // Store the current time before making the API call
+      const response = await axiosInstance.get('/api/queue');
+      const endTime = new Date(); // Store the current time after receiving the response
+      console.log(response.data);
+      setQueueData(response.data);
+  
+      // Calculate the time elapsed
+      const timeElapsed = endTime - startTime; // Time elapsed in milliseconds
+      const minutesElapsed = Math.floor(timeElapsed / (1000 * 60)); // Convert milliseconds to minutes
+  
+      // Display time elapsed
+      setUpdateTime(minutesElapsed);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  const { themeStretch } = useSettings();
+
 
   return (
     <Page title="Home">
       <Container maxWidth={themeStretch ? false : 'xl'} spacing={3}>
+
+
+
+        <AppWelcome displayName={user?.username} />
+
+
+        { queueData.queueStatus ? (
+          <>
+            <Typography xs={12} md={6} variant="h3" component="div" sx={{ color: 'primary.main', display: 'flex', flexDirection: 'column', alignItems: 'left', justifyContent: 'space-between', paddingTop: '20px' }}>
+              Active Queue
+              <Typography xs={12} md={6} component="div" sx={{ color: 'white', display: 'flex', flexDirection: 'row', alignItems: 'left', justifyContent: 'space-between', paddingTop: '5px', paddingBottom: '20px' }}>
+                {queueData?.services?.name} -  
+              </Typography>
+            </Typography>
+          </>
+        ) : (
+          <>  
+            <Typography xs={12} md={6} variant="h3" component="div" sx={{ color: 'red', display: 'flex', flexDirection: 'column', alignItems: 'left', justifyContent: 'space-between', paddingTop: '20px' }}>
+              No Active Queue
+            </Typography>
+          </>
+          
+        )}
+
+
         <Grid container spacing={3}>
-          <Grid item xs={12}   >
-            <AppWelcome displayName={user.username}/>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <AppTotalActiveUsers />
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <AppTotalInstalled />
-          </Grid> 
-
-          <Grid item xs={12} md={4}>
-            <AppTotalDownloads />
-          </Grid> 
-          
-          <Grid item xs={12} >
-            <UpcomingAppointments />
-          </Grid>
-
-          
-
-          {/* <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentDownload />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppAreaInstalled />
-          </Grid> */}
-
-          <Grid item xs={12} lg={8}>
-            <AppNewInvoice />
-          </Grid>
-
-          {/* <Grid item xs={12} md={6} lg={4}>
-            <AppTopRelated />
-          </Grid> */}
-
-          {/* <Grid item xs={12} md={6} lg={4}>
-            <AppTopInstalledCountries />
-          </Grid> */}
-
-          {/* <Grid item xs={12} md={6} lg={4}>
-            <AppTopAuthors />
-          </Grid> */}
-
-          {/* <Grid item xs={12} md={6} lg={4}>
-            <Stack spacing={3}>
-              <AppWidgets1 />
-              <AppWidgets2 />
-            </Stack>
-          </Grid> */}
+          {queueData.queueStatus ? (
+            <>
+              <Grid item xs={12} md={3}>
+                <TotalAppointments  data ={queueData.currentQueueSize}/>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <RemainingAppointments data ={queueData.remaing} />
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <AverageWaitTime data ={queueData.averageServiceTime} />
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <LastUpdate data={updateTime} />
+              </Grid>
+              <Grid item xs={12}>
+                <UpcomingAppointments isActive={true} queueid = {queueData?.queueID} />
+              </Grid>
+              <Grid item xs={12}>
+                <AppNewInvoice />
+              </Grid>
+            </>
+          ) : (
+            <Grid item xs={12}>
+              <Typography variant="h5" textAlign="center">
+                No Active Data Available
+              </Typography>
+            </Grid>
+          )}
         </Grid>
+
+
+
       </Container>
     </Page>
   );

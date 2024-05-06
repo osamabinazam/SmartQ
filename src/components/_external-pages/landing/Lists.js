@@ -1,106 +1,97 @@
-// import { useState } from 'react';
-// material
 import DraftsIcon from '@mui/icons-material/Drafts';
 import { styled } from '@mui/material/styles';
-import {
-  Grid,
-  List,
-  Paper,
-  Container,
-  ListItemText,
-  ListItemIcon,
-  ListItemButton,
-} from '@mui/material';
-// routes
-// import { PATH_PAGE } from '../../../routes/paths';
-// components
-import Page from '../../Page';
+import { Grid, List, Paper, Container, ListItemText, ListItemIcon, ListItemButton, Typography } from '@mui/material';
 import { Block } from '../Block';
-
-// ----------------------------------------------------------------------
-
+import Page from 'src/components/Page';
+import DoneIcon from '@mui/icons-material/Done';
 const RootStyle = styled(Page)(({ theme }) => ({
   paddingTop: theme.spacing(11),
   paddingBottom: theme.spacing(15)
 }));
 
 const ListWrapperStyle = styled(Paper)(({ theme }) => ({
-  width: '100%',
-  border: `solid 1px ${theme.palette.divider}`
+  width: '50vw',
+  
+  borderRadius: theme.spacing(2),
+  
 }));
 
-// ----------------------------------------------------------------------
-
-// function ListItemLink(props) {
-//   return <ListItemButton component="a" {...props} />;
-// }
-
 export default function ListsComponent() {
-  // const [open, setOpen] = useState(true);
-  // const [setSelectedIndex] = useState(1);
-  // const [checked, setChecked] = useState([0]);
-  // const [toggle, setToggle] = useState(['wifi']);
-
-  // const handleClick = () => {
-  //   setOpen(!open);
-  // };
-
-  // const handleListItemClick = (event, index) => {
-  //   setSelectedIndex(index);
-  // };
-
-  // const handleCheck = (value) => () => {
-  //   const currentIndex = checked.indexOf(value);
-  //   const newChecked = [...checked];
-  //   if (currentIndex === -1) {
-  //     newChecked.push(value);
-  //   } else {
-  //     newChecked.splice(currentIndex, 1);
-  //   }
-  //   setChecked(newChecked);
-  // };
-
-  // const handleToggle = (value) => () => {
-  //   const currentIndex = toggle.indexOf(value);
-  //   const newChecked = [...toggle];
-
-  //   if (currentIndex === -1) {
-  //     newChecked.push(value);
-  //   } else {
-  //     newChecked.splice(currentIndex, 1);
-  //   }
-
-  //   setToggle(newChecked);
-  // };
-
   return (
     <RootStyle>
-      
-
       <Container maxWidth="lg">
-        <Grid container spacing={3}>
+        <Grid container >
           <Grid item xs={12}>
-            <Block title="">
+            <Block >
+              <Typography variant="h3"  fontWeight="bold" color="primary" gutterBottom>
+                Features
+              </Typography>
               <ListWrapperStyle>
                 <List component="nav" aria-label="main mailbox folders">
-                  
-                    <ListItemIcon>
-                     
-                    </ListItemIcon>
-                    <ListItemText primary="Predictive Features: Anticipate and minimize wait times using Maps and historical data." />
-                 
                   <ListItemButton>
                     <ListItemIcon>
-                      <DraftsIcon />
+                    <DoneIcon sx={{ color: 'primary.main', fontWeight: 'bold', fontFamily: 'Georgia, serif', fontSize: 32 }} />
                     </ListItemIcon>
-                    <ListItemText primary="Real-Time Queue Management: Effortlessly control and monitor your queues." />
+                    <ListItemText
+                      primary={
+                        <Typography variant="h6">
+                        Appointment Scheduling
+                      </Typography>
+                      }
+                    />
                   </ListItemButton>
 
                   <ListItemButton>
                     <ListItemIcon>
-                      <DraftsIcon />
+                    <DoneIcon sx={{ color: 'primary.main', fontWeight: 'bold', fontFamily: 'Georgia, serif', fontSize: 32 }} />
+
+
                     </ListItemIcon>
-                    <ListItemText primary="User-Friendly Interface: A modern and intuitive platform for both vendors and customers." />
+                    <ListItemText
+                      primary={
+                        <Typography variant="h6">
+                          Real-time Monitoring
+                        </Typography>
+                        
+                      }
+                    />
+                  </ListItemButton>
+
+                  <ListItemButton>
+                    <ListItemIcon>
+                    <DoneIcon sx={{ color: 'primary.main', fontWeight: 'bold', fontFamily: 'Georgia, serif', fontSize: 32 }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography variant="h6">
+                            Queue Management
+                        </Typography>
+                      }
+                    />
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItemIcon>
+                    <DoneIcon sx={{ color: 'primary.main', fontWeight: 'bold', fontFamily: 'Georgia, serif', fontSize: 32 }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography variant="h6">
+                         Geo Location Tracking
+                        </Typography>
+                      }
+                    />
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItemIcon>
+                    <DoneIcon sx={{ color: 'primary.main', fontWeight: 'bold', fontFamily: 'Georgia, serif', fontSize: 32 }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography variant="h6">
+                            Real-time Updates
+                        </Typography>
+                      }
+                    />
                   </ListItemButton>
                 </List>
               </ListWrapperStyle>

@@ -15,6 +15,7 @@ import {
 import { PATH_DASHBOARD } from '../../../routes/paths';
 //
 import { varFadeIn, varFadeInUp, varWrapEnter, varFadeInRight } from '../../animate';
+import useAuth from 'src/hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +28,7 @@ const RootStyle = styled(motion.div)(({ theme }) => ({
     width: '100%',
     height: '100vh',
     display: 'flex',
-    position: 'fixed',
+    justifyContent: 'fixed', // Center horizontally
     alignItems: 'center'
   }
 }));
@@ -72,6 +73,7 @@ const HeroImgStyle = styled(motion.img)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function LandingHero() {
+  const { isAuthenticated } = useAuth();
   return (
     <>
       <RootStyle initial="initial" animate="animate" variants={varWrapEnter}>
@@ -84,33 +86,15 @@ export default function LandingHero() {
             <motion.div variants={varFadeInRight}>
               <Typography variant="h4" sx={{ color: 'common.white', mt: 0 }}>
                 <Typography component="span" variant="h4" sx={{ color: 'primary.main' }}>
-                  <br /><br /> Welcome to SmartQ:
+                  <br /><br /> Welcome to SmartQ: 
                 </Typography>
-                Revolutionizing Your Appointment Experience
+                 Revolutionizing Your Appointment Experience
               </Typography>
             </motion.div>
 
             <motion.div variants={varFadeInRight}>
               <Typography sx={{ color: 'common.white', mt: 0 }}>
                 Experience the future of public service appointments in Pakistan. Our innovative web and mobile platform, developed in collaboration with Everycorner, revolutionizes how you schedule and manage appointments across various public sectors. Say goodbye to long queues and inefficient processes.
-              </Typography>
-            </motion.div>
-
-            <motion.div variants={varFadeInRight}>
-              <Typography variant="h5" sx={{ color: 'common.white', mt: 0 }}>Our Solution</Typography>
-              <Typography sx={{ color: 'common.white', mt: 0 }}>
-                Utilizing cutting-edge technology like real-time data analytics, GPS, and predictive algorithms, SmartQ streamlines appointment scheduling, making it faster, more efficient, and user-friendly.
-              </Typography>
-            </motion.div>
-
-            <motion.div variants={varFadeInRight}>
-              <Typography variant="h5" sx={{ color: 'common.white', mt: 0 }}>Services We Offer</Typography>
-              <Typography sx={{ color: 'common.white', mt: 0 }}>
-                <ul>
-                  <li>Real-time Scheduling: Book appointments instantly with live updates.</li>
-                  <li>Seamless Integration: Our platform integrates smoothly with various public services.</li>
-                  <li>User-Centric Design: An intuitive interface for effortless navigation.</li>
-                </ul>
               </Typography>
             </motion.div>
 
@@ -122,14 +106,13 @@ export default function LandingHero() {
                 to={PATH_DASHBOARD.root}
                 startIcon={<Icon icon={flashFill} width={20} height={20} />}
               >
-                Live Preview
+               {isAuthenticated ? 'Go To Dashboard' : 'Start Now'}
               </Button>
             </motion.div>
-
           </ContentStyle>
         </Container>
       </RootStyle>
-      <Box sx={{ height: { md: '100vh' } }} />
+      
     </>
   );
 }

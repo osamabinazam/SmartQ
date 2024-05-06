@@ -60,7 +60,7 @@ export default function RegisterForm() {
           values.email,
           values.gender,
           values.password,
-          "vendor"
+          'vendor'
           );
         console.log("Done ")
         
