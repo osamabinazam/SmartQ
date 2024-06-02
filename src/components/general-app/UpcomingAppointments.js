@@ -25,9 +25,12 @@ const UpcomingAppointments = ({ isActive, queueid }) => {
     const fetchUpcomingAppointments = async () => {
       try {
         console.log("Queue ID: ", queueid)
-        const response = await axiosInstance.post('/api/appointment/upcoming', { queueId:queueid });
+        const response = await axiosInstance.post('/api/appointment/upcoming', { queueid:queueid });
 
-        console.log("Response: ", response.data);
+        const response2 = await axiosInstance.get('http://localhost:3002/api/profile/vendor/nearby?latitude=40.730610&longitude=-73.935242&radius=10000')
+        console.log("Response2: ", response2);
+
+        console.log("Response: ", response);
         setCurrentAppointments(response.data.length > 0 ? response.data : null);
       } catch (error) {
         console.error('Failed to fetch appointments:', error);
@@ -106,16 +109,16 @@ const UpcomingAppointments = ({ isActive, queueid }) => {
               currentAppointments.map((row) => (
                 <TableRow key={row.appointmentID}>
                   <TableCell>
-                    <Avatar src={row.customer_profile.avatar || '/static/mock-images/avatars/avatar_default.jpg'} />
-                    {`${row.customer_profile.firstname} ${row.customer_profile.lastname}`}
+                    <Avatar src={row.customer_profile?.avatar || '/static/mock-images/avatars/avatar_default.jpg'} />
+                    {`${row.customer_profile?.firstname} ${row.customer_profile?.lastname}`}
                   </TableCell>
                   <TableCell>{format(new Date(row.appointmentDateTime), 'dd MMM yyyy p')}</TableCell>
-                  <TableCell>{row.service.name}</TableCell>
-                  <TableCell>{row.service.price}</TableCell>
+                  <TableCell>{row.service?.name}</TableCell>
+                  <TableCell>{row.service?.price}</TableCell>
                   <TableCell align="right">
                     <IconButton
                       aria-label="more"
-                      aria-controls={`menu-${row.appointmentID}`}
+                      aria-controls={`menu-${row?.appointmentID}`}
                       aria-haspopup="true"
                       onClick={(event) => setAnchorEl({ ...anchorEl, [row.appointmentID]: event.currentTarget })}
                     >

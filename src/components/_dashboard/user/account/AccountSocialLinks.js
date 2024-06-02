@@ -43,10 +43,10 @@ export default function AccountSocialLinks() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      facebookLink: myProfile.facebookLink,
-      instagramLink: myProfile.instagramLink,
-      linkedinLink: myProfile.linkedinLink,
-      twitterLink: myProfile.twitterLink
+      facebookLink: myProfile?.facebookLink || 'https://www.facebook.com',
+      instagramLink: myProfile?.instagramLink || 'https://www.instagram.com',
+      linkedinLink: myProfile?.linkedinLink || 'https://www.linkedin.com',
+      twitterLink: myProfile?.twitterLink || 'https://www.twitter.com'
     },
     onSubmit: async (values, { setSubmitting }) => {
       await fakeRequest(500);

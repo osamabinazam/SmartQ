@@ -51,10 +51,10 @@ export default function NotActiveQueue({ queueData }) {
                     </Typography>
 
                     <Typography xs={12} md={6} variant="h4" component="div" sx={{ color: 'text.secondary', display: 'flex', flexDirection: 'column', alignItems: 'left', justifyContent: 'space-between', paddingTop: '20px' }}>
-                      It looks quiet here. Tap below to add your first queue."
+                      It looks quiet here. Tap below to add your first queue.
                     </Typography>
 
-                  </motion.div>å
+                  </motion.div>
                 </Box>
 
               )}

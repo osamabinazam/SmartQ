@@ -50,5 +50,14 @@ export const PATH_DASHBOARD = {
     pageFour: path(ROOTS_DASHBOARD, '/app/four'),
     pageFive: path(ROOTS_DASHBOARD, '/app/five'),
     pageSix: path(ROOTS_DASHBOARD, '/app/six')
-  }
+  },
+  user: {
+    root: path(ROOTS_DASHBOARD, '/user'),
+    profile: path(ROOTS_DASHBOARD, '/user/profile'),
+    cards: path(ROOTS_DASHBOARD, '/user/cards'),
+    list: path(ROOTS_DASHBOARD, '/user/list'),
+    newUser: path(ROOTS_DASHBOARD, '/user/new'),
+    editById: path(ROOTS_DASHBOARD, `/user/reece-chung/edit`),
+    account: path(ROOTS_DASHBOARD, '/user/account')
+  },
 };

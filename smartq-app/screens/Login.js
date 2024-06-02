@@ -81,7 +81,7 @@ const Login = () => {
       console.log('OTP:', otp)
       console.log('Email:', emailForReset)
       const response = await axios.post(
-        'http://10.102.139.47:3002/api/auth/verify-otp',
+        'http://10.102.138.142:3002/api/auth/verify-otp',
         {
           email: emailForReset, // Assuming you still have the email stored from when you sent the OTP
           otp: otp, // The OTP entered by the user
@@ -143,7 +143,7 @@ const Login = () => {
     try {
       console.log('Sending reset code to email: ', emailForReset)
       const response = await axios.post(
-        'http://10.102.139.47:3002/api/auth/reset-password',
+        'http://10.102.138.142:3002/api/auth/reset-password',
         { email: emailForReset }
       )
       console.log('API Response:', response.data)
@@ -191,7 +191,7 @@ const Login = () => {
       setIsLoading(true) // Set loading to true when login starts
       // Make a POST request to the login API with username and password
       const response = await axios.post(
-        'http://10.102.139.47:3002/api/auth/login',
+        'http://10.102.138.142:3002/api/auth/login',
         {
           username: emailOrUserName,
           password: password,
@@ -294,7 +294,7 @@ const Login = () => {
       // Call API to set new password
       console.log('Setting new password for email:', emailForReset)
       const response = await axios.post(
-        'http://10.102.139.47:3002/api/auth/new-password',
+        'http://10.102.138.142:3002/api/auth/new-password',
         {
           email: emailForReset,
           password: newPassword, // assuming the API expects a key named 'newPassword'

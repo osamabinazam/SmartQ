@@ -74,7 +74,7 @@ const Profile = () => {
 
       console.log('accessTokenApiResp:', accessTokenApiResp)
       const response = await axios.post(
-        'http://10.102.139.47:3002/api/images/upload',
+        'http://10.102.138.142:3002/api/images/upload',
         formData,
         {
           headers: {

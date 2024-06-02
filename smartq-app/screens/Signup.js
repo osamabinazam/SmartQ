@@ -159,7 +159,7 @@ const Signup = () => {
     try {
       setIsLoading(true) // Start loading
       const response = await axios.post(
-        'http://10.102.139.47:3002/api/auth/register',
+        'http://10.102.138.142:3002/api/auth/register',
         {
           username: username,
           email: email,

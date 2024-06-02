@@ -8,20 +8,26 @@ import Page from '../components/Page';
 import { AppWelcome, AppNewInvoice, TotalAppointments, RemainingAppointments, AverageWaitTime, LastUpdate } from '../components/general-app';
 import UpcomingAppointments from 'src/components/general-app/UpcomingAppointments';
 import NotActiveQueue from './NotActiveQueue';
+import { useQueue } from 'src/hooks/useQueue';
+import axios from 'axios';
 
 export default function GeneralApp() {
   const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
   const { themeStretch } = useSettings();
 
+  const { queues } = useQueue();
+  console.log('Queues:', queues)
+
   const [queueData, setQueueData] = useState({});
   const [updateTime, setUpdateTime] = useState(null);
   const [services, setServices] = useState([]);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
-    serviceid: '',
     startTime: '',
-    endTime: ''
+    endTime: '',
+    capacity: '',
+    serviceId: ''  // Added to store the selected service ID
   });
 
   useEffect(() => {
@@ -44,6 +50,7 @@ export default function GeneralApp() {
       const startTime = new Date();
       const response = await axiosInstance.get('/api/queue');
       const endTime = new Date();
+      console.log(response)
       setQueueData(response.data);
 
       const timeElapsed = endTime - startTime;
@@ -74,16 +81,32 @@ export default function GeneralApp() {
   };
 
   const handleCreateQueue = async () => {
-    console.log('Creating queue with data:', formData);
+
+    // getting vendor profile using user id
+    const vendorResponse = await axiosInstance.get('/api/profle/vendor/vendor-by-userid', );
+
+    // get service id from services
+    const service = services.find((service) => service.serviceid === queueData.serviceId);
+
+    const dataForBackend = {
+      currentQueueSize:0,
+      averageServiceTime:0,
+      queueStartTime:queueData.startTime,
+      queueEndTime: queueData.endTime,
+      queueStatus: 'active',
+      serviceid: service.serviceid,
+      vendorprofileid: service.vendorprofileid
+    }
+
+    console.log('Creating queue with data:', dataForBackend);
 
     try {
-      const response  = await axiosInstance.post('/api/queue/create', formData);
+      const response  = await axiosInstance.post('/api/queue/create', dataForBackend);
+      console.log(response)
     }
     catch (error) {
       console.error('Failed to create queue:', error);
     }
-
-    // Send the data to the backend
   };
 
   const handleInputChange = (e, field) => {
@@ -176,15 +199,6 @@ export default function GeneralApp() {
               value={formData.endTime}
               onChange={(e) => handleInputChange(e, 'endTime')}
             />
-            {/* <TextField
-              margin="dense"
-              id="capacity"
-              label="Capacity"
-              type="text"
-              fullWidth
-              value={formData.capacity}
-              onChange={(e) => handleInputChange(e, 'capacity')}
-            /> */}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary" sx={{ border: '1px solid red', color: 'red' }}>Cancel</Button>
