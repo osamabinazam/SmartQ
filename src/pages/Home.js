@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Grid, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Box, FormControl, InputLabel, Select, MenuItem, } from '@mui/material';
+import { Container, Grid, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Box, FormControl, InputLabel, Select, MenuItem, CircularProgress } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axiosInstance from 'src/utils/axios';
 import useAuth from '../hooks/useAuth';
@@ -9,7 +9,6 @@ import { AppWelcome, AppNewInvoice, TotalAppointments, RemainingAppointments, Av
 import UpcomingAppointments from 'src/components/general-app/UpcomingAppointments';
 import NotActiveQueue from './NotActiveQueue';
 import { useQueue } from 'src/hooks/useQueue';
-import axios from 'axios';
 
 export default function GeneralApp() {
   const { isAuthenticated, user } = useAuth();
@@ -17,12 +16,12 @@ export default function GeneralApp() {
   const { themeStretch } = useSettings();
 
   const { queues } = useQueue();
-  console.log('Queues:', queues)
 
   const [queueData, setQueueData] = useState({});
   const [updateTime, setUpdateTime] = useState(null);
   const [services, setServices] = useState([]);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state for the button
   const [formData, setFormData] = useState({
     startTime: '',
     endTime: '',
@@ -40,9 +39,7 @@ export default function GeneralApp() {
     }
 
     fetchQueueData();
-    
     fetchServices();
-
   }, [isAuthenticated, navigate, user?.usertype]);
 
   const fetchQueueData = async () => {
@@ -50,7 +47,6 @@ export default function GeneralApp() {
       const startTime = new Date();
       const response = await axiosInstance.get('/api/queue');
       const endTime = new Date();
-      console.log(response)
       setQueueData(response.data);
 
       const timeElapsed = endTime - startTime;
@@ -66,8 +62,7 @@ export default function GeneralApp() {
       const response = await axiosInstance.get('/api/service/vendor-services');
       console.log('Services:', response.data);  
       setServices(response.data.services);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to fetch services:', error);
     }
   };
@@ -78,34 +73,34 @@ export default function GeneralApp() {
 
   const handleClose = () => {
     setOpen(false);
+    setLoading(false); // Reset loading state when dialog is closed
   };
 
   const handleCreateQueue = async () => {
+    setLoading(true); // Set loading to true when starting the request
 
-    // getting vendor profile using user id
     const vendorResponse = await axiosInstance.get('/api/profle/vendor/vendor-by-userid', );
-
-    // get service id from services
-    const service = services.find((service) => service.serviceid === queueData.serviceId);
+    const service = services.find((service) => service.serviceid === formData.serviceId);
 
     const dataForBackend = {
-      currentQueueSize:0,
-      averageServiceTime:0,
-      queueStartTime:queueData.startTime,
-      queueEndTime: queueData.endTime,
+      currentQueueSize: 0,
+      averageServiceTime: 0,
+      queueStartTime: formData.startTime,
+      queueEndTime: formData.endTime,
       queueStatus: 'active',
       serviceid: service.serviceid,
       vendorprofileid: service.vendorprofileid
-    }
+    };
 
     console.log('Creating queue with data:', dataForBackend);
 
     try {
       const response  = await axiosInstance.post('/api/queue/create', dataForBackend);
-      console.log(response)
-    }
-    catch (error) {
+      console.log(response);
+      handleClose();
+    } catch (error) {
       console.error('Failed to create queue:', error);
+      setLoading(false); // Reset loading state if there's an error
     }
   };
 
@@ -116,28 +111,33 @@ export default function GeneralApp() {
     });
   };
 
+  const getCurrentDateTime = () => {
+    const now = new Date();
+    return now.toISOString().slice(0, 16); // Returns date in 'YYYY-MM-DDTHH:mm' format
+  };
+
   return (
     <Page title="Home">
       <Container maxWidth={themeStretch ? false : 'xl'} spacing={3}>
         <AppWelcome displayName={user?.username} />
-        <NotActiveQueue queueData={queueData} />
+        <NotActiveQueue queueData={queues} />
         <Grid container spacing={3}>
-          {queueData.queueStatus ? (
+          {queues.queueStatus ? (
             <>
               <Grid item xs={12} md={3}>
-                <TotalAppointments data={queueData.currentQueueSize} />
+                <TotalAppointments />
               </Grid>
               <Grid item xs={12} md={3}>
-                <RemainingAppointments data={queueData.remaing} />
+                <RemainingAppointments data={queues.remaing} />
               </Grid>
               <Grid item xs={12} md={3}>
-                <AverageWaitTime data={queueData.averageServiceTime} />
+                <AverageWaitTime data={queues.averageServiceTime} />
               </Grid>
               <Grid item xs={12} md={3}>
-                <LastUpdate data={updateTime} />
+                <LastUpdate data={queues.updateAt} />
               </Grid>
               <Grid item xs={12}>
-                <UpcomingAppointments isActive={true} queueid={queueData?.queueID} />
+                <UpcomingAppointments isActive={true} queueid={queues?.queueID} />
               </Grid>
               <Grid item xs={12}>
                 <AppNewInvoice />
@@ -155,7 +155,7 @@ export default function GeneralApp() {
         <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
           <DialogTitle>Creating New Queue</DialogTitle>
           <DialogContent>
-          <FormControl fullWidth margin="dense">
+            <FormControl fullWidth margin="dense">
               <InputLabel id="serviceid-label">Service Type</InputLabel>
               <Select
                 labelId="serviceid-label"
@@ -171,8 +171,6 @@ export default function GeneralApp() {
                 ))}
               </Select>
             </FormControl>
-            
-
 
             <TextField
               autoFocus
@@ -181,31 +179,31 @@ export default function GeneralApp() {
               label="Start Time"
               type="datetime-local"
               fullWidth
-              InputLabelProps={{
-                shrink: true
-              }}
+              InputLabelProps={{ shrink: true }}
               value={formData.startTime}
               onChange={(e) => handleInputChange(e, 'startTime')}
+              inputProps={{ min: getCurrentDateTime() }}
             />
+
             <TextField
               margin="dense"
               id="end-time"
               label="End Time"
               type="datetime-local"
               fullWidth
-              InputLabelProps={{
-                shrink: true
-              }}
+              InputLabelProps={{ shrink: true }}
               value={formData.endTime}
               onChange={(e) => handleInputChange(e, 'endTime')}
+              inputProps={{ min: getCurrentDateTime() }}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary" sx={{ border: '1px solid red', color: 'red' }}>Cancel</Button>
-            <Button onClick={handleCreateQueue} color="primary" sx={{ border: '1px solid', borderColor: 'primary.main', '&:hover': { borderColor: 'primary.dark' } }}>Create</Button>
+            <Button onClick={handleCreateQueue} color="primary" disabled={loading} sx={{ border: '1px solid', borderColor: 'primary.main', '&:hover': { borderColor: 'primary.dark' } }}>
+              {loading ? <CircularProgress size={24} /> : 'Create'}
+            </Button>
           </DialogActions>
         </Dialog>
-
       </Container>
     </Page>
   );

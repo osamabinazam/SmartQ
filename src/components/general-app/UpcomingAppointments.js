@@ -10,27 +10,24 @@ import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axiosInstance from '../../utils/axios';
-
+import { useQueue } from 'src/hooks/useQueue';
 const UpcomingAppointments = ({ isActive, queueid }) => {
   const [currentAppointments, setCurrentAppointments] = useState([]);
   const [anchorEl, setAnchorEl] = useState({});
+  const {queues} = useQueue();
+  console.log(queues)
 
+  
   useEffect(() => {
     if (!isActive) {
       setCurrentAppointments([]);
       return;
     }
     
-
     const fetchUpcomingAppointments = async () => {
       try {
-        console.log("Queue ID: ", queueid)
-        const response = await axiosInstance.post('/api/appointment/upcoming', { queueid:queueid });
+        const response = await axiosInstance.post('/api/appointment/upcoming', { queueid:queues.queueID });
 
-        const response2 = await axiosInstance.get('http://localhost:3002/api/profile/vendor/nearby?latitude=40.730610&longitude=-73.935242&radius=10000')
-        console.log("Response2: ", response2);
-
-        console.log("Response: ", response);
         setCurrentAppointments(response.data.length > 0 ? response.data : null);
       } catch (error) {
         console.error('Failed to fetch appointments:', error);
@@ -40,7 +37,7 @@ const UpcomingAppointments = ({ isActive, queueid }) => {
 
     fetchUpcomingAppointments();
   
-  }, [isActive, queueid]);
+  }, [isActive, queueid, queues.queueID]);
 
   
   const handleCloseMenu = (id) => {

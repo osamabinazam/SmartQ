@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, Grid, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Container, Typography, Grid, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControl, InputLabel, Select, MenuItem, CircularProgress } from '@mui/material';
 import Page from '../components/Page';
 import UpcomingAppointments from '../components/general-app/UpcomingAppointments';
 import VerticalTable from '../components/general-app/VerticalTable';
@@ -7,15 +7,15 @@ import CompleteQueue from '../components/general-app/CompleteQueue';
 import { useNavigate } from 'react-router-dom';
 import useAuth from 'src/hooks/useAuth';
 import axiosInstance from 'src/utils/axios';
+import { useQueue } from 'src/hooks/useQueue';
 
 export default function PageThree() {
-
-
-
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
   const [open, setOpen] = useState(false);
   const [services, setServices] = useState([]);
+  const { queues } = useQueue();
+  const [loading, setLoading] = useState(false); // Loading state for the button
   const [queueData, setQueueData] = useState({
     startTime: '',
     endTime: '',
@@ -50,31 +50,33 @@ export default function PageThree() {
 
   const handleClose = () => {
     setOpen(false);
+    setLoading(false); // Reset loading state when dialog is closed
   };
 
   const handleCreateQueue = async () => {
+    setLoading(true); // Set loading to true when starting the request
 
-    // get service id from services
     const service = services.find((service) => service.serviceid === queueData.serviceId);
 
     const dataForBackend = {
-      currentQueueSize:0,
-      averageServiceTime:0,
-      queueStartTime:queueData.startTime,
+      currentQueueSize: 0,
+      averageServiceTime: 0,
+      queueStartTime: queueData.startTime,
       queueEndTime: queueData.endTime,
       queueStatus: 'active',
       serviceid: service.serviceid,
       vendorprofileid: service.vendorprofileid
-    }
+    };
 
     console.log('Creating queue with data:', dataForBackend);
 
     try {
-      const response  = await axiosInstance.post('/api/queue/create', dataForBackend);
-      console.log(response)
-    }
-    catch (error) {
+      const response = await axiosInstance.post('/api/queue/create', dataForBackend);
+      console.log(response);
+      handleClose();
+    } catch (error) {
       console.error('Failed to create queue:', error);
+      setLoading(false); // Reset loading state if there's an error
     }
   };
 
@@ -83,6 +85,11 @@ export default function PageThree() {
       ...queueData,
       [field]: e.target.value
     });
+  };
+
+  const getCurrentDateTime = () => {
+    const now = new Date();
+    return now.toISOString().slice(0, 16); // Returns date in 'YYYY-MM-DDTHH:mm' format
   };
 
   return (
@@ -94,11 +101,11 @@ export default function PageThree() {
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} md={7}>
-            <UpcomingAppointments />
+          <Grid item xs={12}>
+            <UpcomingAppointments isActive={true} queueid={queues.queueID} />
           </Grid>
-          <Grid item xs={12} md={5}>
-            <VerticalTable />
+          <Grid item xs={12}>
+            <VerticalTable isActive={true} queueid={queues.queueID} />
           </Grid>
           <Grid item xs={12}>
             <CompleteQueue />
@@ -108,7 +115,6 @@ export default function PageThree() {
         <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
           <DialogTitle>Creating New Queue</DialogTitle>
           <DialogContent>
-            {/* Dropdown for Service Selection */}
             <FormControl fullWidth margin="dense">
               <InputLabel id="service-label">Service Type</InputLabel>
               <Select
@@ -135,6 +141,7 @@ export default function PageThree() {
               InputLabelProps={{ shrink: true }}
               value={queueData.startTime}
               onChange={(e) => handleInputChange(e, 'startTime')}
+              inputProps={{ min: getCurrentDateTime() }}
               sx={{
                 mt: 2,
                 '& .MuiInputBase-input': { color: 'gray' },
@@ -152,6 +159,7 @@ export default function PageThree() {
               InputLabelProps={{ shrink: true }}
               value={queueData.endTime}
               onChange={(e) => handleInputChange(e, 'endTime')}
+              inputProps={{ min: getCurrentDateTime() }}
               sx={{
                 mt: 2,
                 '& .MuiInputBase-input': { color: 'gray' },
@@ -162,7 +170,9 @@ export default function PageThree() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary" sx={{ border: '1px solid red', color: 'red' }}>Cancel</Button>
-            <Button onClick={handleCreateQueue} color="primary" sx={{ border: '1px solid', borderColor: 'primary.main', '&:hover': { borderColor: 'primary.dark' } }}>Create</Button>
+            <Button onClick={handleCreateQueue} color="primary" disabled={loading} sx={{ border: '1px solid', borderColor: 'primary.main', '&:hover': { borderColor: 'primary.dark' } }}>
+              {loading ? <CircularProgress size={24} /> : 'Create'}
+            </Button>
           </DialogActions>
         </Dialog>
       </Container>
