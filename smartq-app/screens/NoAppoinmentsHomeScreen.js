@@ -12,8 +12,11 @@ import { useFocusEffect } from '@react-navigation/native'
 import { Colors } from '../components/styles'
 import { MaterialIcons } from '@expo/vector-icons'
 import { AuthContext } from '../Contexts/AuthContext'
+import { useNavigation } from '@react-navigation/native'
 
 function NoAppoinmentsHomeScreen() {
+  const navigation = useNavigation()
+
   //destructuring the context, username and email, profile, accesstoken only.
   const {
     usernameApiResp,
@@ -66,14 +69,31 @@ function NoAppoinmentsHomeScreen() {
 
           {/* Buttons */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Schedule now</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Queues')
+              }}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>See Queues</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Explore')
+              }}
+              style={styles.button}
+            >
               <Text style={styles.buttonText}>Explore</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Profile</Text>
+              <Text
+                onPress={() => {
+                  navigation.navigate('Profile')
+                }}
+                style={styles.buttonText}
+              >
+                Profile
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

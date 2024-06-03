@@ -80,13 +80,10 @@ const Login = () => {
       console.log('Verifying OTP...')
       console.log('OTP:', otp)
       console.log('Email:', emailForReset)
-      const response = await axios.post(
-        'http://10.102.138.142:3002/api/auth/verify-otp',
-        {
-          email: emailForReset, // Assuming you still have the email stored from when you sent the OTP
-          otp: otp, // The OTP entered by the user
-        }
-      )
+      const response = await axios.post(`${pcIP}:3002/api/auth/verify-otp`, {
+        email: emailForReset, // Assuming you still have the email stored from when you sent the OTP
+        otp: otp, // The OTP entered by the user
+      })
 
       console.log('OTP Verification Response:', response.data) // Log the response data from the server
 
@@ -143,7 +140,7 @@ const Login = () => {
     try {
       console.log('Sending reset code to email: ', emailForReset)
       const response = await axios.post(
-        'http://10.102.138.142:3002/api/auth/reset-password',
+        `${pcIP}:3002/api/auth/reset-password`,
         { email: emailForReset }
       )
       console.log('API Response:', response.data)
@@ -166,6 +163,7 @@ const Login = () => {
     setUsernameApiResp,
     setEmailApiResp,
     setPP,
+    pcIP,
     setPassApiResp,
     setProfilePictureApiResp,
   } = useContext(AuthContext)
@@ -175,7 +173,7 @@ const Login = () => {
     console.log('Logging in user with following credentials:')
     console.log('emailOrUserName:', emailOrUserName)
     console.log('Password:', password)
-    // Reset message state
+    // Reset message statef
 
     // Check for empty input fields
     if (!emailOrUserName.trim()) {
@@ -190,13 +188,11 @@ const Login = () => {
     try {
       setIsLoading(true) // Set loading to true when login starts
       // Make a POST request to the login API with username and password
-      const response = await axios.post(
-        'http://10.102.138.142:3002/api/auth/login',
-        {
-          username: emailOrUserName,
-          password: password,
-        }
-      )
+
+      const response = await axios.post(`${pcIP}:3002/api/auth/login`, {
+        username: emailOrUserName,
+        password: password,
+      })
 
       // Handle the response
       if (response && response.data) {
@@ -220,14 +216,13 @@ const Login = () => {
 
         // Log the extracted data
         console.log('Consoling API Resp. from Login screen')
-        console.log(`Access Token: ${accessToken}`)
         console.log(`Username: ${username}`)
         console.log(`Email: ${email}`)
-        console.log(`Profile Picture: ${profilePicture}`)
-
         // Check the user type from the response
         const userType = response.data.user.usertype
         console.log('User Type:', userType)
+        console.log(`Profile Picture: ${profilePicture}`)
+        console.log(`Access Token: ${accessToken}`)
 
         // Navigate based on user type
         if (userType === 'customer') {
@@ -245,7 +240,7 @@ const Login = () => {
     } catch (error) {
       setIsLoading(false) // Ensure loading is set to false on error as well
       if (error.response) {
-        console.error('Error1:', JSON.stringify(error.response.data, null, 2))
+        console.error('Error1:', JSON.stringify(error, null, 2))
 
         // Extract the error message from the response data
         let errorMessage =
@@ -264,7 +259,8 @@ const Login = () => {
         }
       } else if (error.request) {
         // The request was made but no response was received
-        console.error('Error:', error.request)
+        console.error('Error11:', JSON.stringify(error, null, 2))
+        setIsLoading(false)
         Alert.alert(
           'Network Error',
           'No response from the server. Check your network connection.'
@@ -293,13 +289,10 @@ const Login = () => {
     try {
       // Call API to set new password
       console.log('Setting new password for email:', emailForReset)
-      const response = await axios.post(
-        'http://10.102.138.142:3002/api/auth/new-password',
-        {
-          email: emailForReset,
-          password: newPassword, // assuming the API expects a key named 'newPassword'
-        }
-      )
+      const response = await axios.post(`${pcIP}:3002/api/auth/new-password`, {
+        email: emailForReset,
+        password: newPassword, // assuming the API expects a key named 'newPassword'
+      })
       if (response.data && response.data.message) {
         console.log(
           'Response.Data.Message:',
@@ -599,7 +592,7 @@ const TextInput = ({
       {isPassword && (
         <RightIcon onPress={() => setHidePassword(!hidePassword)}>
           <Ionicons
-            name={hidePassword ? 'md-eye-off' : 'md-eye'}
+            name={hidePassword ? 'eye-off' : 'eye'}
             size={30}
             color={darkLight}
           />

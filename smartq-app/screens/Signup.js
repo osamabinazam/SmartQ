@@ -55,7 +55,8 @@ const Signup = () => {
     setProfilePictureApiResp,
     setAccessTokenApiResp,
     setPP,
-    setPassApiResp
+    setPassApiResp,
+    pcIP
   } = useContext(AuthContext)
 
   const handleCreateAccountSubmit = async () => {
@@ -158,8 +159,9 @@ const Signup = () => {
     // Make a POST request to the register API with signup details
     try {
       setIsLoading(true) // Start loading
+      console.log(`making request to api on this ip: ${pcIP}`)
       const response = await axios.post(
-        'http://10.102.138.142:3002/api/auth/register',
+        `${pcIP}:3002/api/auth/register`,
         {
           username: username,
           email: email,
@@ -198,13 +200,15 @@ const Signup = () => {
         setPP(false)
         navigation.navigate('Profile')
       } else {
-        console.log('Unexpected response structure:', response.data)
+        console.log('Unexpected response structure:', response)
         Alert.alert('Error', 'Received unexpected response from the server.')
       }
       setIsLoading(false) // Stop loading indicator on success or failure
     } catch (error) {
       setIsLoading(false)
+      console.log('OGError:', error)
       if (error.response && error.response.data && error.response.data.errors) {
+        console.log('0Error:', error)
         // Check if the error is a unique constraint violation
         const uniqueError = error.response.data.errors.find(
           (err) => err.type === 'unique violation'
@@ -216,6 +220,7 @@ const Signup = () => {
           //   'Error',
           //   'Username already exists. Please choose a different one.'
           // )
+          console.log('uniqueError:', error)
           setMessage('Username taken! Please choose a different one.')
         } else {
           // Other error occurred, display a generic error message
@@ -387,7 +392,7 @@ const TextInput = ({
       {isPassword && (
         <RightIcon onPress={() => setHidePassword(!hidePassword)}>
           <Ionicons
-            name={hidePassword ? 'md-eye-off' : 'md-eye'}
+            name={hidePassword ? 'eye-off' : 'eye'}
             size={30}
             color={darkLight}
           />
