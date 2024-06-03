@@ -31,6 +31,7 @@ const Profile = () => {
     setProfilePictureApiResp,
     setAccessTokenApiResp,
     pp,
+    pcIP,
     setRefreshTokenApiResp,
   } = useContext(AuthContext)
   console.log('Profile', profilePictureApiResp)
@@ -74,7 +75,7 @@ const Profile = () => {
 
       console.log('accessTokenApiResp:', accessTokenApiResp)
       const response = await axios.post(
-        'http://10.102.139.47:3002/api/images/upload',
+        `${pcIP}:3002/api/images/upload`,
         formData,
         {
           headers: {
