@@ -15,6 +15,7 @@ import NavSection from '../../components/NavSection';
 import { MHidden } from '../../components/@material-extend';
 import sidebarConfig from './SidebarConfig';
 import { useNavigate } from 'react-router-dom';
+import { PATH_DASHBOARD } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -145,7 +146,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         {isCollapse ? (
           <Avatar alt="My Avatar" src="/static/mock-images/avatars/avatar_default.jpg" sx={{ mx: 'auto', mb: 2 }} />
         ) : (
-          <Link underline="none" component={RouterLink} to="#">
+          <Link underline="none" component={RouterLink} to={PATH_DASHBOARD.user.account}>
             <AccountStyle>
               <Avatar alt="Profiel Photo" src={user?.images?.profilePhoto?.path} />
               <Box sx={{ ml: 2 }}>

@@ -32,8 +32,14 @@ export default function Router() {
   // const LoadablePageSix = Loadable(lazy(() => import('../pages/PageSix')), pathname);
   const LoadableNotFound = Loadable(lazy(() => import('../pages/Page404')), pathname);
   const LoadablePage401 = Loadable(lazy(() => import('../pages/Page401')), pathname);
-  const LoadableLandingPage = Loadable(lazy(() => import('../pages/LandingPage')), pathname);
-  const LoadableRequestPage = Loadable(lazy(() => import('../pages/Request')), pathname);
+  // const LoadableLandingPage = Loadable(lazy(() => import('../pages/LandingPage')), pathname);
+  // const LoadableRequestPage = Loadable(lazy(() => import('../pages/Request')), pathname);
+  const LoadableUserProfile = Loadable(lazy(() => import('../pages/dashboard/UserProfile')), pathname);
+  // const LoadableUserCards = Loadable(lazy(() => import('../pages/UserCards')), pathname);
+  // const LoadableUserList = Loadable(lazy(() => import('../pages/UserList')), pathname);
+  // const LoadableUserCreate = Loadable(lazy(() => import('../pages/UserCreate')), pathname);
+  const LoadableUserAccount = Loadable(lazy(() => import('../pages/dashboard/UserAccount')), pathname);
+
 
   return useRoutes([
     {
@@ -55,7 +61,19 @@ export default function Router() {
         { path: 'home', element: <LoadablePageOne /> },
         { path: 'transactions', element: <LoadablePageTwo /> },
         { path: 'queue', element: <LoadablePageThree /> },
-        { path: 'request', element: <Request /> }, 
+        { path: 'request', element: <Request /> },
+        {
+          path: 'user',
+          children: [
+            { element: <Navigate to="/dashboard/user/profile" replace /> },
+            { path: 'profile', element: <LoadableUserProfile /> },
+            // { path: 'cards', element: <UserCards /> },
+            // { path: 'list', element: <UserList /> },
+            // { path: 'new', element: <UserCreate /> },
+            // { path: ':name/edit', element: <UserCreate /> },
+            { path: 'account', element: <LoadableUserAccount /> }
+          ]
+        },
      
       ]
     },

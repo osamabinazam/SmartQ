@@ -188,6 +188,7 @@ const Login = () => {
     try {
       setIsLoading(true) // Set loading to true when login starts
       // Make a POST request to the login API with username and password
+
       const response = await axios.post(`${pcIP}:3002/api/auth/login`, {
         username: emailOrUserName,
         password: password,
@@ -222,7 +223,6 @@ const Login = () => {
         console.log('User Type:', userType)
         console.log(`Profile Picture: ${profilePicture}`)
         console.log(`Access Token: ${accessToken}`)
-
 
         // Navigate based on user type
         if (userType === 'customer') {

@@ -17,6 +17,7 @@ import { LoadingButton } from '@mui/lab';
 // hooks
 import useAuth from '../../../hooks/useAuth';
 import useIsMountedRef from '../../../hooks/useIsMountedRef';
+import { useSnackbar } from 'notistack';
 //
 // import { MIconButton } from '../../@material-extend';
 
@@ -25,7 +26,7 @@ import useIsMountedRef from '../../../hooks/useIsMountedRef';
 export default function RegisterForm() {
   const { register } = useAuth();
   const isMountedRef = useIsMountedRef();
-// const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
+const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -66,11 +67,13 @@ export default function RegisterForm() {
         
         if (isMountedRef.current) {
           setSubmitting(false);
+          enqueueSnackbar('Account created', { variant: 'success' });
         }
       } catch (error) {
         console.error(error);
         if (isMountedRef.current) {
           setErrors({ afterSubmit: error.message });
+          enqueueSnackbar(error, { variant: 'error' });
           setSubmitting(false);
         }
       }

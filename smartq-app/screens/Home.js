@@ -39,50 +39,45 @@ function Home() {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Home</Text>
       <View style={styles.divider} />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollViewContent}
-        style={styles.scrollView}
-      >
-        <View style={styles.userInfoContainer}>
-          <View>
-            <Text style={styles.subtitle}>{usernameApiResp},</Text>
-            <Text style={styles.welcome}>Welcome back!</Text>
-          </View>
-
-          <Image
-            source={{
-              uri: pp
-                ? profilePictureApiResp
-                  ? profilePictureApiResp
-                  : undefined
-                : profilePictureApiResp
-                ? profilePictureApiResp.uri
-                : undefined,
-            }}
-            style={styles.userImage}
-          />
+      {/* ScrollView */}
+      <View style={styles.userInfoContainer}>
+        <View>
+          <Text style={styles.subtitle}>{usernameApiResp},</Text>
+          <Text style={styles.welcome}>Welcome back!</Text>
         </View>
-        <View style={styles.divider} />
+
+        <Image
+          source={{
+            uri: pp
+              ? profilePictureApiResp
+                ? profilePictureApiResp
+                : undefined
+              : profilePictureApiResp
+              ? profilePictureApiResp.uri
+              : undefined,
+          }}
+          style={styles.userImage}
+        />
+      </View>
+      <View style={styles.divider} />
 
         {/* New UI elements */}
 
-        <Text style={styles.appointmentTitle}>Schools Training Appointment</Text>
-        <View style={styles.appointmentContainer}>
-          {/* Profile picture */}
-          <TouchableOpacity
-            onPress={() => navigation.navigate('VendorProfile')}
-          >
-            <Image
-              source={require('../assets/sppp.png')}
-              style={styles.profileImage}
-            />
-          </TouchableOpacity>
-          <View style={styles.appointmentInfo}>
-            {/* Text content */}
-            <Text style={styles.updatedText}>John Doe Enterprises</Text>
-            <Text style={styles.updatedText}>Updated: 2 minutes ago</Text>
-          </View>
+      <Text style={styles.appointmentTitle}>Sonologist Appointment</Text>
+      <View style={styles.appointmentContainer}>
+        {/* Profile picture */}
+        <TouchableOpacity onPress={() => navigation.navigate('VendorProfile')}>
+          <Image
+            source={require('../assets/sppp.png')}
+            style={styles.profileImage}
+          />
+        </TouchableOpacity>
+
+        <View style={styles.appointmentInfo}>
+          {/* Text content */}
+          <Text style={styles.updatedText}>Dr. Ahmed ~ Rated 4.5</Text>
+          <Text style={styles.updatedText}>Updated: 2 minutes ago</Text>
+        </View>
 
           <TouchableOpacity
             onPress={() => navigation.navigate('NoAppoinmentsHomeScreen')}
@@ -91,12 +86,12 @@ function Home() {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.elevatedBox}>
-          {/* Box 1 */}
-          <View style={[styles.box, styles.borderRight, styles.borderBottom]}>
-            <Text style={styles.boxTitle}>Your Position</Text>
-            <Text style={styles.boxContent}>012</Text>
-          </View>
+      <View style={styles.elevatedBox}>
+        {/* Box 1 */}
+        <View style={[styles.box, styles.borderRight, styles.borderBottom]}>
+          <Text style={styles.boxTitle}>Your Position</Text>
+          <Text style={styles.boxContent}>008</Text>
+        </View>
 
           {/* Box 2 */}
           <View style={[styles.box, styles.borderBottom]}>
@@ -104,11 +99,11 @@ function Home() {
             <Text style={styles.boxContent}>120</Text>
           </View>
 
-          {/* Box 3 */}
-          <View style={[styles.box, styles.borderRight]}>
-            <Text style={styles.boxTitle}>Current</Text>
-            <Text style={styles.boxContent}>008</Text>
-          </View>
+        {/* Box 3 */}
+        <View style={[styles.box, styles.borderRight]}>
+          <Text style={styles.boxTitle}>Current</Text>
+          <Text style={styles.boxContent}>012</Text>
+        </View>
 
           {/* Box 4 */}
           <View style={styles.box}>
@@ -132,24 +127,17 @@ function Home() {
           </View>
         </View>
 
-        <TouchableOpacity
-          onPress={() => console.log('Get Ready button pressed')}
-        >
-          {/* Button */}
-          <View style={styles.buttonContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.getReadyText}>Get Ready!</Text>
-              <Text style={styles.distanceText}>Distance: 26km</Text>
-              <Text style={styles.timeText}>Time: 20 mins</Text>
-            </View>
-            <MaterialIcons
-              name='arrow-forward'
-              size={42}
-              color={Colors.brand}
-            />
+      <TouchableOpacity onPress={() => console.log('Get Ready button pressed')}>
+        {/* Button */}
+        <View style={styles.buttonContainer}>
+          <View style={styles.textContainer}>
+            <Text style={styles.getReadyText}>Get Ready!</Text>
+            <Text style={styles.distanceText}>Distance: 25km</Text>
+            <Text style={styles.timeText}>Time: 30 mins</Text>
           </View>
-        </TouchableOpacity>
-      </ScrollView>
+          <MaterialIcons name='arrow-forward' size={42} color={Colors.brand} />
+        </View>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }

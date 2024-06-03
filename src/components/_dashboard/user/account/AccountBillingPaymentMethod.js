@@ -27,7 +27,7 @@ export default function AccountBillingPaymentMethod({ formik, cards, isOpen, onO
       </Typography>
 
       <Stack spacing={2} direction={{ xs: 'column', md: 'row' }}>
-        {cards.map((card) => (
+        {cards?.map((card) => (
           <Paper
             key={card.id}
             sx={{

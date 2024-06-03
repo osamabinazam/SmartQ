@@ -37,12 +37,12 @@ export default function AccountNotifications() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      activityComments: notifications.activityComments,
-      activityAnswers: notifications.activityAnswers,
-      activityFollows: notifications.activityFollows,
-      applicationNews: notifications.applicationNews,
-      applicationProduct: notifications.applicationProduct,
-      applicationBlog: notifications.applicationBlog
+      activityComments: notifications?.activityComments || false,
+      activityAnswers: notifications?.activityAnswers || false,
+      activityFollows: notifications?.activityFollows || false,
+      applicationNews: notifications?.applicationNews ||  false,
+      applicationProduct: notifications?.applicationProduct ||  false,
+      applicationBlog: notifications?.applicationBlog || false
     },
     onSubmit: async (values, { setSubmitting }) => {
       await fakeRequest(500);

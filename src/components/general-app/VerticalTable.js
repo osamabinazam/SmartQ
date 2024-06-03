@@ -1,197 +1,158 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-  Avatar,
-  Box,
-  IconButton,
-  Menu,
-  MenuItem,
-  TextField,
-  Button,
-} from '@mui/material';
+import { Card, CardHeader, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, IconButton, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import EditIcon from '@mui/icons-material/Edit';
+import DownloadIcon from '@mui/icons-material/CloudDownload';
 import PrintIcon from '@mui/icons-material/Print';
+import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SuspendIcon from '@mui/icons-material/Pause';
+import axiosInstance from 'src/utils/axios';
+import Scrollbar from '../Scrollbar';
 
-const VerticalTableData = [
-  {
-    queueId: 18765,
-    startTime: '09:00 AM',
-    endTime: '10:00 AM',
-  },
-  {
-    queueId: 18766,
-    startTime: '10:00 AM',
-    endTime: '11:00 AM',
-  },
-  {
-    queueId: 18767,
-    startTime: '11:00 AM',
-    endTime: '12:00 PM',
-  },
-];
-
-const VerticalTable = ({ hasUpcomingQueue }) => {
-  const [editableRowId, setEditableRowId] = useState(null);
+export default function InactiveQueue() {
+  const [anchorEl, setAnchorEl] = useState(null);
   const [editedRowData, setEditedRowData] = useState(null);
-  const [anchorEl, setAnchorEl] = useState({});
-  const [verticalTableData, setVerticalTableData] = useState(VerticalTableData);
+  const [inactiveQueue, setInactiveQueue] = useState([]);
 
-  const handleEditRow = (rowData) => {
-    setEditableRowId(rowData.id);
-    setEditedRowData({ ...rowData });
-    handleCloseMenu(rowData.id);
-  };
-
-  const handleSaveRow = () => {
-    setEditableRowId(null);
-    console.log('Saving edited row:', editedRowData);
-    const updatedData = verticalTableData.map((row) => {
-      if (row.id === editedRowData.id) {
-        return editedRowData;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get('/api/queue/status?queueStatus=inactive');
+        console.log("response.data", response.data);
+        setInactiveQueue(response.data);
+      } catch (error) {
+        console.error('Failed to fetch inactive queue:', error);
       }
-      return row;
-    });
-    setVerticalTableData(updatedData);
-  };
-
-  const handleCancelEdit = () => {
-    setEditableRowId(null);
-    setEditedRowData(null);
-    console.log('Canceling edit');
-  };
+    };
+    fetchData();
+  }, []);
 
   const handleClickMenu = (event, rowData) => {
-    setAnchorEl({ ...anchorEl, [rowData.id]: event.currentTarget });
+    setAnchorEl(event.currentTarget);
     setEditedRowData(rowData);
   };
 
-  const handleCloseMenu = (id) => {
-    setAnchorEl({ ...anchorEl, [id]: null });
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
   };
 
-  const handleDelete = (rowData) => {
-    console.log('Deleting:', rowData.queueId);
-    handleCloseMenu(rowData.id);
+  const handleDownload = () => {
+    const rowDataText = `ID: ${editedRowData.queueID}\nStart: ${editedRowData.queueStartTime}\nEnd: ${editedRowData.queueEndTime}\nStatus: ${editedRowData.queueStatus}`;
+    const element = document.createElement('a');
+    const file = new Blob([rowDataText], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = 'rowData.txt';
+    document.body.appendChild(element);
+    element.click();
+    handleCloseMenu();
   };
 
   const handlePrint = () => {
-    console.log('Printing:', editedRowData.queueId);
-    handleCloseMenu(editedRowData.id);
+    window.print();
+    handleCloseMenu();
   };
 
-  const handleSuspend = (rowData) => {
-    console.log('Suspending:', rowData.queueId);
-    handleCloseMenu(rowData.id);
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Shared Data',
+          text: `ID: ${editedRowData.queueID}, Start: ${editedRowData.queueStartTime}, End: ${editedRowData.queueEndTime}, Status: ${editedRowData.queueStatus}`,
+        });
+        console.log('Data shared successfully');
+      } catch (error) {
+        console.error('Error sharing data:', error);
+      }
+    } else {
+      console.log('Web Share API not supported');
+    }
+    handleCloseMenu();
   };
 
-  const handleInputChange = (e, field) => {
-    setEditedRowData({
-      ...editedRowData,
-      [field]: e.target.value,
-    });
+  const handleDelete = () => {
+    const newData = inactiveQueue.filter(item => item.queueID !== editedRowData.queueID);
+    setInactiveQueue(newData);
+    console.log('Data deleted:', editedRowData);
+    handleCloseMenu();
   };
 
   return (
-    <Box sx={{ backgroundColor: 'background.paper', padding: '16px', borderRadius: '8px', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)' }}>
-      <Box sx={{ marginBottom: '16px' }}>
-        <Typography variant="h6">Upcoming Queue</Typography>
-      </Box>
-      {hasUpcomingQueue ? (
-        <TableContainer sx={{ maxHeight: 'calc(100vh - 240px)', overflowY: 'auto', position: 'relative'}}>
-          <Table sx={{ border: 'none' }}>
+    <Card>
+      <CardHeader
+        title={
+          <Typography variant="h6" component="div">
+            Inactive Queue
+          </Typography>
+        }
+        sx={{ mb: 3 }}
+      />
+      <Scrollbar style={{ maxHeight: '400px' }}>
+        <TableContainer>
+          <Table>
             <TableHead>
               <TableRow>
-                <TableCell style={{ border: 'none' }}>Queue ID</TableCell>
-                <TableCell style={{ border: 'none' }}>Start Time</TableCell>
-                <TableCell style={{ border: 'none' }}>End Time</TableCell>
-                <TableCell>Action</TableCell>
+                <TableCell>ID</TableCell>
+                <TableCell>Start</TableCell>
+                <TableCell>End</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {verticalTableData.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    {row.id === editableRowId ? (
-                      <TextField size="small" value={editedRowData.queueId} onChange={(e) => handleInputChange(e, 'queueId')} />
-                    ) : (
-                      row.queueId
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {row.id === editableRowId ? (
-                      <TextField size="small" value={editedRowData.startTime} onChange={(e) => handleInputChange(e, 'startTime')} />
-                    ) : (
-                      row.startTime
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {row.id === editableRowId ? (
-                      <TextField size="small" value={editedRowData.endTime} onChange={(e) => handleInputChange(e, 'endTime')} />
-                    ) : (
-                      row.endTime
-                    )}
-                  </TableCell>
-                  <TableCell align="right">
-                    <IconButton aria-label="more" onClick={(event) => handleClickMenu(event, row)}>
-                      <MoreVertIcon />
-                    </IconButton>
+              {inactiveQueue.length !== 0 ? (
+                inactiveQueue.map((row) => (
+                  <TableRow key={row.queueID}>
+                    <TableCell>{row.queueID}</TableCell>
+                    <TableCell>{format(new Date(row.queueStartTime), 'yyyy-MM-dd HH:mm')}</TableCell>
+                    <TableCell>{format(new Date(row.queueEndTime), 'yyyy-MM-dd HH:mm')}</TableCell>
+                    <TableCell>{row.queueStatus}</TableCell>
+                    <TableCell align="right">
+                      <IconButton
+                        aria-label="more"
+                        aria-controls="long-menu"
+                        aria-haspopup="true"
+                        onClick={(event) => handleClickMenu(event, row)}
+                      >
+                        <MoreVertIcon />
+                      </IconButton>
+                      <Menu
+                        id="long-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleCloseMenu}
+                      >
+                        <MenuItem onClick={handleDownload}>
+                          <DownloadIcon fontSize="small" sx={{ mr: 1 }} />
+                          Download
+                        </MenuItem>
+                        <MenuItem onClick={handlePrint}>
+                          <PrintIcon fontSize="small" sx={{ mr: 1 }} />
+                          Print
+                        </MenuItem>
+                        <MenuItem onClick={handleShare}>
+                          <ShareIcon fontSize="small" sx={{ mr: 1 }} />
+                          Share
+                        </MenuItem>
+                        <MenuItem onClick={handleDelete}>
+                          <DeleteIcon fontSize="small" sx={{ mr: 1 }} />
+                          Delete
+                        </MenuItem>
+                      </Menu>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5} align="center">
+                    No data found
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-      ) : (
-        <Typography variant="body1" align="center">
-          There are no upcoming queues.
-        </Typography>
-      )}
-      {editableRowId && (
-        <Box sx={{ mt: 2 }}>
-          <Button variant="contained" color="primary" onClick={handleSaveRow}>
-            Save
-          </Button>
-          <Button variant="outlined" color="primary" onClick={handleCancelEdit}>
-            Cancel
-          </Button>
-        </Box>
-      )}
-      <Menu
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={Boolean(anchorEl[editedRowData?.id])}
-        onClose={() => handleCloseMenu(editedRowData?.id)}
-        anchorEl={anchorEl[editedRowData?.id]}
-      >
-        <MenuItem onClick={() => handleEditRow(editedRowData)}>
-          <EditIcon sx={{ mr: 1 }} />
-          Edit
-        </MenuItem>
-        <MenuItem onClick={() => handlePrint(editedRowData)}>
-          <PrintIcon sx={{ mr: 1 }} />
-          Print
-        </MenuItem>
-        <MenuItem onClick={() => handleDelete(editedRowData)}>
-          <DeleteIcon sx={{ mr: 1 }} />
-          Delete
-        </MenuItem>
-        <MenuItem onClick={() => handleSuspend(editedRowData)}>
-          <SuspendIcon sx={{ mr: 1 }} />
-          Suspend
-        </MenuItem>
-      </Menu>
-    </Box>
+      </Scrollbar>
+    </Card>
   );
-};
-
-export default VerticalTable;
+}
