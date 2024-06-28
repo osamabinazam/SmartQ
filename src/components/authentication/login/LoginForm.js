@@ -11,7 +11,7 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { Link, Stack, Alert, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 // routes
 import { PATH_AUTH } from '../../../routes/paths';
 // hooks

@@ -1,288 +1,412 @@
-import { map, filter } from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
-// utils
-import axios from '../../utils/axios';
-
-// ----------------------------------------------------------------------
+// import axios from '../../utils/axios';
+// import { Category } from '@mui/icons-material';
+// import { get } from 'lodash';
+import axiosInstance from '../../utils/axios';
 
 const initialState = {
   isLoading: false,
   error: false,
   myProfile: null,
-  posts: [],
-  users: [],
-  userList: [],
-  followers: [],
-  friends: [],
-  gallery: [],
-  cards: null,
-  addressBook: [],
-  invoices: [],
-  notifications: null
+  operatinghours: [],
+  services: [],
+  locations: [],
+  educations: [],
+  socialmedialinks: [],
+  categories : null
 };
 
 const slice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // START LOADING
     startLoading(state) {
       state.isLoading = true;
     },
-
-    // HAS ERROR
     hasError(state, action) {
       state.isLoading = false;
       state.error = action.payload;
     },
-
-    // GET PROFILE
     getProfileSuccess(state, action) {
       state.isLoading = false;
-      state.myProfile = action.payload;
+      const profile = action.payload;
+      state.myProfile = profile;
+      state.services = profile.services;
+      state.locations = profile.business_locations;
+      state.educations = profile.educations;
+      state.operatinghours = profile.operating_hours;
+      state.socialmedialinks = profile.social_media;
     },
-
-    // GET POSTS
-    getPostsSuccess(state, action) {
+    updateServicesSuccess(state, action) {
       state.isLoading = false;
-      state.posts = action.payload;
+      state.services = action.payload;
     },
-
-    // GET USERS
-    getUsersSuccess(state, action) {
+    updateLocationsSuccess(state, action) {
       state.isLoading = false;
-      state.users = action.payload;
+      state.locations = action.payload;
     },
-
-    // DELETE USERS
-    deleteUser(state, action) {
-      const deleteUser = filter(state.userList, (user) => user.id !== action.payload);
-      state.userList = deleteUser;
-    },
-
-    // GET FOLLOWERS
-    getFollowersSuccess(state, action) {
+    updateEducationsSuccess(state, action) {
       state.isLoading = false;
-      state.followers = action.payload;
+      state.educations = action.payload;
     },
-
-    // ON TOGGLE FOLLOW
-    onToggleFollow(state, action) {
-      const followerId = action.payload;
-
-      const handleToggle = map(state.followers, (follower) => {
-        if (follower.id === followerId) {
-          return {
-            ...follower,
-            isFollowed: !follower.isFollowed
-          };
-        }
-        return follower;
-      });
-
-      state.followers = handleToggle;
-    },
-
-    // GET FRIENDS
-    getFriendsSuccess(state, action) {
+    updateOperatingHoursSuccess(state, action) {
       state.isLoading = false;
-      state.friends = action.payload;
+      state.operatinghours = action.payload;
     },
-
-    // GET GALLERY
-    getGallerySuccess(state, action) {
+    updateSocialMediaLinksSuccess(state, action) {
       state.isLoading = false;
-      state.gallery = action.payload;
+      state.socialmedialinks = action.payload;
     },
-
-    // GET MANAGE USERS
-    getUserListSuccess(state, action) {
+    getCategoriesSuccess(state, action) {
       state.isLoading = false;
-      state.userList = action.payload;
-    },
-
-    // GET CARDS
-    getCardsSuccess(state, action) {
-      state.isLoading = false;
-      state.cards = action.payload;
-    },
-
-    // GET ADDRESS BOOK
-    getAddressBookSuccess(state, action) {
-      state.isLoading = false;
-      state.addressBook = action.payload;
-    },
-
-    // GET INVOICES
-    getInvoicesSuccess(state, action) {
-      state.isLoading = false;
-      state.invoices = action.payload;
-    },
-
-    // GET NOTIFICATIONS
-    getNotificationsSuccess(state, action) {
-      state.isLoading = false;
-      state.notifications = action.payload;
+      state.categories = action.payload;
     }
-  }
+  },
 });
 
-// Reducer
+export const {
+  startLoading,
+  hasError,
+  getProfileSuccess,
+  updateServicesSuccess,
+  updateLocationsSuccess,
+  updateEducationsSuccess,
+  updateOperatingHoursSuccess,
+  updateSocialMediaLinksSuccess,
+  getCategoriesSuccess
+} = slice.actions;
+
 export default slice.reducer;
-
-// Actions
-export const { onToggleFollow, deleteUser } = slice.actions;
-
-// ----------------------------------------------------------------------
 
 export function getProfile() {
   return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
+    dispatch(startLoading());
     try {
-      const response = await axios.get('/api/user/profile');
-      dispatch(slice.actions.getProfileSuccess(response.data.profile));
+      const response = await axiosInstance.get('/api/profile/vendor/vendor-by-userid');
+      console.log("Profile Data is ;\n",response.data)
+      dispatch(getProfileSuccess(response.data));
     } catch (error) {
-      dispatch(slice.actions.hasError(error));
+      dispatch(hasError(error));
     }
   };
 }
 
-// ----------------------------------------------------------------------
-
-export function getPosts() {
+export function getCategories() {
   return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
+    dispatch(startLoading());
     try {
-      const response = await axios.get('/api/user/posts');
-      dispatch(slice.actions.getPostsSuccess(response.data.posts));
+      const response = await axiosInstance.get('/api/category');
+      dispatch(getCategoriesSuccess(response.data));
     } catch (error) {
-      dispatch(slice.actions.hasError(error));
+      dispatch(hasError(error));
     }
   };
 }
 
-// ----------------------------------------------------------------------
-
-export function getFollowers() {
+export function updateServices(updatedServices) {
   return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
+    dispatch(startLoading());
     try {
-      const response = await axios.get('/api/user/social/followers');
-      dispatch(slice.actions.getFollowersSuccess(response.data.followers));
+      dispatch(updateServicesSuccess(updatedServices));
     } catch (error) {
-      dispatch(slice.actions.hasError(error));
+      dispatch(hasError(error));
     }
   };
 }
 
-// ----------------------------------------------------------------------
-
-export function getFriends() {
+export function updateLocations(updatedLocations) {
   return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
+    dispatch(startLoading());
     try {
-      const response = await axios.get('/api/user/social/friends');
-      dispatch(slice.actions.getFriendsSuccess(response.data.friends));
+      dispatch(updateLocationsSuccess(updatedLocations));
     } catch (error) {
-      dispatch(slice.actions.hasError(error));
+      dispatch(hasError(error));
     }
   };
 }
 
-// ----------------------------------------------------------------------
-
-export function getGallery() {
+export function updateEducations(updatedEducations) {
   return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
+    dispatch(startLoading());
     try {
-      const response = await axios.get('/api/user/social/gallery');
-      dispatch(slice.actions.getGallerySuccess(response.data.gallery));
+      dispatch(updateEducationsSuccess(updatedEducations));
     } catch (error) {
-      dispatch(slice.actions.hasError(error));
+      dispatch(hasError(error));
     }
   };
 }
 
-// ----------------------------------------------------------------------
-
-export function getUserList() {
+export function updateOperatingHours(updatedOperatingHours) {
   return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
+    dispatch(startLoading());
     try {
-      const response = await axios.get('/api/user/manage-users');
-      dispatch(slice.actions.getUserListSuccess(response.data.users));
+      dispatch(updateOperatingHoursSuccess(updatedOperatingHours));
     } catch (error) {
-      dispatch(slice.actions.hasError(error));
+      dispatch(hasError(error));
     }
   };
 }
 
-// ----------------------------------------------------------------------
-
-export function getCards() {
+export function updateSocialMediaLinks(updatedSocialMediaLinks) {
   return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
+    dispatch(startLoading());
     try {
-      const response = await axios.get('/api/user/account/cards');
-      dispatch(slice.actions.getCardsSuccess(response.data.cards));
+      dispatch(updateSocialMediaLinksSuccess(updatedSocialMediaLinks));
     } catch (error) {
-      dispatch(slice.actions.hasError(error));
+      dispatch(hasError(error));
     }
   };
 }
 
-// ----------------------------------------------------------------------
 
-export function getAddressBook() {
-  return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get('/api/user/account/address-book');
-      dispatch(slice.actions.getAddressBookSuccess(response.data.addressBook));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
 
-// ----------------------------------------------------------------------
+// import { map, filter } from 'lodash';
+// import { createSlice } from '@reduxjs/toolkit';
+// // utils
+// import axios from '../../utils/axios';
 
-export function getInvoices() {
-  return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get('/api/user/account/invoices');
-      dispatch(slice.actions.getInvoicesSuccess(response.data.invoices));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
+// // ----------------------------------------------------------------------
 
-// ----------------------------------------------------------------------
+// const initialState = {
+//   isLoading: false,
+//   error: false,
+//   myProfile: null,
+//   operatinghours: [],
+//   services: [],
+//   locations: [],
+//   educations: [],
+//   socialmedialinks: [],
 
-export function getNotifications() {
-  return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get('/api/user/account/notifications-settings');
-      dispatch(slice.actions.getNotificationsSuccess(response.data.notifications));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
+// };
 
-// ----------------------------------------------------------------------
+// const slice = createSlice({
+//   name: 'user',
+//   initialState,
+//   reducers: {
+//     // START LOADING
+//     startLoading(state) {
+//       state.isLoading = true;
+//     },
 
-export function getUsers() {
-  return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get('/api/user/all');
-      dispatch(slice.actions.getUsersSuccess(response.data.users));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
+//     // HAS ERROR
+//     hasError(state, action) {
+//       state.isLoading = false;
+//       state.error = action.payload;
+//     },
+
+//     // GET PROFILE
+//     getProfileSuccess(state, action) {
+//       state.isLoading = false;
+//       const profile = action.payload;
+//       state.myProfile = profile;
+//       state.services = profile.services;
+//       state.locations = profile.business_locations;
+//       state.educations = profile.educations;
+//       state.operatinghours = profile.operating_hours;
+//       state.socialmedialinks = profile.social_media;
+
+//     },
+
+//     // GET LOCATIONS
+//     getLocationsSuccess(state, action) {
+//       state.isLoading = false;
+//       state.posts = action.payload;
+//     },
+
+//     // GET EDUCATIONS
+//     getEducationsSuccess(state, action) {
+//       state.isLoading = false;
+//       state.users = action.payload;
+//     },
+
+//     // DELETE  USER
+//     deleteUser(state, action) {
+//       const deleteUser = filter(state.userList, (user) => user.id !== action.payload);
+//       state.userList = deleteUser;
+//     },
+
+//     // GET Social Media
+//     getSocialMediaSuccess(state, action) {
+//       state.isLoading = false;
+//       state.followers = action.payload;
+//     },
+
+//     // ON TOGGLE FOLLOW
+//     onToggleFollow(state, action) {
+//       const followerId = action.payload;
+
+//       const handleToggle = map(state.followers, (follower) => {
+//         if (follower.id === followerId) {
+//           return {
+//             ...follower,
+//             isFollowed: !follower.isFollowed
+//           };
+//         }
+//         return follower;
+//       });
+
+//       state.followers = handleToggle;
+//     },
+//   }
+// });
+
+// // Reducer
+// export default slice.reducer;
+
+// // Actions
+// export const { onToggleFollow, deleteUser } = slice.actions;
+
+// // ----------------------------------------------------------------------
+
+// export function getProfile() {
+//   return async (dispatch) => {
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       const response = await axios.get('/api/profile/vendor/vendor-by-userid');
+//       dispatch(slice.actions.getProfileSuccess(response.data.profile));
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
+
+// // ----------------------------------------------------------------------
+
+// // export function getPosts() {
+// //   return async (dispatch) => {
+// //     dispatch(slice.actions.startLoading());
+// //     try {
+// //       const response = await axios.get('/api//posts');
+// //       dispatch(slice.actions.getPostsSuccess(response.data.posts));
+// //     } catch (error) {
+// //       dispatch(slice.actions.hasError(error));
+// //     }
+// //   };
+// // }
+
+// // ----------------------------------------------------------------------
+
+// // export function getFollowers() {
+// //   return async (dispatch) => {
+// //     dispatch(slice.actions.startLoading());
+// //     try {
+// //       const response = await axios.get('/api/user/social/followers');
+// //       dispatch(slice.actions.getFollowersSuccess(response.data.followers));
+// //     } catch (error) {
+// //       dispatch(slice.actions.hasError(error));
+// //     }
+// //   };
+// // }
+
+// // ----------------------------------------------------------------------
+
+// // export function getFriends() {
+// //   return async (dispatch) => {
+// //     dispatch(slice.actions.startLoading());
+// //     try {
+// //       const response = await axios.get('/api/user/social/friends');
+// //       dispatch(slice.actions.getFriendsSuccess(response.data.friends));
+// //     } catch (error) {
+// //       dispatch(slice.actions.hasError(error));
+// //     }
+// //   };
+// // }
+
+// // ----------------------------------------------------------------------
+
+// // export function getGallery() {
+// //   return async (dispatch) => {
+// //     dispatch(slice.actions.startLoading());
+// //     try {
+// //       const response = await axios.get('/api/user/social/gallery');
+// //       dispatch(slice.actions.getGallerySuccess(response.data.gallery));
+// //     } catch (error) {
+// //       dispatch(slice.actions.hasError(error));
+// //     }
+// //   };
+// // }
+
+// // ----------------------------------------------------------------------
+
+// // export function getUserList() {
+// //   return async (dispatch) => {
+// //     dispatch(slice.actions.startLoading());
+// //     try {
+// //       const response = await axios.get('/api/user/manage-users');
+// //       dispatch(slice.actions.getUserListSuccess(response.data.users));
+// //     } catch (error) {
+// //       dispatch(slice.actions.hasError(error));
+// //     }
+// //   };
+// // }
+
+// // ----------------------------------------------------------------------
+
+// // export function getCards() {
+// //   return async (dispatch) => {
+// //     dispatch(slice.actions.startLoading());
+// //     try {
+// //       const response = await axios.get('/api/user/account/cards');
+// //       dispatch(slice.actions.getCardsSuccess(response.data.cards));
+// //     } catch (error) {
+// //       dispatch(slice.actions.hasError(error));
+// //     }
+// //   };
+// // }
+
+// // ----------------------------------------------------------------------
+
+// // export function getAddressBook() {
+// //   return async (dispatch) => {
+// //     dispatch(slice.actions.startLoading());
+// //     try {
+// //       const response = await axios.get('/api/user/account/address-book');
+// //       dispatch(slice.actions.getAddressBookSuccess(response.data.addressBook));
+// //     } catch (error) {
+// //       dispatch(slice.actions.hasError(error));
+// //     }
+// //   };
+// // }
+
+// // ----------------------------------------------------------------------
+
+// // export function getInvoices() {
+// //   return async (dispatch) => {
+// //     dispatch(slice.actions.startLoading());
+// //     try {
+// //       const response = await axios.get('/api/user/account/invoices');
+// //       dispatch(slice.actions.getInvoicesSuccess(response.data.invoices));
+// //     } catch (error) {
+// //       dispatch(slice.actions.hasError(error));
+// //     }
+// //   };
+// // }
+
+// // ----------------------------------------------------------------------
+
+// // export function getNotifications() {
+// //   return async (dispatch) => {
+// //     dispatch(slice.actions.startLoading());
+// //     try {
+// //       const response = await axios.get('/api/user/account/notifications-settings');
+// //       dispatch(slice.actions.getNotificationsSuccess(response.data.notifications));
+// //     } catch (error) {
+// //       dispatch(slice.actions.hasError(error));
+// //     }
+// //   };
+// // }
+
+// // ----------------------------------------------------------------------
+
+// // export function getUsers() {
+// //   return async (dispatch) => {
+// //     dispatch(slice.actions.startLoading());
+// //     try {
+// //       const response = await axios.get('/api/user/all');
+// //       dispatch(slice.actions.getUsersSuccess(response.data.users));
+// //     } catch (error) {
+// //       dispatch(slice.actions.hasError(error));
+// //     }
+// //   };
+// // }
+

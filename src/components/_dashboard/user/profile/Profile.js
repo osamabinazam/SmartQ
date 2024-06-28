@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, Stack } from '@mui/material';
 //
 import ProfileAbout from './ProfileAbout';
-import ProfilePostCard from './ProfilePostCard';
+// import ProfilePostCard from './ProfilePostCard';
 import ProfilePostInput from './ProfilePostInput';
 import ProfileFollowInfo from './ProfileFollowInfo';
 import ProfileSocialInfo from './ProfileSocialInfo';
@@ -27,12 +27,17 @@ export default function Profile({ myProfile, posts }) {
       </Grid>
 
       <Grid item xs={12} md={8}>
-        <Stack spacing={3}>
+        {/* <Stack spacing={3}>
           <ProfilePostInput />
           {posts.map((post) => (
             <ProfilePostCard key={post.id} post={post} />
           ))}
-        </Stack>
+
+        </Stack> */}
+
+        <ProfilePostInput />
+
+
       </Grid>
     </Grid>
   );

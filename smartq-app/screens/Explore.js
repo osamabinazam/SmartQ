@@ -66,7 +66,7 @@ function Explore() {
       setLocation({ latitude, longitude, radius: 10000 })
 
       // Construct API URL
-      const url = `http://10.102.128.179:3002/api/profile/vendor/nearby?latitude=40.730610&longitude=-73.935242&radius=10000`
+      const url = `http://10.102.138.101:3002/api/profile/vendor/nearby?latitude=40.730610&longitude=-73.935242&radius=10000`
       console.log('API URL:', url)
       console.log('Access Token:', accessTokenApiResp)
 

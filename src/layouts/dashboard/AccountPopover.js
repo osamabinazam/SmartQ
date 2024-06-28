@@ -28,7 +28,7 @@ const MENU_OPTIONS = [
 
 
 export default function AccountPopover() {
-  const { isAuthenticated, user, logout } = useAuth();
+  const {  user, logout } = useAuth();
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 

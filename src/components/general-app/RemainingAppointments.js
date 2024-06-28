@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Card, Typography, Stack } from '@mui/material';
-import { fNumber } from '../../utils/formatNumber';
+// import { fNumber } from '../../utils/formatNumber';
 
-const SERVED_CUSTOMERS = 4876;
+// const SERVED_CUSTOMERS = 4876;
 
 export default function RemaingAppointments( {data}) {
   return (

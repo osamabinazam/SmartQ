@@ -28,7 +28,7 @@ export default function AccountChangePassword() {
     onSubmit: async (values, { setSubmitting }) => {
       await fakeRequest(500);
       setSubmitting(false);
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       enqueueSnackbar('Save success', { variant: 'success' });
     }
   });

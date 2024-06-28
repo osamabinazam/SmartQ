@@ -1,7 +1,12 @@
 import { styled } from '@mui/material/styles';
-import { Box, Grid, Container, Typography, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Grid, Container, Typography, 
+  // List,
+  // ListItemButton, 
+  // ListItemIcon,
+  // ListItemText 
+} from '@mui/material';
 import Lists from './Lists';
-import DraftsIcon from '@mui/icons-material/Drafts';
+// import DraftsIcon from '@mui/icons-material/Drafts';
 import { 
   MotionInView, 
   varFadeInUp,
@@ -30,11 +35,11 @@ const ContentStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const ListWrapperStyle = styled('div')(({ theme }) => ({
-  width: '100%',
-  border: `solid 1px ${theme.palette.divider}`,
-  backgroundColor: theme.palette.background.paper,
-}));
+// const ListWrapperStyle = styled('div')(({ theme }) => ({
+//   width: '100%',
+//   border: `solid 1px ${theme.palette.divider}`,
+//   backgroundColor: theme.palette.background.paper,
+// }));
 
 export default function LandingWhySmartQ() {
   return (

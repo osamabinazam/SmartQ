@@ -6,15 +6,20 @@ import VerticalTable from '../components/general-app/VerticalTable';
 import CompleteQueue from '../components/general-app/CompleteQueue';
 import { useNavigate } from 'react-router-dom';
 import useAuth from 'src/hooks/useAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfile } from '../redux/slices/user';
+import { fetchActiveQueues, fetchFutureQueues, fetchCompleteQueue } from '../redux/slices/queue';
 import axiosInstance from 'src/utils/axios';
-import { useQueue } from 'src/hooks/useQueue';
 
 export default function PageThree() {
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
+  const dispatch = useDispatch();
+  const services = useSelector((state) => state.user.services);
+  const { activeQueues, 
+    // completedQueue, futureQueues 
+  } = useSelector((state) => state.queue);
   const [open, setOpen] = useState(false);
-  const [services, setServices] = useState([]);
-  const { queues } = useQueue();
   const [loading, setLoading] = useState(false); // Loading state for the button
   const [queueData, setQueueData] = useState({
     startTime: '',
@@ -31,18 +36,12 @@ export default function PageThree() {
     if (isAuthenticated && user?.usertype !== 'vendor') {
       navigate('/auth/401', { replace: true });
     } else {
-      fetchServices();
+      dispatch(fetchActiveQueues());
+      dispatch(fetchFutureQueues());
+      dispatch(fetchCompleteQueue());
+      dispatch(getProfile());
     }
-  }, [isAuthenticated, navigate, user?.usertype]);
-
-  const fetchServices = async () => {
-    try {
-      const response = await axiosInstance.get('/api/service/vendor-services');
-      setServices(response.data.services);
-    } catch (error) {
-      console.error('Failed to fetch services:', error);
-    }
-  };
+  }, [isAuthenticated, navigate, user?.usertype, dispatch]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -65,7 +64,7 @@ export default function PageThree() {
       queueEndTime: queueData.endTime,
       queueStatus: 'active',
       serviceid: service.serviceid,
-      vendorprofileid: service.vendorprofileid
+      vendorprofileid: service.VendorService.vendorprofileid
     };
 
     console.log('Creating queue with data:', dataForBackend);
@@ -74,6 +73,7 @@ export default function PageThree() {
       const response = await axiosInstance.post('/api/queue/create', dataForBackend);
       console.log(response);
       handleClose();
+      dispatch(fetchActiveQueues()); // Refresh the active queues
     } catch (error) {
       console.error('Failed to create queue:', error);
       setLoading(false); // Reset loading state if there's an error
@@ -102,10 +102,10 @@ export default function PageThree() {
 
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <UpcomingAppointments isActive={true} queueid={queues.queueID} />
+            <UpcomingAppointments isActive={true} appointments={activeQueues.length > 0 ? activeQueues[0].appointments : []} />
           </Grid>
           <Grid item xs={12}>
-            <VerticalTable isActive={true} queueid={queues.queueID} />
+            <VerticalTable isActive={true} queueid={activeQueues.length > 0 ? activeQueues[0].queueID : null} />
           </Grid>
           <Grid item xs={12}>
             <CompleteQueue />

@@ -3,7 +3,12 @@ import { styled } from '@mui/material/styles';
 import { Divider } from '@mui/material';
 // components
 import Page from '../components/Page';
-import { AboutHero, AboutWhat, AboutTeam, AboutVision, AboutTestimonials } from '../components/_external-pages/about';
+import { AboutHero, 
+  // AboutWhat, 
+  AboutTeam, 
+  // AboutVision, 
+  // AboutTestimonials 
+} from '../components/_external-pages/about';
 
 // ----------------------------------------------------------------------
 

@@ -28,7 +28,8 @@ const sidebarConfig = [
       { title: 'Manage Queue', path: PATH_DASHBOARD.general.queue, icon: ICONS.ecommerce },
       { title: 'Transactions', path: PATH_DASHBOARD.general.transactions, icon: ICONS.product },
       { title: 'Requests', path: PATH_DASHBOARD.general.request, icon: ICONS.analytics },
-      { title: 'History', path: PATH_DASHBOARD.app.pageFive, icon: ICONS.history }
+      { title: 'History', path: PATH_DASHBOARD.general.history, icon: ICONS.history },
+      { title: 'Services', path: PATH_DASHBOARD.general.services, icon: ICONS.history}
    //   { title: 'User', path: PATH_DASHBOARD.app.user, icon: ICONS.user } // Add the "User" item
     ]
   },

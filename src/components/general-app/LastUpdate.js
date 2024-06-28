@@ -2,7 +2,7 @@
 import { Box, Card, Typography, Stack } from '@mui/material';
 
 
-import data from '@iconify/icons-eva/arrow-ios-upward-fill';
+// import data from '@iconify/icons-eva/arrow-ios-upward-fill';
 
 
 export default function LastUpdate({data}) {

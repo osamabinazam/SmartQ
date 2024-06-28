@@ -1,7 +1,9 @@
 // VerticalTableRequest.js
 
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Box, Button, Icon, Divider } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Box, Button, Icon, 
+  // Divider
+ } from '@mui/material';
 import MoreMenuButton from './MoreMenuButton'; 
 import Scrollbar from '../Scrollbar'; 
 import { Link as RouterLink } from 'react-router-dom'; 

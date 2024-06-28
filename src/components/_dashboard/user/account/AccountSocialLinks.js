@@ -9,7 +9,7 @@ import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 import { Stack, Card, TextField, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // redux
-import { useSelector } from '../../../../redux/store';
+// import { useSelector } from '../../../../redux/store';
 // utils
 import fakeRequest from '../../../../utils/fakeRequest';
 
@@ -36,17 +36,17 @@ const SOCIAL_LINKS_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function AccountSocialLinks() {
+export default function AccountSocialLinks({ profile }) {
   const { enqueueSnackbar } = useSnackbar();
-  const { myProfile } = useSelector((state) => state.user);
 
+  // Initialize formik with initialValues from profile or default values
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      facebookLink: myProfile?.facebookLink || 'https://www.facebook.com',
-      instagramLink: myProfile?.instagramLink || 'https://www.instagram.com',
-      linkedinLink: myProfile?.linkedinLink || 'https://www.linkedin.com',
-      twitterLink: myProfile?.twitterLink || 'https://www.twitter.com'
+      facebookLink: profile?.find((sm) => sm.platform === 'facebook')?.link || '',
+      instagramLink: profile?.find((sm) => sm.platform === 'instagram')?.link || '',
+      linkedinLink: profile?.find((sm) => sm.platform === 'linkedIn')?.link || '',
+      twitterLink: profile?.find((sm) => sm.platform === 'twitter')?.link || ''
     },
     onSubmit: async (values, { setSubmitting }) => {
       await fakeRequest(500);

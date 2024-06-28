@@ -24,7 +24,14 @@ ProfileAbout.propTypes = {
 };
 
 export default function ProfileAbout({ profile }) {
-  const { quote, country, email, role, company, school } = profile;
+  // const { quote, country, email, role, company, school } = profile;
+  const quote = 'Software Engineer';
+  const country = 'Vietnam';
+  const email = 'osamabinazam@gmail.com';
+  const role = 'Software Engineer';
+  const company = 'FPT Software';
+  const school = 'FPT University';
+
 
   return (
     <Card>

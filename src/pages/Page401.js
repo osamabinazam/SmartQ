@@ -9,8 +9,8 @@ import Page from '../components/Page';
 import { PageNotFoundIllustration } from '../assets';
 import useAuth from 'src/hooks/useAuth';
 import {  useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import checkRole from 'src/utils/checkUserRole';
+// import { useEffect } from 'react';
+// import checkRole from 'src/utils/checkUserRole';
 import MainNavbar from '../layouts/main/MainNavbar';   
 
 // ----------------------------------------------------------------------

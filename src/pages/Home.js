@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Grid, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Box, FormControl, InputLabel, Select, MenuItem, CircularProgress } from '@mui/material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from 'src/utils/axios';
 import useAuth from '../hooks/useAuth';
 import useSettings from '../hooks/useSettings';
@@ -8,26 +8,27 @@ import Page from '../components/Page';
 import { AppWelcome, AppNewInvoice, TotalAppointments, RemainingAppointments, AverageWaitTime, LastUpdate } from '../components/general-app';
 import UpcomingAppointments from 'src/components/general-app/UpcomingAppointments';
 import NotActiveQueue from './NotActiveQueue';
-import { useQueue } from 'src/hooks/useQueue';
+import CurrentRunningAppointment from 'src/components/general-app/CurrentRunningAppointment';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfile } from '../redux/slices/user';
+import { fetchActiveQueues, fetchFutureQueues, fetchCompleteQueue } from '../redux/slices/queue';
 
 export default function GeneralApp() {
   const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
   const { themeStretch } = useSettings();
-
-  const { queues } = useQueue();
-
-  const [queueData, setQueueData] = useState({});
-  const [updateTime, setUpdateTime] = useState(null);
-  const [services, setServices] = useState([]);
+  const dispatch = useDispatch();
+  const services = useSelector((state) => state.user.services);
+  const { activeQueues } = useSelector((state) => state.queue);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false); // Loading state for the button
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     startTime: '',
     endTime: '',
     capacity: '',
-    serviceId: ''  // Added to store the selected service ID
+    serviceid: ''
   });
+  const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -38,34 +39,17 @@ export default function GeneralApp() {
       navigate('/auth/401', { replace: true });
     }
 
-    fetchQueueData();
-    fetchServices();
-  }, [isAuthenticated, navigate, user?.usertype]);
+    dispatch(fetchActiveQueues());
+    dispatch(fetchFutureQueues());
+    dispatch(fetchCompleteQueue());
+    dispatch(getProfile());
+  }, [isAuthenticated, navigate, user?.usertype, dispatch]);
 
-  const fetchQueueData = async () => {
-    try {
-      const startTime = new Date();
-      const response = await axiosInstance.get('/api/queue');
-      const endTime = new Date();
-      setQueueData(response.data);
-
-      const timeElapsed = endTime - startTime;
-      const minutesElapsed = Math.floor(timeElapsed / (1000 * 60));
-      setUpdateTime(minutesElapsed);
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    if (activeQueues.length > 0) {
+      setAppointments(activeQueues[0].appointments);
     }
-  };
-
-  const fetchServices = async () => {
-    try {
-      const response = await axiosInstance.get('/api/service/vendor-services');
-      console.log('Services:', response.data);  
-      setServices(response.data.services);
-    } catch (error) {
-      console.error('Failed to fetch services:', error);
-    }
-  };
+  }, [activeQueues]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -73,14 +57,12 @@ export default function GeneralApp() {
 
   const handleClose = () => {
     setOpen(false);
-    setLoading(false); // Reset loading state when dialog is closed
+    setLoading(false);
   };
 
   const handleCreateQueue = async () => {
-    setLoading(true); // Set loading to true when starting the request
-
-    const vendorResponse = await axiosInstance.get('/api/profle/vendor/vendor-by-userid', );
-    const service = services.find((service) => service.serviceid === formData.serviceId);
+    setLoading(true);
+    const service = services.find((service) => service.serviceid === formData.serviceid);
 
     const dataForBackend = {
       currentQueueSize: 0,
@@ -89,18 +71,16 @@ export default function GeneralApp() {
       queueEndTime: formData.endTime,
       queueStatus: 'active',
       serviceid: service.serviceid,
-      vendorprofileid: service.vendorprofileid
+      vendorprofileid: service.VendorService.vendorprofileid
     };
 
-    console.log('Creating queue with data:', dataForBackend);
-
     try {
-      const response  = await axiosInstance.post('/api/queue/create', dataForBackend);
-      console.log(response);
+      await axiosInstance.post('/api/queue/create', dataForBackend);
       handleClose();
+      dispatch(fetchActiveQueues());
     } catch (error) {
       console.error('Failed to create queue:', error);
-      setLoading(false); // Reset loading state if there's an error
+      setLoading(false);
     }
   };
 
@@ -113,39 +93,49 @@ export default function GeneralApp() {
 
   const getCurrentDateTime = () => {
     const now = new Date();
-    return now.toISOString().slice(0, 16); // Returns date in 'YYYY-MM-DDTHH:mm' format
+    return now.toISOString().slice(0, 16);
   };
 
   return (
     <Page title="Home">
-      <Container maxWidth={themeStretch ? false : 'xl'} spacing={3}>
+      <Container maxWidth={themeStretch ? false : 'xl'} spacing={5}>
         <AppWelcome displayName={user?.username} />
-        <NotActiveQueue queueData={queues} />
+        <NotActiveQueue queueData={activeQueues[0]} />
         <Grid container spacing={3}>
-          {queues.queueStatus ? (
+          {activeQueues.length > 0 ? (
+
+            
             <>
+             
               <Grid item xs={12} md={3}>
                 <TotalAppointments />
               </Grid>
               <Grid item xs={12} md={3}>
-                <RemainingAppointments data={queues.remaing} />
+                <RemainingAppointments data={activeQueues[0].remaing} />
               </Grid>
               <Grid item xs={12} md={3}>
-                <AverageWaitTime data={queues.averageServiceTime} />
+                <AverageWaitTime data={activeQueues[0].averageServiceTime} />
               </Grid>
               <Grid item xs={12} md={3}>
-                <LastUpdate data={queues.updateAt} />
+                <LastUpdate data={activeQueues[0].updatedAt} />
               </Grid>
-              <Grid item xs={12}>
-                <UpcomingAppointments isActive={true} queueid={queues?.queueID} />
+          
+              
+
+              <Grid item xs={12} md={9}>
+                <UpcomingAppointments isActive={true} appointments={appointments} setAppointments={setAppointments} />
               </Grid>
+              <Grid item xs={12} md={3}>
+                <CurrentRunningAppointment appointments={appointments} setAppointments={setAppointments} />
+              </Grid>
+
               <Grid item xs={12}>
                 <AppNewInvoice />
               </Grid>
             </>
           ) : (
             <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center', mb: 5 }}>
-              <Button to="/" size="large" variant="contained" onClick={handleOpen} sx={{ mt: 5, textAlign: 'center' }}>
+              <Button size="large" variant="contained" onClick={handleOpen} sx={{ mt: 5, textAlign: 'center' }}>
                 Create Queue
               </Button>
             </Box>

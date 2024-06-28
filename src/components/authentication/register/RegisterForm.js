@@ -26,7 +26,10 @@ import { useSnackbar } from 'notistack';
 export default function RegisterForm() {
   const { register } = useAuth();
   const isMountedRef = useIsMountedRef();
-const { enqueueSnackbar, closeSnackbar } = useSnackbar();     // added by me
+const { 
+  enqueueSnackbar, 
+  // closeSnackbar 
+} = useSnackbar();     // added by me
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 

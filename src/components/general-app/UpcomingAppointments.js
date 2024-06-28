@@ -1,45 +1,78 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import {
-  Button, Card, CardHeader, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Typography, IconButton, Menu, MenuItem, Avatar, Box
+  Button, Card, 
+  // CardHeader, 
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+  Typography, IconButton, Menu, MenuItem, Avatar, Box, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControl, InputLabel, Select, CircularProgress
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DownloadIcon from '@mui/icons-material/CloudDownload';
 import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
-import axiosInstance from '../../utils/axios';
-import { useQueue } from 'src/hooks/useQueue';
-const UpcomingAppointments = ({ isActive, queueid }) => {
+import axiosInstance from 'src/utils/axios';
+
+const UpcomingAppointments = ({ isActive, appointments = [], queues = [] }) => {
   const [currentAppointments, setCurrentAppointments] = useState([]);
   const [anchorEl, setAnchorEl] = useState({});
-  const {queues} = useQueue();
-  console.log(queues)
+  const [appointmentOpen, setAppointmentOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [appointmentFormData, setAppointmentFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    address: '',
+    queueId: '',
+    serviceId: '',
+    vendorprofileid: ''
+  });
 
-  
   useEffect(() => {
     if (!isActive) {
       setCurrentAppointments([]);
       return;
     }
-    
-    const fetchUpcomingAppointments = async () => {
-      try {
-        const response = await axiosInstance.post('/api/appointment/upcoming', { queueid:queues.queueID });
 
-        setCurrentAppointments(response.data.length > 0 ? response.data : null);
-      } catch (error) {
-        console.error('Failed to fetch appointments:', error);
-        setCurrentAppointments(null);
-      }
+    const scheduledAppointments = appointments.filter(appointment => appointment.appointmentStatus === 'scheduled');
+    setCurrentAppointments(scheduledAppointments);
+
+  }, [isActive, appointments]);
+
+  const handleOpenAppointmentDialog = () => {
+    setAppointmentOpen(true);
+  };
+
+  const handleCloseAppointmentDialog = () => {
+    setAppointmentOpen(false);
+    setLoading(false);
+  };
+
+  const handleCreateAppointment = async () => {
+    setLoading(true);
+
+    const appointmentData = {
+      ...appointmentFormData,
+      appointmentStatus: 'scheduled'
     };
 
-    fetchUpcomingAppointments();
-  
-  }, [isActive, queueid, queues.queueID]);
+    try {
+      await axiosInstance.post('/api/appointment/create', appointmentData);
+      handleCloseAppointmentDialog();
+      // Update the appointments list here if necessary
+    } catch (error) {
+      console.error('Failed to create appointment:', error);
+      setLoading(false);
+    }
+  };
 
-  
+  const handleAppointmentInputChange = (e, field) => {
+    setAppointmentFormData({
+      ...appointmentFormData,
+      [field]: e.target.value
+    });
+  };
+
   const handleCloseMenu = (id) => {
     setAnchorEl({ ...anchorEl, [id]: null });
   };
@@ -86,10 +119,10 @@ const UpcomingAppointments = ({ isActive, queueid }) => {
 
   return (
     <Card>
-      <CardHeader
-        title={<Typography variant="h6">Current Appointments</Typography>}
-        sx={{ mb: 3 }}
-      />
+      <Box display="flex" alignItems="center" justifyContent="space-between" p={2}>
+        <Typography variant="h6">Current Appointments</Typography>
+        <Button variant="contained" color="primary" onClick={handleOpenAppointmentDialog}>Create New</Button>
+      </Box>
       <TableContainer component={Box}>
         <Table>
           <TableHead>
@@ -157,6 +190,70 @@ const UpcomingAppointments = ({ isActive, queueid }) => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Dialog open={appointmentOpen} onClose={handleCloseAppointmentDialog} maxWidth="md" fullWidth>
+        <DialogTitle>Creating New Appointment</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="first-name"
+            label="First Name"
+            type="text"
+            fullWidth
+            value={appointmentFormData.firstName}
+            onChange={(e) => handleAppointmentInputChange(e, 'firstName')}
+          />
+          <TextField
+            margin="dense"
+            id="last-name"
+            label="Last Name"
+            type="text"
+            fullWidth
+            value={appointmentFormData.lastName}
+            onChange={(e) => handleAppointmentInputChange(e, 'lastName')}
+          />
+          <TextField
+            margin="dense"
+            id="email"
+            label="Email"
+            type="email"
+            fullWidth
+            value={appointmentFormData.email}
+            onChange={(e) => handleAppointmentInputChange(e, 'email')}
+          />
+          <TextField
+            margin="dense"
+            id="address"
+            label="Address"
+            type="text"
+            fullWidth
+            value={appointmentFormData.address}
+            onChange={(e) => handleAppointmentInputChange(e, 'address')}
+          />
+          <FormControl fullWidth margin="dense">
+            <InputLabel id="queueid-label">Queue</InputLabel>
+            <Select
+              labelId="queueid-label"
+              id="queueId"
+              value={appointmentFormData.queueId}
+              onChange={(e) => handleAppointmentInputChange(e, 'queueId')}
+            >
+              {queues.map((queue) => (
+                <MenuItem key={queue.queueID} value={queue.queueID}>
+                   {queue.queueStartTime} to {queue.queueEndTime}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseAppointmentDialog} color="primary" sx={{ border: '1px solid red', color: 'red' }}>Cancel</Button>
+          <Button onClick={handleCreateAppointment} color="primary" disabled={loading} sx={{ border: '1px solid', borderColor: 'primary.main', '&:hover': { borderColor: 'primary.dark' } }}>
+            {loading ? <CircularProgress size={24} /> : 'Create'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Card>
   );
 };

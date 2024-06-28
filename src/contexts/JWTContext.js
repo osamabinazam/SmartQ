@@ -48,6 +48,15 @@ const handlers = {
       isAuthenticated: true,
       user
     };
+  },
+  CHANGEPASSWORD:(state, action) =>{
+    const {user} =  action.payload;
+
+    return {
+      ...state,
+      isAuthenticated:true,
+      user
+    }
   }
 };
 
@@ -58,7 +67,8 @@ const AuthContext = createContext({
   method: 'jwt',
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
-  register: () => Promise.resolve()
+  register: () => Promise.resolve(),
+  changePassword: () => Promise.resolve()
 });
 
 AuthProvider.propTypes = {
@@ -176,6 +186,8 @@ function AuthProvider({ children }) {
 
   const updateProfile = () => {};
 
+  const changePassword = () =>{}
+
   return (
     <AuthContext.Provider
       value={{
@@ -185,7 +197,8 @@ function AuthProvider({ children }) {
         logout,
         register,
         resetPassword,
-        updateProfile
+        updateProfile,
+        changePassword
       }}
     >
       {children}

@@ -9,8 +9,8 @@ import { useEffect } from 'react';
 import {
   LandingHero,
   LandingMinimal,
-  LandingDarkMode,
-  LandingPricingPlans,
+  // LandingDarkMode,
+  // LandingPricingPlans,
   // LandingAdvertisement,
   LandingCleanInterfaces,
 
@@ -36,7 +36,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function LandingPage() {
 
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {

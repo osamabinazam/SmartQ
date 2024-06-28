@@ -1,9 +1,9 @@
 
 import { Box, Card, Typography, Stack } from '@mui/material';
 
-import { fNumber} from '../../utils/formatNumber';
+// import { fNumber} from '../../utils/formatNumber';
 
-const REMAINING_CUSTOMERS = 678;
+// const REMAINING_CUSTOMERS = 678;
 
 export default function AverageWaitTime({data}) {
   return (

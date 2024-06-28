@@ -12,7 +12,6 @@ import ResetPassword from 'src/pages/authentication/ResetPassword';
 import VerifyCode from 'src/pages/authentication/VerifyCode';
 import NewPasswordForm from 'src/pages/authentication/NewPasswordForm';
 import Request from 'src/pages/Request';
-import Page401 from 'src/pages/Page401';
 
 // ----------------------------------------------------------------------
 
@@ -39,6 +38,8 @@ export default function Router() {
   // const LoadableUserList = Loadable(lazy(() => import('../pages/UserList')), pathname);
   // const LoadableUserCreate = Loadable(lazy(() => import('../pages/UserCreate')), pathname);
   const LoadableUserAccount = Loadable(lazy(() => import('../pages/dashboard/UserAccount')), pathname);
+  const LoadableServices = Loadable(lazy(() => import('../pages/Services')));
+  const LoadableHistory = Loadable(lazy(() => import('../pages/History')));
 
 
   return useRoutes([
@@ -62,6 +63,8 @@ export default function Router() {
         { path: 'transactions', element: <LoadablePageTwo /> },
         { path: 'queue', element: <LoadablePageThree /> },
         { path: 'request', element: <Request /> },
+        { path: 'history', element: <LoadableHistory /> },
+        {path: 'services', element: <LoadableServices />},
         {
           path: 'user',
           children: [
@@ -108,14 +111,14 @@ export default function Router() {
 
 // IMPORT COMPONENTS
 
-// Dashboard
-const PageOne = Loadable(lazy(() => import('../pages/Home')));
-const PageTwo = Loadable(lazy(() => import('../pages/Transactions')));
-const PageThree = Loadable(lazy(() => import('../pages/Queues')));
-const PageFour = Loadable(lazy(() => import('../pages/PageFour')));
-const PageFive = Loadable(lazy(() => import('../pages/PageFive')));
-const PageSix = Loadable(lazy(() => import('../pages/PageSix')));
-const NotFound = Loadable(lazy(() => import('../pages/Page404')));
+// // Dashboard
+// const PageOne = Loadable(lazy(() => import('../pages/Home')));
+// const PageTwo = Loadable(lazy(() => import('../pages/Transactions')));
+// const PageThree = Loadable(lazy(() => import('../pages/Queues')));
+// const PageFour = Loadable(lazy(() => import('../pages/PageFour')));
+// const PageFive = Loadable(lazy(() => import('../pages/PageFive')));
+// const PageSix = Loadable(lazy(() => import('../pages/PageSix')));
+// const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 // Main
 const LandingPage = Loadable(lazy(() => import('../pages/LandingPage')));
 

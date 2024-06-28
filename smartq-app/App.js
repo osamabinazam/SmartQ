@@ -24,7 +24,7 @@ export default function App() {
     require('./assets/nopp.jpg')
   ) // State to hold profile image URI
   const [passApiResp, setPassApiResp] = useState('')
-  const [pcIP, setPcIP] = useState('http://10.102.128.179')
+  const [pcIP, setPcIP] = useState('http://10.102.138.101')
 
   return (
     <AuthContext.Provider

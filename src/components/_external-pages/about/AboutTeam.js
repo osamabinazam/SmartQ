@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { useRef } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -9,11 +9,11 @@ import githubFill from '@iconify/icons-eva/github-fill';
 import linkedinFill from '@iconify/icons-eva/linkedin-fill';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
 
-import roundArrowRightAlt from '@iconify/icons-ic/round-arrow-right-alt';
+// import roundArrowRightAlt from '@iconify/icons-ic/round-arrow-right-alt';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 import { Box, Card, Container, Typography, IconButton } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { varFadeIn, varFadeInUp, varFadeInDown } from '../../animate';
+// import { varFadeIn, varFadeInUp, varFadeInDown } from '../../animate';
 import { CarouselControlsArrowsBasic2 } from '../../carousel';
 
 const MEMBERS = [

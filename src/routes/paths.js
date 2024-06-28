@@ -43,13 +43,17 @@ export const PATH_DASHBOARD = {
     home: path(ROOTS_DASHBOARD, '/home'),
     transactions: path(ROOTS_DASHBOARD, '/transactions'),
     queue: path(ROOTS_DASHBOARD, '/queue'),
-    request: path(ROOTS_DASHBOARD, '/request') 
+    request: path(ROOTS_DASHBOARD, '/request'),
+    history: path(ROOTS_DASHBOARD, '/history'),
+    services: path(ROOTS_DASHBOARD, '/services'),
+
   },
   app: {
     root: path(ROOTS_DASHBOARD, '/app'),
     pageFour: path(ROOTS_DASHBOARD, '/app/four'),
     pageFive: path(ROOTS_DASHBOARD, '/app/five'),
-    pageSix: path(ROOTS_DASHBOARD, '/app/six')
+    pageSix: path(ROOTS_DASHBOARD, '/app/six'),
+    // services: path(ROOTS_DASHBOARD, '/app/services')
   },
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),

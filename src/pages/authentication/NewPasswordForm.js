@@ -105,7 +105,9 @@ export default function NewPasswordForm() {
   });
 
 
-  const { values, errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const {
+    //  values, 
+     errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 
 
   //  Handle eye icon click to show password

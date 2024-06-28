@@ -6,8 +6,8 @@ import { LoadingButton } from '@mui/lab';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router';
 import axiosInstance from 'src/utils/axios';
-import { useEffect, useState } from 'react';
-import { replace } from 'lodash';
+import { useEffect } from 'react';
+// import { replace } from 'lodash';
 
 // ----------------------------------------------------------------------
 
@@ -17,9 +17,9 @@ ResetPasswordForm.propTypes = {
 };
 
 export default function ResetPasswordForm() {
-  const { resetPassword } = useAuth();
+  // const { resetPassword } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
   const { isAuthenticated } = useAuth()
 
   useEffect(() => {

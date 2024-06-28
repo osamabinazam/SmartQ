@@ -6,3 +6,6 @@ export { default as AccountChangePassword } from './AccountChangePassword';
 export { default as AccountGeneral } from './AccountGeneral';
 export { default as AccountNotifications } from './AccountNotifications';
 export { default as AccountSocialLinks } from './AccountSocialLinks';
+export { default as AccountLocation } from './AccountLocation';
+export { default as AccountService } from './AccountService';
+export { default as AccountOpertatingHours } from './AccountOpertatingHours';

@@ -11,7 +11,7 @@ import LogoOnlyLayout from '../../layouts/LogoOnlyLayout';
 import { SentIcon } from 'src/assets';
 import axiosInstance from 'src/utils/axios';
 import useAuth from 'src/hooks/useAuth';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const RootStyle = styled(Page)(({ theme }) => ({
   display: 'flex',
@@ -91,7 +91,15 @@ export default function VerifyCodeForm() {
     }
   });
 
-  const { values, errors, isValid, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const { 
+    // values, 
+    errors, 
+    isValid, 
+    touched, 
+    isSubmitting, 
+    handleSubmit, 
+    getFieldProps 
+  } = formik;
 
   return (
     <RootStyle title="Verify Code">

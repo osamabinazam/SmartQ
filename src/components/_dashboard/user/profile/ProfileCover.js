@@ -54,7 +54,10 @@ ProfileCover.propTypes = {
 
 export default function ProfileCover({ myProfile }) {
   const { user } = useAuth();
-  const { position, cover } = myProfile;
+  // const { position, cover } = myProfile;
+  const position = 'Software Engineer';
+  const cover = 'https://images.unsplash.com/photo-1627307366582-0d5b9b1f5b9b';
+
 
   return (
     <RootStyle>

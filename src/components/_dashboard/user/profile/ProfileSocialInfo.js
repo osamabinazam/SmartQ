@@ -25,7 +25,11 @@ ProfileSocialInfo.propTypes = {
 };
 
 export default function ProfileSocialInfo({ profile }) {
-  const { facebookLink, instagramLink, linkedinLink, twitterLink } = profile;
+  // const { facebookLink, instagramLink, linkedinLink, twitterLink } = profile;
+  const facebookLink = 'https://www.facebook.com/osamabinazam';
+  const instagramLink = 'https://www.instagram.com/osamabinazam';
+  const linkedinLink = 'https://www.linkedin.com/in/osamabinazam';
+  const twitterLink = 'https://twitter.com/osamabinazam';
 
   const SOCIALS = [
     {

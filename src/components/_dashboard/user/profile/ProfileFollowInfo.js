@@ -11,7 +11,10 @@ ProfileFollowInfo.propTypes = {
 };
 
 export default function ProfileFollowInfo({ profile }) {
-  const { follower, following } = profile;
+  // const { follower, following } = profile;
+  const follower = 22;
+  const following = 33;
+
 
   return (
     <Card sx={{ py: 3 }}>

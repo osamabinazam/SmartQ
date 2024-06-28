@@ -1,23 +1,29 @@
-import { useDispatch as useReduxDispatch, useSelector as useReduxSelector } from 'react-redux';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
-//
-import { rootPersistConfig, rootReducer } from './rootReducer';
+import storage from 'redux-persist/lib/storage';
+import { useDispatch as useReduxDispatch, useSelector as useReduxSelector } from 'react-redux';
+import rootReducer from './rootReducer';
 
-// ----------------------------------------------------------------------
+const rootPersistConfig = {
+  key: 'root',
+  storage,
+  keyPrefix: 'redux-',
+  whitelist: ['user', 'queue'], // whitelist the slices you want to persist
+};
+
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 
 const store = configureStore({
-  reducer: persistReducer(rootPersistConfig, rootReducer),
+  reducer: persistedReducer,
   middleware: getDefaultMiddleware({
     serializableCheck: false,
-    immutableCheck: false
-  })
+    immutableCheck: false,
+  }),
 });
 
 const persistor = persistStore(store);
 
 const useSelector = useReduxSelector;
-
 const useDispatch = () => useReduxDispatch();
 
 export { store, persistor, useSelector, useDispatch };

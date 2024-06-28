@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from 'src/hooks/useAuth';
 import Page from '../components/Page';
 import CurrentQueueRequest from '../components/general-app/CurrentQueueRequest';
-import VerticalTableRequest from '../components/general-app/VerticalTableRequest';
+// import VerticalTableRequest from '../components/general-app/VerticalTableRequest';
 
 export default function Request() {
   const navigate = useNavigate();
@@ -43,9 +43,9 @@ export default function Request() {
           <Grid item xs={12}>
             <CurrentQueueRequest sx={{ width: '100%' }} />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <VerticalTableRequest sx={{ maxWidth: '100%', height: '400px' }} />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>
